@@ -25,8 +25,12 @@
             return true;
         }
 
-        // Metodo responsavel por buscar uma vaga pelo seu email
-        public static function getUsuario($email){
-            return (new DataBase('usuario'))->select('email = '.$email, null, null, 'senha')->fetchObject(self::class);
+        // Metodo responsavel por retornar uma senha pelo seu email
+        public static function getUsuarioSenha($email){
+            return (new DataBase('usuario'))->select("email = '$email'", null, null, 'senha')->fetchObject(self::class);
+        }
+
+        public static function getUsuarioEmail($email){
+            return (new DataBase('usuario'))->select("email = '$email'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
     }

@@ -12,11 +12,10 @@
         
         if ($email != '' && $senha != ''){
 
-            $verificarUsuario = Usuario::getUsuario($email);
-            $verificarSenha = password_verify($senha, $verificarUsuario);
+            $verificarUsuario = Usuario::getUsuarioSenha($email);
 
-            if ($verificarUsuario != '' && $verificarSenha){
-                header('location: login.php?status=successes');
+            if ($verificarUsuario != '' && password_verify($senha, $verificarUsuario->senha)){
+                header('location: index.php?status=success');
             } else {
                 header('location: login.php?status=error');
             }

@@ -4,8 +4,8 @@
             <div class="login-box ptb--100">
                 <form action="login.php" method="POST">
                     <div class="login-form-head">
-                        <h4>Entrar</h4>
-                        <p>Hello there, Sign in and start managing your Admin Template</p>
+                        <h4>Acesse sua Conta</h4>
+                        <p>Bem-vindo de volta!</p>
                     </div>
                     <div class="login-form-body">
                         <div class="form-gp">

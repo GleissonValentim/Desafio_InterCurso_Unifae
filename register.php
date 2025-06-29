@@ -19,7 +19,9 @@
         
         if ($nome != '' && $tipo != '' && $email != '' && $_POST['senha'] != '' && $confirmar_senha != ''){
 
-            if ($_POST["senha"] == $confirmar_senha){
+            $verificarUsuario = Usuario::getUsuarioEmail($email);
+
+            if ($_POST["senha"] == $confirmar_senha && count($verificarUsuario) < 1){
                 $obUsuario->cadastrar();
                 header('location: index.php?status=success');
             } else {

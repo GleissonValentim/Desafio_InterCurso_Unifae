@@ -72,9 +72,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-6 clearfix p-5">
-                        
-                    </div>
+                    <div class="col-sm-6 clearfix p-5"></div>
                 </div>
             </div>
         <?= $menssagem ?>
