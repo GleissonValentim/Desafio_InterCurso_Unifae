@@ -25,11 +25,21 @@
             return true;
         }
 
+        // Metodo responsavel por retornar um usuario pelo seu email
+        public static function getUsuario($email){
+            return (new DataBase('usuario'))->select("email = '$email'", null, null, '*')->fetchObject(self::class);
+        }
+
+        public static function getUsuarioId($id){
+            return (new DataBase('usuario'))->select("id = '$id'", null, null, '*')->fetchObject(self::class);
+        }
+
         // Metodo responsavel por retornar uma senha pelo seu email
         public static function getUsuarioSenha($email){
             return (new DataBase('usuario'))->select("email = '$email'", null, null, 'senha')->fetchObject(self::class);
         }
 
+        // Metodo responsavel por retornar um id pelo seu email
         public static function getUsuarioEmail($email){
             return (new DataBase('usuario'))->select("email = '$email'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);
         }

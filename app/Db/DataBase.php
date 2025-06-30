@@ -8,7 +8,7 @@
     class DataBase {
 
         const HOST = 'localhost';
-        const NAME = 'intercursounifae';
+        const NAME = 'intercurso';
         const USER = 'root';
         const PASS = '1234';
 

@@ -101,13 +101,50 @@
 
 /*-------------------- 2.1 Sidebar Menu -------------------*/
 
-/* Header */
 .header-area img {
     width: 150px;
 }
 
+.logado a {
+    font-size: 16px;
+    color: #212529;
+}
+
+.logado a:hover {
+    color: #565858;
+}
+
+.user {
+    color: #39bd9c !important;
+}
+
+.btn-cadastrar {
+    background-color: #39bd9c;
+    color: white;
+}
+
 .btn-entrar {
-    background-color: red;
+    color: #39bd9c;
+    background-color: transparent;
+    border: 1px solid #39bd9c;
+}
+
+.btn-cadastrar:hover {
+    background-color: #2ad1a7;
+}
+
+.btn-entrar:hover {
+    background-color: #f3f3f3;
+}
+
+.enviar {
+   background-color: #39bd9c;
+   color: white; 
+}
+
+.enviar:hover {
+   background-color: #2ad1a7;
+   color: white; 
 }
 
 .sidebar-menu {

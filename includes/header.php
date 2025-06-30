@@ -1,4 +1,13 @@
 <?php
+    require_once 'vendor/autoload.php';
+
+    use \App\Entity\Usuario;
+
+    $usuario = null;
+    if (isset($_SESSION['usuario'])) {
+        $usuario = Usuario::getUsuarioId($_SESSION['usuario']);
+    }
+
     $menssagem = '';
     if(isset($_GET['status'])){
         switch ($_GET['status']) {
@@ -14,7 +23,7 @@
 ?>
 
 <!doctype html>
-<html class="no-js" lang="en">
+<html class="no-js" lang="pt-BR">
 
 <head>
     <meta charset="utf-8">
@@ -43,24 +52,29 @@
     <div id="preloader">
         <div class="loader"></div>
     </div>
-    <!-- preloader area end -->
-    <!-- page container area start -->
     <div class="page-container">
-    
         <div class="main-content">
-            <!-- header area start -->
             <div class="header-area">
                 <div class="row align-items-center d-flex justify-content-between">
                     <img class="logo_unifae" src="assets/images/1625239632883-logo-unifae-2021.png" alt="">
-                    <!-- profile info & task notification -->
-                    <div>
-                        <a href="register.php"><button class="btn-cadastrar btn mr-2">Cadastrar-se</button></a>
-                        <a href="login.php"><button class="brn-entrar btn">Entrar</button></a>
-                    </div>
+                    <?php if(!$usuario): ?>
+                        <div>
+                            <a href="login.php"><button class="btn-entrar btn mr-2">Entrar</button></a>
+                            <a href="register.php"><button class="btn-cadastrar btn">Cadastrar-se</button></a>
+                        </div>
+                    <?php elseif($usuario): ?>
+                        <div class="logado">
+                            <?php if($usuario->tipo == "Organizador"): ?>
+                                <a href="modalidades.php" class="mr-3">Modalidades</a>
+                                <a href="jogos.php" class="mr-3">Jogos</a>
+                            <?php endif; ?>
+
+                            <a href="profile.php" class="user mr-3"><?= $usuario->nome ?></a>
+                            <a href="logout.php">Sair</a>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
-            <!-- header area end -->
-            <!-- page title area start -->
             <div class="page-title-area">
                 <div class="row align-items-center">
                     <div class="col-sm-6">

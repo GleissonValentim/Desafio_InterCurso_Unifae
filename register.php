@@ -1,12 +1,14 @@
 <?php
-
+    session_start();
+    
     include __DIR__.'/vendor/autoload.php';
 
     use \App\Entity\Usuario;
     $obUsuario = new Usuario;
 
-    // testar se o formulario funciona
-    // print_r($_POST);
+    if (isset($_SESSION['usuario'])) {
+        header('location: index.php?status=error');
+    }
 
     if(isset($_POST['nome'], $_POST['tipo'], $_POST['email'], $_POST['senha'], $_POST['confirmar_senha'])){
 

@@ -1,9 +1,14 @@
 <?php
+    session_start();
 
     include __DIR__.'/vendor/autoload.php';
 
     use \App\Entity\Usuario;
     $obUsuario = new Usuario;
+
+    if (isset($_SESSION['usuario'])) {
+        header('location: index.php?status=error');
+    }
 
     if(isset($_POST['email'], $_POST['senha'])){
 
@@ -15,6 +20,10 @@
             $verificarUsuario = Usuario::getUsuarioSenha($email);
 
             if ($verificarUsuario != '' && password_verify($senha, $verificarUsuario->senha)){
+                $usuario = Usuario::getUsuario($email);
+
+                $_SESSION['usuario'] = $usuario->id;
+
                 header('location: index.php?status=success');
             } else {
                 header('location: login.php?status=error');
