@@ -147,6 +147,21 @@
    color: white; 
 }
 
+.tabela th, td {
+    width: 500px;
+    height: 50px;
+}
+
+.tabela a {
+    color: inherit !important;
+}
+
+.infos:hover {
+    color: #2ad1a7 !important;
+    background-color: #f8f9fa;
+    cursor: pointer;
+}
+
 .sidebar-menu {
     position: fixed;
     left: 0;
@@ -883,7 +898,7 @@ ul.breadcrumbs {
     letter-spacing: 0;
     color: #333;
     text-transform: capitalize;
-    margin-bottom: 17px;
+    /* margin-bottom: 17px; */
 }
 
 .single-report p {

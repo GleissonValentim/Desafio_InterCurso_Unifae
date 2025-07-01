@@ -14,7 +14,7 @@
 
         if ($nome != '' && $regras != '' && $atletas != ''){
 
-            $verificarModalidade = Modalidade::getModalidade($nome);
+            $verificarModalidade = Modalidade::getModalidades($nome);
             
             if(count($verificarModalidade) < 1){
                 $obModalidade->cadastrar();

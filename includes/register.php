@@ -17,6 +17,11 @@
                         <input type="email" id="exampleInputEmail1" name="email">
                         <i class="ti-email"></i>
                     </div>
+                    <!-- <div class="form-gp">
+                        <label for="exampleInputEmail1">Email: </label>
+                        <input type="text" id="exampleInputEmail1" name="tipo">
+                        <i class="ti-email"></i>
+                    </div> -->
                     <div class="form-gp">
                         <label for="exampleInputPassword1">Senha: </label>
                         <input type="password" id="exampleInputPassword1" name="senha">
@@ -26,14 +31,6 @@
                         <label for="exampleInputPassword2">Confirmar senha: </label>
                         <input type="password" id="exampleInputPassword2" name="confirmar_senha">
                         <i class="ti-lock"></i>
-                    </div>
-                    <div class="form-gp">
-                        <select name="tipo" class="form-control">
-                            <option value="">Selecione</option>
-                            <option value="Atleta">Atleta</option>
-                            <option value="Organizador">Organizador</option>
-                            <option value="Gestor de time">Gestor de time</option>
-                        </select>
                     </div>
                     <div class="submit-btn-area">
                         <button id="form_submit" type="submit" value="enviar">Enviar <i class="ti-arrow-right"></i></button>

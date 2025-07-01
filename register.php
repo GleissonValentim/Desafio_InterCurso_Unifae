@@ -10,16 +10,16 @@
         header('location: index.php?status=error');
     }
 
-    if(isset($_POST['nome'], $_POST['tipo'], $_POST['email'], $_POST['senha'], $_POST['confirmar_senha'])){
+    if(isset($_POST['nome'], $_POST['email'], $_POST['senha'], $_POST['confirmar_senha'])){
 
         $senhaProtegida = password_hash($_POST["senha"], PASSWORD_DEFAULT);
         $nome = $obUsuario->nome = $_POST["nome"];
-        $tipo = $obUsuario->tipo = $_POST["tipo"];
+        $tipo = $obUsuario->tipo = "Atleta";
         $email = $obUsuario->email = $_POST["email"];
         $senha = $obUsuario->senha = $senhaProtegida;
         $confirmar_senha = $_POST["confirmar_senha"];
         
-        if ($nome != '' && $tipo != '' && $email != '' && $_POST['senha'] != '' && $confirmar_senha != ''){
+        if ($nome != '' && $email != '' && $_POST['senha'] != '' && $confirmar_senha != ''){
 
             $verificarUsuario = Usuario::getUsuarioEmail($email);
 
