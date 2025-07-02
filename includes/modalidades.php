@@ -2,7 +2,7 @@
     <div class="card col-5 ">
         <div class="card-body">
             <h4 class="header-title mb-3">Cadastrar modalidade</h4>
-            <form action="modalidades.php" method="POST">
+            <form action="cadastrar_modalidades.php" method="POST">
                 <div class="form-group">
                     <label for="nome">Nome: </label>
                     <input type="text" class="form-control" name="nome" placeholder="Digite o nome da modalidade">

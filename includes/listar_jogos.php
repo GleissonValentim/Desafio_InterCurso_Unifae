@@ -23,14 +23,14 @@
                         <tbody>
                             <?php foreach($jogos as $jogo ): ?>
                                 <tr class="infos">
-                                    <td><a href="profile.php"><?= $jogo->nome ?></a></td>
-                                    <td><a href="profile.php"><?= $jogo->local ?></a></td>
-                                    <td><a href="profile.php"><?= $verificarModalidade->nome ?></a></td>
-                                    <td><a href="profile.php"><?= $jogo->data ?></a></td>
-                                    <td><a href="profile.php"><?= $jogo->time_1 ?></a></td>
-                                    <td><a href="profile.php"><?= $jogo->time_2 ?></a></td>
-                                    <td><a href="profile.php">Não tem</a></td>
-                                    <td><a href="profile.php">Jogo ainda não começou</a></td>
+                                    <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $jogo->nome ?></a></td>
+                                    <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $jogo->local ?></a></td>
+                                    <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $verificarModalidade->nome ?></a></td>
+                                    <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $jogo->data ?></a></td>
+                                    <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $jogo->time_1 ?></a></td>
+                                    <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $jogo->time_2 ?></a></td>
+                                    <td><a href="editar_jogos.php?id=<?=$jogo->id?>">Não tem</a></td>
+                                    <td><a href="editar_jogos.php?id=<?=$jogo->id?>">Jogo ainda não começou</a></td>
                                 </tr>
                             <?php endforeach; ?> 
                         </tbody>

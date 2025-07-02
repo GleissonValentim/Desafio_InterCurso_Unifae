@@ -25,7 +25,7 @@
 
         if ($nome != '' && $local != '' && $_POST['modalidade'] != '' && $data != ''){
 
-            $verificarJogo = Jogo::getJogo($nome);
+            $verificarJogo = Jogo::getJogoNome($nome);
             
             if(count($verificarJogo) < 1){
                 $obJogo->cadastrar();
