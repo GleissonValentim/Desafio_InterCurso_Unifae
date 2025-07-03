@@ -43,6 +43,11 @@
             return (new DataBase('Modalidade'))->select(null, null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
 
+        // Metodo responsavel por retornar todos as modalidades que nao estejam asscoiadas ha um jogo
+        public static function getModalidadesNaoUsadas(){
+            return (new DataBase('Modalidade'))->select("id NOT IN (SELECT id_modalidade FROM jogo)", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        }
+
         // Metodo responsavel por excluir uma modalidade
         public static function deleteModalidade($id){
             return (new DataBase('Modalidade'))->delete("id = '$id'");

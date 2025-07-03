@@ -5,6 +5,8 @@
 
     use \App\Entity\jogo;
     use \App\Entity\Modalidade;
+    use \App\Entity\Mensagem;
+    $obMensagem = new Mensagem;
     $obModalidade = new Modalidade;
 
     if(isset($_GET['id'])){
@@ -28,6 +30,10 @@
 
                 $verificarModalidades = Modalidade::getModalidadeNome($nome);
 
+                if(empty($verificarModalidades)){
+                    $obMensagem->getMensagem("modalidades.php", "error", "Erro ao editar a modalidade. Por favor, tente novamente.");
+                }
+
                 $nomeDuplicado = false;
 
                 foreach ($verificarModalidades as $verificarModalidade) {
@@ -39,14 +45,13 @@
 
                 if (!$nomeDuplicado) {
                     $obModalidade->editarModalidade();
-                    header('location: modalidades.php?status=success');
+                    $obMensagem->getMensagem("modalidades.php", "success", "modalidade editada com sucesso!");
                 } else {
-                    header('Location: editar_modalidades.php?id=' . $id . '&status=error');
+                    $obMensagem->getMensagem("editar_modalidades.php?id=" . $id, "error", "Essa modalidade já foi cadastrada. Por favor, tente novamente.");
                 }
             } else {
-                header('Location: editar_modalidades.php?id=' . $id . '&status=error');
+                $obMensagem->getMensagem("editar_modalidades.php?id=" . $id, "error", "Por favor, preencha todos os campos!");
             }
-        exit;
         }
     } 
 
@@ -57,9 +62,9 @@
         $deleteModalidade = Modalidade::deleteModalidade($id);
 
         if($deleteJogo && $deleteModalidade){
-            header('location: modalidades.php?status=success');
+            $obMensagem->getMensagem("modalidades.php", "success", "modalidade excluida com sucesso!");
         } else {
-            header('Location: editar_modalidades.php?id=' . $id . '&status=error');
+            $obMensagem->getMensagem("editar_modalidades.php?id=".$id, "error", "Falha ao excluir a modalidade. Por favor, tente novamente.");
         }
     } 
 

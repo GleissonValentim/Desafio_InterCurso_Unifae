@@ -4,23 +4,23 @@
     include __DIR__.'/vendor/autoload.php';
 
     use \App\Entity\jogo;
+    use \App\Entity\Mensagem;
+    $obMensagem = new Mensagem;
     $obJogo = new Jogo;
 
     use \App\Entity\Modalidade;
     $obModalidade = new Modalidade;
 
+    $modalidades = Modalidade::getModalidadesNaoUsadas();
+
     if(isset($_POST['nome'], $_POST['local'], $_POST['modalidade'], $_POST['data'])){
-
-        $verificarModalidadeId = Modalidade::getModalidadeId($_POST['modalidade']);
-
-        if(empty($verificarModalidadeId)){
-            header('location: cadastrar_jogos.php?status=error');
-            exit;
-        }
 
         $nome = $obJogo->nome = $_POST["nome"];
         $local = $obJogo->local = $_POST["local"];
-        $modalidade = $obJogo->modalidade = $verificarModalidadeId->id;
+        // if (empty($_POST['modalidade'])){
+        //     $modalidade = $obJogo->modalidade = $_POST['modalidade'];
+        // }
+        $modalidade = $obJogo->modalidade = $_POST['modalidade'];
         $data = $obJogo->data = $_POST["data"];
 
         if ($nome != '' && $local != '' && $_POST['modalidade'] != '' && $data != ''){
@@ -29,14 +29,13 @@
             
             if(count($verificarJogo) < 1){
                 $obJogo->cadastrar();
-                header('location: jogos.php?status=success');
+                $obMensagem->getMensagem("jogos.php", "success", "jogo cadastrado com sucesso!");
             } else {
-                header('location: cadastrar_jogos.php?status=error');
+                $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Esse jogo já foi cadastrado. Por favor cadastre outro.");
             }
         } else {
-            header('location: cadastrar_jogos.php?status=error');
+            $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Por favor preencha todos os campos!");
         }
-        exit;
     }
 
     include __DIR__.'/includes/header.php';

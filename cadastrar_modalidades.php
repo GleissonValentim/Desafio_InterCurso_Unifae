@@ -3,6 +3,8 @@
     
     include __DIR__.'/vendor/autoload.php';
 
+    use \App\Entity\Mensagem;
+    $obMensagem = new Mensagem;
     use \App\Entity\Modalidade;
     $obModalidade = new Modalidade;
 
@@ -18,14 +20,13 @@
             
             if(count($verificarModalidade) < 1){
                 $obModalidade->cadastrar();
-                header('location: modalidades.php?status=success');
+                $obMensagem->getMensagem("modalidades.php", "success", "Modalidade cadastrado com sucesso!");
             } else {
-                header('location: cadastrar_modalidades.php?status=error');
+                $obMensagem->getMensagem("cadastrar_modalidades.php", "error", "Essa modalidade já foi cadastrada. Por favor cadastre outra.");
             }
         } else {
-            header('location: cadastrar_modalidades.php?status=error');
+             $obMensagem->getMensagem("cadastrar_modalidades.php", "error", "Por favor preencha todos os campos!");
         }
-        exit;
     }
 
     include __DIR__.'/includes/header.php';

@@ -4,10 +4,12 @@
     include __DIR__.'/vendor/autoload.php';
 
     use \App\Entity\Usuario;
+    use \App\Entity\Mensagem;
+    $obMensagem = new Mensagem;
     $obUsuario = new Usuario;
 
     if (isset($_SESSION['usuario'])) {
-        header('location: index.php?status=error');
+        $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
     }
 
     if(isset($_POST['nome'], $_POST['email'], $_POST['senha'], $_POST['confirmar_senha'])){
@@ -25,14 +27,13 @@
 
             if ($_POST["senha"] == $confirmar_senha && count($verificarUsuario) < 1){
                 $obUsuario->cadastrar();
-                header('location: index.php?status=success');
+                $obMensagem->getMensagem("register.php", "success", "Usuário cadastrado com sucesso!");
             } else {
-                header('location: register.php?status=error');
+                $obMensagem->getMensagem("register.php", "error", "As senhas não batem. Por favor, tente novamente.");
             }
         } else {
-            header('location: register.php?status=error');
+            $obMensagem->getMensagem("register.php", "error", "Por favor preencha todos os campos!");
         }
-        exit;
     }
 
     include __DIR__.'/includes/header.php';

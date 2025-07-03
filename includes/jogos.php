@@ -12,12 +12,17 @@
                     <input type="text" class="form-control" name="local" placeholder="Digite o local do jogo">
                 </div>
                 <div class="form-group">
-                    <label for="data">Modalidade: </label>
-                    <input type="modalidade" class="form-control" name="modalidade" placeholder="Digite a modalidade do jogo">
-                </div>
-                <div class="form-group">
                     <label for="data">Data: </label>
                     <input type="date" class="form-control" name="data" min="2025-07-01" placeholder="Digite a data do jogo">
+                </div>
+                <div class="form-group">
+                    <label for="modalidade">Modalidade: </label>
+                    <select class="form-control" name="modalidade">
+                        <option value="">Selecione uma modalidade</option>
+                        <?php foreach($modalidades as $modalidade): ?>
+                            <option value="<?= $modalidade->id ?>"><?= $modalidade->nome?></option>
+                        <?php endforeach; ?>
+                    </select>
                 </div>
                 <button type="submit" class="btn enviar mt-2 pr-4 pl-4">Enviar</button>
             </form>

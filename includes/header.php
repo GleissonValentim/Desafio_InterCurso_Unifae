@@ -12,11 +12,11 @@
     if(isset($_GET['status'])){
         switch ($_GET['status']) {
         case 'success':
-            $menssagem = '<div class="alert alert-success text-center">Ação executada com sucesso!</div>';
+            $menssagem = '<div class="alert alert-success text-center mt-5">'.$_SESSION['menssagem'].'</div>';
             break;
         
         case 'error':
-            $menssagem = '<div class="alert alert-danger text-center">Ação não executada!</div>';
+            $menssagem = '<div class="alert alert-danger text-center mt-5">'.$_SESSION['menssagem'].'</div>';
             break;
         }
     }
@@ -65,6 +65,7 @@
                     <?php elseif($usuario): ?>
                         <div class="logado">
                             <?php if($usuario->tipo == "Organizador"): ?>
+                                <a href="gestores.php" class="mr-3">Gestores</a>
                                 <a href="modalidades.php" class="mr-3">Modalidades</a>
                                 <a href="jogos.php" class="mr-3">Jogos</a>
                             <?php endif; ?>
@@ -89,4 +90,6 @@
                     <div class="col-sm-6 clearfix p-5"></div>
                 </div>
             </div>
-        <?= $menssagem ?>
+        <div class="container">
+            <?= $menssagem ?>
+        </div>

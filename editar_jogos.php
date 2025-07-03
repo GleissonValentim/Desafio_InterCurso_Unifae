@@ -5,6 +5,8 @@
 
     use \App\Entity\jogo;
     use \App\Entity\Modalidade;
+    use \App\Entity\Mensagem;
+    $obMensagem = new Mensagem;
     $obJogo = new Jogo;
 
     if(isset($_GET['id'])){
@@ -16,44 +18,40 @@
     $editar = $_POST['editar'] ?? null;
     $excluir = $_POST['excluir'] ?? null;
 
+    $modalidades = Modalidade::getModalidadesNaoUsadas();
+
     if($editar){
         $idEditar = $_POST['editar'];
 
         if(isset($_POST['nome'], $_POST['local'], $_POST['modalidade'], $_POST['data'])){
 
-            $verificarModalidadeId = Modalidade::getModalidadeId($_POST['modalidade']);
+            $id = $obJogo->id = $idEditar;
+            $nome = $obJogo->nome = $_POST["nome"];
+            $local = $obJogo->local = $_POST["local"];
+            $modalidade = $obJogo->modalidade = $_POST['modalidade'];
+            $data = $obJogo->data = $_POST["data"];
 
-            if(empty($verificarModalidadeId)){
-                header('Location: editar_jogos.php?id=' . $idEditar . '&status=error');
-            } else {
-                $id = $obJogo->id = $idEditar;
-                $nome = $obJogo->nome = $_POST["nome"];
-                $local = $obJogo->local = $_POST["local"];
-                $modalidade = $obJogo->modalidade = $verificarModalidadeId->id;
-                $data = $obJogo->data = $_POST["data"];
+            if ($nome != '' && $local != '' && $_POST['modalidade'] && $data != ''){
 
-                if ($nome != '' && $local != '' && $_POST['modalidade'] != '' && $data != ''){
+                $verificarJogos = Jogo::getJogoNome($nome);
 
-                    $verificarJogos = Jogo::getJogoNome($nome);
+                $nomeDuplicado = false;
 
-                    $nomeDuplicado = false;
-
-                    foreach ($verificarJogos as $verificarJogo) {
-                        if ($verificarJogo->id != $idEditar) {
-                            $nomeDuplicado = true;
-                            break;
-                        }
+                foreach ($verificarJogos as $verificarJogo) {
+                    if ($verificarJogo->id != $idEditar) {
+                        $nomeDuplicado = true;
+                        break;
                     }
-
-                    if (!$nomeDuplicado) {
-                        $obJogo->editarJogo();
-                        header('location: jogos.php?status=success');
-                    } else {
-                        header('Location: editar_jogos.php?id=' . $id . '&status=error');
-                    }
-                } else {
-                    header('Location: editar_jogos.php?id=' . $id . '&status=error');
                 }
+
+                if (!$nomeDuplicado) {
+                    $obJogo->editarJogo();
+                    $obMensagem->getMensagem("jogos.php", "success", "jogo editado com sucesso!");
+                } else {
+                    $obMensagem->getMensagem("editar_jogos.php?id=" . $id, "error", "Esse jogo já foi cadastrado. Por favor, tente novamente.");
+                }
+            } else {
+                $obMensagem->getMensagem("editar_jogos.php?id=".$id, "error", "Por favor, preencha todos os campos!");
             }
         }
     } 
@@ -64,9 +62,9 @@
         $deleteJogo = Jogo::deleteJogo($id);
 
         if($deleteJogo){
-            header('location: jogos.php?status=success');
+            $obMensagem->getMensagem("jogos.php", "success", "jogo excluido com sucesso!");
         } else {
-            header('Location: editar_jogos.php?id=' . $id . '&status=error');
+            $obMensagem->getMensagem("editar_jogos.php?id=".$id, "error", "Falha ao excluir o jogo. Por favor, tente novamente.");
         }
     } 
 

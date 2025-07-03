@@ -25,7 +25,7 @@
                                 <tr class="infos">
                                     <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $jogo->nome ?></a></td>
                                     <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $jogo->local ?></a></td>
-                                    <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $verificarModalidade->nome ?></a></td>
+                                    <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $modalidades[$jogo->id]->nome ?></a></td>
                                     <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $jogo->data ?></a></td>
                                     <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $jogo->time_1 ?></a></td>
                                     <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $jogo->time_2 ?></a></td>

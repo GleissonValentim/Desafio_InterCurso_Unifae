@@ -4,13 +4,15 @@
     session_start();
 
     use \App\Entity\jogo;
-
     use \App\Entity\Modalidade;
+    use \App\Entity\Mensagem;
+    $obMensagem = new Mensagem;
 
     $jogos = Jogo::getJogos() ?? null;
 
+    $modalidades = [];
     foreach($jogos as $jogo ){
-        $verificarModalidade = Modalidade::getModalidade($jogo->id_modalidade);
+        $modalidades[$jogo->id] = Modalidade::getModalidade($jogo->id_modalidade);
     }
 
     include __DIR__.'/includes/header.php';

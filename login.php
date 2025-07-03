@@ -4,10 +4,12 @@
     include __DIR__.'/vendor/autoload.php';
 
     use \App\Entity\Usuario;
+    use \App\Entity\Mensagem;
+    $obMensagem = new Mensagem;
     $obUsuario = new Usuario;
 
     if (isset($_SESSION['usuario'])) {
-        header('location: index.php?status=error');
+        $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
     }
 
     if(isset($_POST['email'], $_POST['senha'])){
@@ -24,17 +26,14 @@
 
                 $_SESSION['usuario'] = $usuario->id;
 
-                header('location: index.php?status=success');
+                $obMensagem->getMensagem("index.php", "success", "Bem vindo ".$usuario->nome);
             } else {
-                header('location: login.php?status=error');
+                $obMensagem->getMensagem("login.php", "error", "Usuário ou senha incorretos. Por favor, tente novamente.");
             }
         } else {
-            header('location: login.php?status=error');
+            $obMensagem->getMensagem("login.php", "error", "Por favor preencha todos os campos!");
         }
-        exit;
     }
-
-    include __DIR__.'/vendor/autoload.php';
 
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/login.php';
