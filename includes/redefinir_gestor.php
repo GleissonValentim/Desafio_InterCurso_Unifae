@@ -5,14 +5,14 @@
             <form action="#" method="POST">
                 <div class="form-group">
                     <label for="nome">Gestor antigo: </label>
-                    <input type="text" class="form-control" name="antigo">
+                    <input type="text" class="form-control" name="antigo" value="<?= $usuario->nome ?>" readonly>
                 </div>
                 <div class="form-group">
                     <label for="nome">Gestor Novo: </label>
                     <input type="text" class="form-control" name="novo">
                 </div>
                 <div class="d-flex">
-                    <button type="hidden" name="editar" class="btn enviar mt-2 pr-4 pl-4">Enviar</button>
+                    <button type="hidden" name="editar" class="btn enviar mt-2 pr-4 pl-4">Redefinir</button>
                 </div>
             </form>
         </div>

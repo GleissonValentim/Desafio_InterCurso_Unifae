@@ -48,10 +48,10 @@
                     $obJogo->editarJogo();
                     $obMensagem->getMensagem("jogos.php", "success", "jogo editado com sucesso!");
                 } else {
-                    $obMensagem->getMensagem("editar_jogos.php?id=" . $id, "error", "Esse jogo já foi cadastrado. Por favor, tente novamente.");
+                    $obMensagem->getMensagem("editar_jogos.php", "error", "Esse jogo já foi cadastrado. Por favor, tente novamente.", "&id=$id");
                 }
             } else {
-                $obMensagem->getMensagem("editar_jogos.php?id=".$id, "error", "Por favor, preencha todos os campos!");
+                $obMensagem->getMensagem("editar_jogos.php", "error", "Por favor, preencha todos os campos!", "&id=$id");
             }
         }
     } 
@@ -64,7 +64,7 @@
         if($deleteJogo){
             $obMensagem->getMensagem("jogos.php", "success", "jogo excluido com sucesso!");
         } else {
-            $obMensagem->getMensagem("editar_jogos.php?id=".$id, "error", "Falha ao excluir o jogo. Por favor, tente novamente.");
+            $obMensagem->getMensagem("editar_jogos.php", "error", "Falha ao excluir o jogo. Por favor, tente novamente.", "&id=$id");
         }
     } 
 

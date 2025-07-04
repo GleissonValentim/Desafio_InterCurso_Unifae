@@ -17,11 +17,6 @@
                         <input type="email" id="exampleInputEmail1" name="email">
                         <i class="ti-email"></i>
                     </div>
-                    <!-- <div class="form-gp">
-                        <label for="exampleInputEmail1">Email: </label>
-                        <input type="text" id="exampleInputEmail1" name="tipo">
-                        <i class="ti-email"></i>
-                    </div> -->
                     <div class="form-gp">
                         <label for="exampleInputPassword1">Senha: </label>
                         <input type="password" id="exampleInputPassword1" name="senha">

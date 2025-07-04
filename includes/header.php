@@ -68,6 +68,8 @@
                                 <a href="gestores.php" class="mr-3">Gestores</a>
                                 <a href="modalidades.php" class="mr-3">Modalidades</a>
                                 <a href="jogos.php" class="mr-3">Jogos</a>
+                            <?php elseif($usuario->tipo == "gestor"): ?>
+                                <a href="times.php" class="mr-3">Meu time</a>
                             <?php endif; ?>
 
                             <a href="profile.php" class="user mr-3"><?= $usuario->nome ?></a>

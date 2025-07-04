@@ -39,6 +39,13 @@
             return (new DataBase('usuario'))->select("email = '$email'", null, null, 'senha')->fetchObject(self::class);
         }
 
+        // Mudar o tipo do usuário 
+        public function getUsuarioTipo(){
+            return (new Database('usuario'))->update('id = '.$this->id, [
+                                                'tipo' => $this->tipo
+            ]);
+        }
+
         // Metodo responsavel por retornar os usuarios com base no tipo      
         public static function getUsuarios($tipo){
             return (new DataBase('usuario'))->select("tipo= '$tipo'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
@@ -47,5 +54,12 @@
         // Metodo responsavel por retornar um id pelo seu email
         public static function getUsuarioEmail($email){
             return (new DataBase('usuario'))->select("email = '$email'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);
+        }
+
+        // Metodo responsavel por excluir um usuario
+        public function deleteGestor(){
+            return (new Database('usuario'))->update('id = '.$this->id, [
+                                                'tipo' => $this->tipo
+            ]);
         }
     }

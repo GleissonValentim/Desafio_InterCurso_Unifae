@@ -43,8 +43,8 @@
         }
 
         // Metodo responsavel por excluir um jogo com base na modalidade
-        public static function deleteJogoModalidade($id){
-            return (new DataBase('Jogo'))->delete("id_modalidade = '$id'");
+        public static function verificaModalidade($id){
+            return (new DataBase('Jogo'))->select("id_modalidade = '$id'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);
         } 
 
         // Metodo responsavel por excluir um jogo

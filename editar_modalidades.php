@@ -47,10 +47,10 @@
                     $obModalidade->editarModalidade();
                     $obMensagem->getMensagem("modalidades.php", "success", "modalidade editada com sucesso!");
                 } else {
-                    $obMensagem->getMensagem("editar_modalidades.php?id=" . $id, "error", "Essa modalidade já foi cadastrada. Por favor, tente novamente.");
+                    $obMensagem->getMensagem("editar_modalidades.php", "error", "Essa modalidade já foi cadastrada. Por favor, tente novamente.", "&id=$id");
                 }
             } else {
-                $obMensagem->getMensagem("editar_modalidades.php?id=" . $id, "error", "Por favor, preencha todos os campos!");
+                $obMensagem->getMensagem("editar_modalidades.php", "error", "Por favor, preencha todos os campos!", "&id=$id");
             }
         }
     } 
@@ -58,13 +58,13 @@
     if($excluir){
         $id = $_POST['excluir'];
 
-        $deleteJogo = Jogo::deleteJogoModalidade($id);
-        $deleteModalidade = Modalidade::deleteModalidade($id);
+        $verificaModalidade = Jogo::verificaModalidade($id);
 
-        if($deleteJogo && $deleteModalidade){
+        if(count($verificaModalidade) < 1){
+            $deleteModalidade = Modalidade::deleteModalidade($id);
             $obMensagem->getMensagem("modalidades.php", "success", "modalidade excluida com sucesso!");
         } else {
-            $obMensagem->getMensagem("editar_modalidades.php?id=".$id, "error", "Falha ao excluir a modalidade. Por favor, tente novamente.");
+            $obMensagem->getMensagem("editar_modalidades.php", "error", "Não foi possível excluir esta modalidade, pois ela está vinculada a um ou mais jogos.", "&id=$id");
         }
     } 
 

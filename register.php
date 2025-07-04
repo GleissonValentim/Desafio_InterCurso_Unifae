@@ -16,7 +16,7 @@
 
         $senhaProtegida = password_hash($_POST["senha"], PASSWORD_DEFAULT);
         $nome = $obUsuario->nome = $_POST["nome"];
-        $tipo = $obUsuario->tipo = "Atleta";
+        $tipo = $obUsuario->tipo = "Organizador";
         $email = $obUsuario->email = $_POST["email"];
         $senha = $obUsuario->senha = $senhaProtegida;
         $confirmar_senha = $_POST["confirmar_senha"];
@@ -27,7 +27,7 @@
 
             if ($_POST["senha"] == $confirmar_senha && count($verificarUsuario) < 1){
                 $obUsuario->cadastrar();
-                $obMensagem->getMensagem("register.php", "success", "Usuário cadastrado com sucesso!");
+                $obMensagem->getMensagem("index.php", "success", "Usuário cadastrado com sucesso!");
             } else {
                 $obMensagem->getMensagem("register.php", "error", "As senhas não batem. Por favor, tente novamente.");
             }

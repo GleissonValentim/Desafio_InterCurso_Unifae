@@ -142,7 +142,17 @@
    color: white; 
 }
 
-.enviar:hover {
+.enviar-formulario {
+   background-color: #39bd9c;
+   color: white; 
+   padding: 7px 10px !important;
+}
+
+.deletar-formulario {
+    padding: 7px 10px !important;
+}
+
+.enviar:hover, .enviar-formulario:hover {
    background-color: #2ad1a7;
    color: white; 
 }
