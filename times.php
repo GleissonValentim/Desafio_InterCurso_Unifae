@@ -7,6 +7,7 @@
     use \App\Entity\Mensagem;
     use \App\Entity\Usuario;
     use \App\Entity\Usuario_and_time;
+    use \App\Entity\Modalidade;
     $obMensagem = new Mensagem;
     $obTime = new time;
 
@@ -21,6 +22,13 @@
 
     $id = $_SESSION['usuario'];
     $times = Time::getTimesId($id) ?? null;
+    $time = Time::getTimeId($_SESSION['usuario']);
+    
+    if ($time && is_object($time)) {
+        $modalidade = Modalidade::getModalidade($time->id_modalidade) ?? null;
+    } else {
+        $modalidade = null;
+    }
     
     $numeroAtletas = Usuario_and_time::getAtletas($id) ?? 0;
     $cont = count($numeroAtletas);

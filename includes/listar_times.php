@@ -12,7 +12,7 @@
                             <tr>
                                 <th>Nome</th>
                                 <th>Numero de Atletas</th>
-                                <th>Ações</th>
+                                <th>Modalidade</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -20,7 +20,7 @@
                                 <tr class="infos">
                                     <td><a href="editar_modalidades.php?id=<?= $time->id ?>"><?= $time->nome?></a></td>
                                     <td><?= $cont?></td>
-                                    <td></td>
+                                    <td><a href="editar_modalidades.php?id=<?= $time->id ?>"><?= $modalidade->nome ?></a></td>
                                 </tr>
                             <?php endforeach; ?> 
                         </tbody>

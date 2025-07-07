@@ -24,4 +24,9 @@
         public static function getAtletas($id){
             return (new DataBase('Usuario_and_time'))->select("id_time = '$id'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
+
+        // Metodo responsavel por retornar todos os atletas de cada time
+        public static function getAtletasTime($id){
+            return (new DataBase('Usuario_and_time'))->select("id_time = '$id'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        }
     }

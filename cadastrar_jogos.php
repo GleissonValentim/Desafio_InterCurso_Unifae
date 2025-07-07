@@ -11,7 +11,7 @@
     use \App\Entity\Modalidade;
     $obModalidade = new Modalidade;
 
-    $modalidades = Modalidade::getModalidadesNaoUsadas();
+    $modalidades = Modalidade::getModalidades();
 
     if(isset($_POST['nome'], $_POST['local'], $_POST['modalidade'], $_POST['data'])){
 

@@ -5,10 +5,10 @@
 
     use \App\Entity\Mensagem;
     use \App\Entity\Usuario;
-    //use \App\Entity\Time;
+    use \App\Entity\Time;
     $obMensagem = new Mensagem;
     $obUsuario = new Usuario;
-    //$obTime = new Time;
+    $obTime = new Time;
 
     if (isset($_SESSION['usuario'])) {
         $usuario = Usuario::getUsuarioId($_SESSION['usuario']);
@@ -47,18 +47,19 @@
 
     if(isset($_POST['remover'])){
         $id = $obUsuario->id = $_POST['remover'];
-        $tipo = $obUsuario->tipo = "comum";
-        $remover = $obUsuario->deleteGestor();
-        //$obTime = Time::getTimeGestor($id);
+        $obTime = Time::getTimeId($id);
 
-        //if(!$obTime){
+        if(!$obTime){  
+            $tipo = $obUsuario->tipo = "comum";
+            $remover = $obUsuario->deleteGestor();
             if($remover){
                 $obMensagem->getMensagem("gestores.php", "success", "Gestor removido com sucesso!");
             } else {
                 $obMensagem->getMensagem("gestores.php", "error", "Erro ao remover o gestor!");
             }
-            //header("Location: redefinir_gestor.php");
-        //}  
+        } else {
+            $obMensagem->getMensagem("redefinir_gestor.php", "warning", "Para remover este gestor, desvincule-o primeiro do time.", "&id=$id");
+        }
     }
 
     include __DIR__.'/includes/header.php';

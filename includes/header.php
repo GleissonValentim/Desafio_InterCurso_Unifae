@@ -18,6 +18,10 @@
         case 'error':
             $menssagem = '<div class="alert alert-danger text-center mt-5">'.$_SESSION['menssagem'].'</div>';
             break;
+
+        case 'warning':
+            $menssagem = '<div class="alert alert-warning text-center mt-5">'.$_SESSION['menssagem'].'</div>';
+            break;
         }
     }
 ?>
@@ -69,6 +73,8 @@
                                 <a href="modalidades.php" class="mr-3">Modalidades</a>
                                 <a href="jogos.php" class="mr-3">Jogos</a>
                             <?php elseif($usuario->tipo == "gestor"): ?>
+                                <a href="definir_atletas.php" class="mr-3">Definir atletas</a>
+                                <a href="atletas.php" class="mr-3">Atletas do time</a>
                                 <a href="times.php" class="mr-3">Meu time</a>
                             <?php endif; ?>
 

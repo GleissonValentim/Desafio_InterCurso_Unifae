@@ -18,7 +18,7 @@
     $editar = $_POST['editar'] ?? null;
     $excluir = $_POST['excluir'] ?? null;
 
-    $modalidades = Modalidade::getModalidadesNaoUsadas();
+    $modalidades = Modalidade::getModalidades();
 
     if($editar){
         $idEditar = $_POST['editar'];

@@ -5,18 +5,22 @@
 
     use \App\Entity\time;
     use \App\Entity\Mensagem;
+    use \App\Entity\Modalidade;
     $obMensagem = new Mensagem;
     $obTime = new time;
 
-    if(isset($_POST['nome'])){
+    $modalidades = Modalidade::getModalidades();
+
+    if(isset($_POST['nome'], $_POST['modalidade'])){
 
         $id = $_SESSION['usuario'];
         $nome = $obTime->nome = $_POST["nome"];
         $gestor = $obTime->gestor = $id;
+        $modalidade = $obTime->modalidade = $_POST['modalidade'];
 
-        if ($nome != ''){
+        if ($nome != '' && $modalidade != ''){
 
-            $verificarTime = Time::getTimeNome($nome);
+            $verificarTime = Time::getTimeNome($nome, $modalidade);
             $verificarGestor = Time::getTimesId($id);
             
             if (count($verificarGestor) < 1){

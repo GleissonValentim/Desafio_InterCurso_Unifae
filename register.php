@@ -16,7 +16,7 @@
 
         $senhaProtegida = password_hash($_POST["senha"], PASSWORD_DEFAULT);
         $nome = $obUsuario->nome = $_POST["nome"];
-        $tipo = $obUsuario->tipo = "Organizador";
+        $tipo = $obUsuario->tipo = "comum";
         $email = $obUsuario->email = $_POST["email"];
         $senha = $obUsuario->senha = $senhaProtegida;
         $confirmar_senha = $_POST["confirmar_senha"];

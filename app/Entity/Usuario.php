@@ -51,6 +51,15 @@
             return (new DataBase('usuario'))->select("tipo= '$tipo'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
 
+         // Metodo responsavel por retornar os usuarios com base no id    
+        public static function getUsuariosId($id){
+            return (new DataBase('usuario'))->select("id= '$id'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        }
+
+        public static function getGestores(){
+            return (new DataBase('usuario'))->select("tipo = 'gestor' and id not in (select id_gestor from time)", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        }
+
         // Metodo responsavel por retornar um id pelo seu email
         public static function getUsuarioEmail($email){
             return (new DataBase('usuario'))->select("email = '$email'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);
