@@ -18,19 +18,28 @@
                                 <th>Time-2</th>
                                 <th>Vencedor</th>
                                 <th>Status</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach($jogos as $jogo ): ?>
                                 <tr class="infos">
-                                    <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $jogo->nome ?></a></td>
-                                    <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $jogo->local ?></a></td>
-                                    <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $modalidades[$jogo->id]->nome ?></a></td>
-                                    <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $jogo->data ?></a></td>
-                                    <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $jogo->time_1 ?></a></td>
-                                    <td><a href="editar_jogos.php?id=<?=$jogo->id?>"><?= $jogo->time_2 ?></a></td>
-                                    <td><a href="editar_jogos.php?id=<?=$jogo->id?>">Não tem</a></td>
-                                    <td><a href="editar_jogos.php?id=<?=$jogo->id?>">Jogo ainda não começou</a></td>
+                                    <td><?= $jogo->nome ?></td>
+                                    <td><?= $jogo->local ?></td>
+                                    <td><?= $modalidades[$jogo->id]->nome ?></td>
+                                    <td><?= $jogo->data ?></td>
+                                    <td><?= $jogo->time_1 ?></td>
+                                    <td><?= $jogo->time_2 ?></td>
+                                    <td>Não tem</a></td>
+                                    <td><?= $jogo->status ?></td>
+                                    <form action="jogos.php" method="POST">
+                                        <td>
+                                            <?php if($jogo->status != 'concluido'): ?>
+                                                <button type="hidden" class="btn enviar-formulario ml-2" value="<?=$jogo->id?>" name="editar">Editar</button>
+                                            <?php endif; ?>
+                                            <button type="hidden" class="btn btn-danger deletar-formulario ml-2" value="<?=$jogo->id?>" name="excluir">Deletar</button>
+                                        </td>
+                                    </form>
                                 </tr>
                             <?php endforeach; ?> 
                         </tbody>
@@ -42,3 +51,4 @@
         </div>
     </div>
 </div>
+

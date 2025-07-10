@@ -25,6 +25,25 @@
         $modalidades[$jogo->id] = Modalidade::getModalidade($jogo->id_modalidade);
     }
 
+    $excluir = $_POST['excluir'] ?? null;
+    $editar = $_POST['editar'] ?? null;
+
+    if($excluir){
+        $id = $_POST['excluir'];
+
+        $deleteJogo = Jogo::deleteJogo($id);
+
+        if($deleteJogo){
+            $obMensagem->getMensagem("jogos.php", "success", "jogo excluido com sucesso!");
+        } else {
+            $obMensagem->getMensagem("jogos.php", "error", "Falha ao excluir o jogo. Por favor, tente novamente.", "&id=$id");
+        }
+    } 
+
+    if($editar){
+        $obMensagem->getMensagem("editar_jogos.php", "warning", "Atenção: após definir o status do jogo como 'Concluído', não será mais possível editá-lo.", "&id=$editar");
+    }
+
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/listar_jogos.php';
     include __DIR__.'/includes/footer.php';

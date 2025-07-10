@@ -8,12 +8,14 @@
     class Jogo {
         
         public $id;
+        public $nome;
         public $local;
         public $modalidade;
         public $data;
         public $time_1;
         public $time_2;
         public $vencedor;
+        public $status;
 
         public function cadastrar(){
 
@@ -22,7 +24,8 @@
                                             'nome' => $this->nome,
                                             'local' => $this->local,
                                             'id_modalidade' => $this->modalidade,
-                                            'data' => $this->data
+                                            'data' => $this->data,
+                                            'status' => $this->status
                                         ]);
             return true;
         }
@@ -58,7 +61,8 @@
                                                 'nome' => $this->nome,
                                                 'local' => $this->local,
                                                 'id_modalidade' => $this->modalidade,
-                                                'data' => $this->data
+                                                'data' => $this->data,
+                                                'status' => $this->status
             ]);
         }
     }

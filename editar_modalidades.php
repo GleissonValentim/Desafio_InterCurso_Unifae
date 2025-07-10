@@ -6,8 +6,18 @@
     use \App\Entity\jogo;
     use \App\Entity\Modalidade;
     use \App\Entity\Mensagem;
+    use \App\Entity\Usuario;
     $obMensagem = new Mensagem;
     $obModalidade = new Modalidade;
+
+    if (isset($_SESSION['usuario'])) {
+        $usuario = Usuario::getUsuarioId($_SESSION['usuario']);
+        if ($usuario->tipo != "Organizador") {
+            $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
+        }
+    } else {
+        $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
+    }
 
     if(isset($_GET['id'])){
         $id = $_GET['id'];
@@ -15,7 +25,6 @@
     }
 
     $editar = $_POST['editar'] ?? null;
-    $excluir = $_POST['excluir'] ?? null;
 
     if($editar){
         $idEditar = $_POST['editar'];
@@ -52,19 +61,6 @@
             } else {
                 $obMensagem->getMensagem("editar_modalidades.php", "error", "Por favor, preencha todos os campos!", "&id=$id");
             }
-        }
-    } 
-
-    if($excluir){
-        $id = $_POST['excluir'];
-
-        $verificaModalidade = Jogo::verificaModalidade($id);
-
-        if(count($verificaModalidade) < 1){
-            $deleteModalidade = Modalidade::deleteModalidade($id);
-            $obMensagem->getMensagem("modalidades.php", "success", "modalidade excluida com sucesso!");
-        } else {
-            $obMensagem->getMensagem("editar_modalidades.php", "error", "Não foi possível excluir esta modalidade, pois ela está vinculada a um ou mais jogos.", "&id=$id");
         }
     } 
 

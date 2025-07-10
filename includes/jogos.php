@@ -1,4 +1,4 @@
-<div class="row justify-content-center mt-5">
+<div class="row justify-content-center mt-5 pb-5">
     <div class="card col-5">
         <div class="card-body">
             <h4 class="header-title mb-3">Cadastrar Jogo</h4>
@@ -14,6 +14,18 @@
                 <div class="form-group">
                     <label for="data">Data: </label>
                     <input type="date" class="form-control" name="data" min="2025-07-01" placeholder="Digite a data do jogo">
+                </div>
+                <div class="form-group">
+                    <label for="time_1">Time-1: </label>
+                    <select class="form-control" name="time_1">
+                        <option value="">Selecione um time</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="time_2">Time-2: </label>
+                    <select class="form-control" name="time_2">
+                        <option value="">Selecione um time</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="modalidade">Modalidade: </label>

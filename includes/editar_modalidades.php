@@ -17,7 +17,6 @@
                 </div>
                 <div class="d-flex">
                     <button type="hidden" name="editar" class="btn enviar mt-2 mr-2 pr-4 pl-4" value="<?= $modalidade->id ?>">Editar</button>
-                    <button type="hidden" name="excluir" class="btn btn-danger mt-2 pr-4 pl-4" value="<?= $modalidade->id ?>">Excluir</button>
                 </div>
             </form>
         </div>

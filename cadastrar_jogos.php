@@ -5,11 +5,21 @@
 
     use \App\Entity\jogo;
     use \App\Entity\Mensagem;
+    use \App\Entity\Usuario;
     $obMensagem = new Mensagem;
     $obJogo = new Jogo;
 
     use \App\Entity\Modalidade;
     $obModalidade = new Modalidade;
+
+    if (isset($_SESSION['usuario'])) {
+        $usuario = Usuario::getUsuarioId($_SESSION['usuario']);
+        if ($usuario->tipo != "Organizador") {
+            $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
+        }
+    } else {
+        $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
+    }
 
     $modalidades = Modalidade::getModalidades();
 
@@ -22,6 +32,7 @@
         // }
         $modalidade = $obJogo->modalidade = $_POST['modalidade'];
         $data = $obJogo->data = $_POST["data"];
+        $status = $obJogo->status = 'Não começou';
 
         if ($nome != '' && $local != '' && $_POST['modalidade'] != '' && $data != ''){
 

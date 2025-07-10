@@ -20,7 +20,7 @@
                                             'nome' => $this->nome,
                                             'tipo' => $this->tipo,
                                             'email' => $this->email,
-                                            'senha' => $this->senha,
+                                            'senha' => $this->senha
                                         ]);
             return true;
         }
@@ -51,6 +51,11 @@
             return (new DataBase('usuario'))->select("tipo= '$tipo'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
 
+        // Metodo responsavel por retornar os usuarios com base no status nulo e tipo comum
+        public static function getUsuariosStatus(){
+            return (new DataBase('usuario'))->select("tipo = 'comum'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        }
+
          // Metodo responsavel por retornar os usuarios com base no id    
         public static function getUsuariosId($id){
             return (new DataBase('usuario'))->select("id= '$id'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
@@ -63,6 +68,14 @@
         // Metodo responsavel por retornar um id pelo seu email
         public static function getUsuarioEmail($email){
             return (new DataBase('usuario'))->select("email = '$email'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);
+        }
+
+        // Metodo responsavel por editar um usuario
+        public function editarUsuario(){
+            return (new Database('usuario'))->update('id = '.$this->id, [
+                                                'nome' => $this->nome,
+                                                'senha' => $this->senha
+            ]);
         }
 
         // Metodo responsavel por excluir um usuario

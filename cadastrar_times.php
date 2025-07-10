@@ -6,8 +6,18 @@
     use \App\Entity\time;
     use \App\Entity\Mensagem;
     use \App\Entity\Modalidade;
+    use \App\Entity\Usuario;
     $obMensagem = new Mensagem;
     $obTime = new time;
+
+    if (isset($_SESSION['usuario'])) {
+        $usuario = Usuario::getUsuarioId($_SESSION['usuario']);
+        if ($usuario->tipo != "gestor") {
+            $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
+        }
+    } else {
+        $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
+    }
 
     $modalidades = Modalidade::getModalidades();
 

@@ -10,6 +10,15 @@
     $obUsuario = new Usuario;
     $obTime = new Time;
 
+    if (isset($_SESSION['usuario'])) {
+        $usuario = Usuario::getUsuarioId($_SESSION['usuario']);
+        if ($usuario->tipo != "Organizador") {
+            $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
+        }
+    } else {
+        $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
+    }
+
     $gestores = Usuario::getGestores();
 
     if(isset($_GET['id'], $_POST['gestor'])){

@@ -13,14 +13,21 @@
                                 <th>Nome</th>
                                 <th>Regras</th>
                                 <th>Numeo máximo de atletas</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach($modalidades as $modalidade): ?>
                                 <tr class="infos">
-                                    <td><a href="editar_modalidades.php?id=<?= $modalidade->id ?>"><?= $modalidade->nome?></a></td>
-                                    <td><a href="editar_modalidades.php?id=<?= $modalidade->id ?>"><?= $modalidade->regras?></a></td>
-                                    <td><a href="editar_modalidades.php?id=<?= $modalidade->id ?>"><?= $modalidade->numero_atletas?></a></td>
+                                    <td><?= $modalidade->nome?></td>
+                                    <td><?= $modalidade->regras?></td>
+                                    <td><?= $modalidade->numero_atletas?></td>
+                                    <form action="modalidades.php" method="POST">
+                                        <td>
+                                            <button type="hidden" class="btn enviar-formulario ml-2" value="<?=$modalidade->id?>" name="editar">Editar</button>
+                                            <button type="hidden" class="btn btn-danger deletar-formulario ml-2" value="<?=$modalidade->id?>" name="excluir">Deletar</button>
+                                        </td>
+                                    </form>
                                 </tr>
                             <?php endforeach; ?> 
                         </tbody>

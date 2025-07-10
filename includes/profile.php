@@ -1,33 +1,26 @@
-<?php
-
-?>
-    <div class="login-area">
-        <div class="container">
-            <div class="login-box ptb--100">
-                <form action="login.php" method="POST">
-                    <div class="login-form-head">
-                        <h4>Acesse sua Conta</h4>
-                        <p>Bem-vindo de volta!</p>
-                    </div>
-                    <div class="login-form-body">
-                        <div class="form-gp">
-                            <label for="exampleInputEmail1">Email: </label>
-                            <input type="email" id="exampleInputEmail1" name="email">
-                            <i class="ti-email"></i>
-                        </div>
-                        <div class="form-gp">
-                            <label for="exampleInputPassword1">Senha: </label>
-                            <input type="password" id="exampleInputPassword1" name="senha">
-                            <i class="ti-lock"></i>
-                        </div>
-                        <div class="submit-btn-area">
-                            <button id="form_submit" type="submit" value="entrar">Entrar <i class="ti-arrow-right"></i></button>
-                        </div>
-                        <div class="form-footer text-center mt-5">
-                            <p class="text-muted">Você ainda não tem uma conta? <a href="register.php">Registrar-se</a></p>
-                        </div>
-                    </div>
-                </form>
-            </div>
+<div class="row justify-content-center mt-5">
+    <div class="card col-5">
+        <div class="card-body">
+            <h4 class="header-title mb-3">Seus dados pessoais</h4>
+            <form action="editar_perfil.php" method="POST">
+                <div class="form-group">
+                    <label for="nome">Nome: </label>
+                    <input type="text" class="form-control" name="nome" value="<?= $usuario->nome ?>">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email: </label>
+                    <input type="email" class="form-control" name="email" value="<?= $usuario->email ?>" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="senha">Nova senha: </label>
+                    <input type="password" class="form-control" name="senha">
+                </div>
+                <div class="form-group">
+                    <label for="confirmar_senha">Confirmar senha: </label>
+                    <input type="password" class="form-control" name="confirmar_senha">
+                </div>
+                <button type="submit" class="btn enviar mt-2 pr-4 pl-4">Editar</button>
+            </form>
         </div>
     </div>
+</div>

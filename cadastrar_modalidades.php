@@ -6,7 +6,17 @@
     use \App\Entity\Mensagem;
     $obMensagem = new Mensagem;
     use \App\Entity\Modalidade;
+    use \App\Entity\Usuario;
     $obModalidade = new Modalidade;
+
+    if (isset($_SESSION['usuario'])) {
+        $usuario = Usuario::getUsuarioId($_SESSION['usuario']);
+        if ($usuario->tipo != "Organizador") {
+            $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
+        }
+    } else {
+        $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
+    }
 
     if(isset($_POST['nome'], $_POST['regras'], $_POST['atletas'])){
 

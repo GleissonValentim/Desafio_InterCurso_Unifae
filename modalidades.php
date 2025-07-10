@@ -5,6 +5,7 @@
 
     use \App\Entity\Modalidade;
     use \App\Entity\Usuario;
+    use \App\Entity\Jogo;
     use \App\Entity\Mensagem;
     $obMensagem = new Mensagem;
     
@@ -18,6 +19,26 @@
     }
 
     $modalidades = Modalidade::getModalidades() ?? null;
+
+    $excluir = $_POST['excluir'] ?? null;
+    $editar = $_POST['editar'] ?? null;
+
+    if($excluir){
+        $id = $_POST['excluir'];
+
+        $verificaModalidade = Jogo::verificaModalidade($id);
+
+        if(count($verificaModalidade) < 1){
+            $deleteModalidade = Modalidade::deleteModalidade($id);
+            $obMensagem->getMensagem("modalidades.php", "success", "modalidade excluida com sucesso!");
+        } else {
+            $obMensagem->getMensagem("modalidades.php", "error", "Não foi possível excluir esta modalidade, pois ela está vinculada a um ou mais jogos.", "&id=$id");
+        }
+    } 
+
+    if($editar){
+        header("Location: editar_modalidades.php?id=$editar");
+    }
 
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/listar_modalidades.php';

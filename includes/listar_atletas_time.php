@@ -3,7 +3,7 @@
         <div class="card-body">
             <form action="definir_atletas.php" method="POST" class="row d-flex justify-content-between align-items-center mb-4">
                 <div class="col-auto">
-                    <h4 class="header-title"><?= $titulo ?></h4>
+                    <h4 class="header-title">Atletas do time</h4>
                 </div>
             </form>
             <div class="data-tables">
@@ -18,13 +18,13 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($atletas as $atleta): ?>
+                            <?php foreach($flatAtletas as $atleta): ?>
                                 <tr class="infos">
                                     <td><?= $atleta->nome ?></td>
                                     <td><?= $atleta->email ?></td>
                                     <td><?= $atleta->tipo ?></td>
-                                    <form action="definir_atletas.php" method="POST">
-                                        <td><button type="hidden" class="btn btn-danger deletar-formulario ml-2" value="<?= $usuario->id ?>" name="definir">Remover Atleta</button></td>
+                                    <form action="atletas.php" method="POST">
+                                        <td><button type="hidden" class="btn btn-danger deletar-formulario ml-2" value="<?= $atleta->id ?>" name="remover">Remover Atleta</button></td>
                                     </form>
                                 </tr>
                             <?php endforeach; ?> 

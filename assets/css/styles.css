@@ -172,6 +172,12 @@
     cursor: pointer;
 }
 
+select {
+    height: 45px !important;
+}
+
+/* Termina aqui  */
+
 .sidebar-menu {
     position: fixed;
     left: 0;
@@ -1764,8 +1770,7 @@ table.dbkit-table tr td {
 }
 
 .gradiant-bg .card-header a {
-    background-image: -webkit-linear-gradient(top left, #8914fe, #8160f6);
-    background-image: linear-gradient(to bottom right, #8914fe, #8160f6);
+    background-color: #39bd9c;
     color: #fff;
 }
 

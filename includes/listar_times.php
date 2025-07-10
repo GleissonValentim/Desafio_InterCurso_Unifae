@@ -18,9 +18,9 @@
                         <tbody>
                             <?php foreach($times as $time): ?>
                                 <tr class="infos">
-                                    <td><a href="editar_modalidades.php?id=<?= $time->id ?>"><?= $time->nome?></a></td>
+                                    <td><?= $time->nome?></a></td>
                                     <td><?= $cont?></td>
-                                    <td><a href="editar_modalidades.php?id=<?= $time->id ?>"><?= $modalidade->nome ?></a></td>
+                                    <td><?= $modalidade->nome ?></a></td>
                                 </tr>
                             <?php endforeach; ?> 
                         </tbody>

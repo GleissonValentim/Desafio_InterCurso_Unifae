@@ -56,7 +56,7 @@
     <div id="preloader">
         <div class="loader"></div>
     </div>
-    <div class="page-container">
+    <!-- <div class="page-container"> -->
         <div class="main-content">
             <div class="header-area">
                 <div class="row align-items-center d-flex justify-content-between">
@@ -76,9 +76,32 @@
                                 <a href="definir_atletas.php" class="mr-3">Definir atletas</a>
                                 <a href="atletas.php" class="mr-3">Atletas do time</a>
                                 <a href="times.php" class="mr-3">Meu time</a>
+                            <?php elseif($usuario->tipo == "comum"): ?>
+                                <!-- profile info & task notification -->
+                                <!-- <ul class="notification-area pull-left mr-4">
+                                    <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
+                                    <li class="dropdown">
+                                        <i class="ti-bell dropdown-toggle" data-toggle="dropdown">
+                                            <span>2</span>
+                                        </i>
+                                        <div class="dropdown-menu bell-notify-box notify-box">
+                                            <span class="notify-title">You have 3 new notifications <a href="#">view all</a></span>
+                                            <div class="nofity-list">
+                                                <a href="#" class="notify-item">
+                                                    <div class="notify-thumb"><i class="ti-key btn-danger"></i></div>
+                                                    <div class="notify-text">
+                                                        <p>You have Changed Your Password</p>
+                                                        <span>Just Now</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul> -->
+                                <a href="notificações.php" class="mr-3">Notificações</a>
                             <?php endif; ?>
 
-                            <a href="profile.php" class="user mr-3"><?= $usuario->nome ?></a>
+                            <a href="editar_perfil.php" class="user mr-3"><?= $usuario->nome ?></a>
                             <a href="logout.php">Sair</a>
                         </div>
                     <?php endif; ?>
@@ -98,6 +121,7 @@
                     <div class="col-sm-6 clearfix p-5"></div>
                 </div>
             </div>
-        <div class="container">
-            <?= $menssagem ?>
-        </div>
+            <div class="container">
+                <?= $menssagem ?>
+            </div>
+

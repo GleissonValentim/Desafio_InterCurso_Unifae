@@ -1,4 +1,12 @@
-<!-- offset area end -->
+        </div>
+    </div>
+    <footer>
+        <div class="footer-area">
+            <p>© 2025 UNIFAE. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+       
+    <!-- offset area end -->
     <!-- jquery latest version -->
     <script src="assets/js/vendor/jquery-2.2.4.min.js"></script>
     <!-- bootstrap 4 js -->
@@ -28,3 +36,6 @@
     <script src="assets/js/scripts.js"></script>
 </body>
 </html>
+
+            
+       

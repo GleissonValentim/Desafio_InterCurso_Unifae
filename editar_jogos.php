@@ -6,13 +6,31 @@
     use \App\Entity\jogo;
     use \App\Entity\Modalidade;
     use \App\Entity\Mensagem;
+    use \App\Entity\Usuario;
     $obMensagem = new Mensagem;
     $obJogo = new Jogo;
+
+    if (isset($_SESSION['usuario'])) {
+        $usuario = Usuario::getUsuarioId($_SESSION['usuario']);
+        if ($usuario->tipo != "Organizador") {
+            $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
+        }
+
+    } else {
+        $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
+    }
 
     if(isset($_GET['id'])){
         $id = $_GET['id'];
         $jogo = Jogo::getJogo($id);
+
+        if($jogo->status == 'concluido'){
+            $obMensagem->getMensagem("jogos.php", "error", "Voçe não tem acesso a essa página");
+        }   
+
         $verificarModalidade = Modalidade::getModalidade($jogo->id_modalidade);
+    } else {
+        $obMensagem->getMensagem("jogos.php", "error", "Voçe não tem acesso a essa página");
     }
 
     $editar = $_POST['editar'] ?? null;
@@ -23,13 +41,14 @@
     if($editar){
         $idEditar = $_POST['editar'];
 
-        if(isset($_POST['nome'], $_POST['local'], $_POST['modalidade'], $_POST['data'])){
+        if(isset($_POST['nome'], $_POST['local'], $_POST['modalidade'], $_POST['data'], $_POST['status'])){
 
             $id = $obJogo->id = $idEditar;
             $nome = $obJogo->nome = $_POST["nome"];
             $local = $obJogo->local = $_POST["local"];
             $modalidade = $obJogo->modalidade = $_POST['modalidade'];
             $data = $obJogo->data = $_POST["data"];
+            $status = $obJogo->status = $_POST["status"];
 
             if ($nome != '' && $local != '' && $_POST['modalidade'] && $data != ''){
 
@@ -53,18 +72,6 @@
             } else {
                 $obMensagem->getMensagem("editar_jogos.php", "error", "Por favor, preencha todos os campos!", "&id=$id");
             }
-        }
-    } 
-
-    if($excluir){
-        $id = $_POST['excluir'];
-
-        $deleteJogo = Jogo::deleteJogo($id);
-
-        if($deleteJogo){
-            $obMensagem->getMensagem("jogos.php", "success", "jogo excluido com sucesso!");
-        } else {
-            $obMensagem->getMensagem("editar_jogos.php", "error", "Falha ao excluir o jogo. Por favor, tente novamente.", "&id=$id");
         }
     } 
 

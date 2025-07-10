@@ -27,7 +27,10 @@
         } else if($_POST['usuarios'] == 'comum'){
             $usuarios = Usuario::getUsuarios("comum");
             $titulo = "Usuarios comuns";
-        } 
+        } else {
+            $usuarios = Usuario::getUsuarios("gestor");
+            $titulo = "Gestores";
+        }
     } else {
         $usuarios = Usuario::getUsuarios("gestor");
         $titulo = "Gestores";
