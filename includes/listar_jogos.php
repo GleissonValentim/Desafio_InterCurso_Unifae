@@ -1,19 +1,20 @@
 <div class="mt-5 row justify-content-center tabela">
-    <div class="card col-10">
+    <div class="card col-11">
         <div class="card-body">
             <div class="row d-flex justify-content-between align-items-center mb-4">
                 <h4 class="header-title">Jogos</h4>
-                <a href="cadastrar_jogos.php"><button class="btn enviar pr-4 pl-4">Cadastrar Jogo</button></a>
+                <a href="cadastrar_jogos.php"><button class="btn enviar pr-4 pl-4">Sortear Jogos</button></a>
             </div>
             <div class="data-tables">
                 <?php if(!empty($jogos)): ?>
-                    <table id="dataTable" class="text-center">
+                    <table id="dataTable" class="text-center jogos">
                         <thead class="bg-light text-capitalize">
                             <tr>
                                 <th>Nome</th>
                                 <th>Local</th>
                                 <th>Modalidade</th>
                                 <th>Data</th>
+                                <th>Horário</th>
                                 <th>Time-1</th>
                                 <th>Time-2</th>
                                 <th>Vencedor</th>
@@ -22,15 +23,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($jogos as $jogo ): ?>
+                            <?php foreach($jogos as $jogo): ?>
                                 <tr class="infos">
                                     <td><?= $jogo->nome ?></td>
                                     <td><?= $jogo->local ?></td>
                                     <td><?= $modalidades[$jogo->id]->nome ?></td>
                                     <td><?= $jogo->data ?></td>
-                                    <td><?= $jogo->time_1 ?></td>
-                                    <td><?= $jogo->time_2 ?></td>
-                                    <td>Não tem</a></td>
+                                    <td><?= $jogo->horario ?></td>
+                                    <td><?= $times1[$jogo->id]->nome ?></td>
+                                    <td><?= $times2[$jogo->id]->nome ?></td>
+                                    <?php if(empty($vencedor[$jogo->id])): ?>
+                                        <td>Não tem</td>
+                                    <?php else: ?>
+                                        <td><?= $vencedor[$jogo->id]->nome ?></a></td>
+                                    <?php endif; ?>
                                     <td><?= $jogo->status ?></td>
                                     <form action="jogos.php" method="POST">
                                         <td>

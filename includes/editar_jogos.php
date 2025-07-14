@@ -20,10 +20,15 @@
                     <input type="date" class="form-control" name="data" min="2025-07-01" value="<?=$jogo->data?>">
                 </div>
                 <div class="form-group">
+                    <label for="horario">Horario: </label>
+                    <input type="time" class="form-control" name="horario" placeholder="Digite o horário do jogo" value="<?=$jogo->horario?>">
+                </div>
+                <div class="form-group">
                     <label for="vencedor">Vencedor: </label>
                     <select class="form-control" name="vencedor">
-                        <option value="Em andamento">Em andamento</option>
-                        <option value="concluido">Concluido</option>
+                        <option value="">Selecione</option>
+                        <option value="<?= $jogo->time1 ?>"><?= $time1->nome ?></option>
+                        <option value="<?= $jogo->time2 ?>"><?= $time2->nome ?></option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -36,18 +41,6 @@
                         <?php endif; ?>
                         <option value="Em andamento">Em andamento</option>
                         <option value="concluido">Concluido</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="time_1">Time-1: </label>
-                    <select class="form-control" name="time_1">
-                        <option value="">Selecione um time</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="time_2">Time-2: </label>
-                    <select class="form-control" name="time_2">
-                        <option value="">Selecione um time</option>
                     </select>
                 </div>
                 <div class="form-group">

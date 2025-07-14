@@ -13,6 +13,7 @@
                                 <th>Local</th>
                                 <th>Modalidade</th>
                                 <th>Data</th>
+                                <th>Horário</th>
                                 <th>Time-1</th>
                                 <th>Time-2</th>
                                 <th>Vencedor</th>
@@ -26,10 +27,15 @@
                                     <td><?= $jogo->local ?></td>
                                     <td><?= $modalidades[$jogo->id]->nome ?></td>
                                     <td><?= $jogo->data ?></td>
-                                    <td><?= $jogo->time_1 ?></td>
-                                    <td><?= $jogo->time_2 ?></td>
-                                    <td>Não tem</td>
-                                    <td>Jogo ainda não começou</td>
+                                    <td><?= $jogo->horario ?></td>
+                                    <td><?= $times1[$jogo->id]->nome ?></td>
+                                    <td><?= $times2[$jogo->id]->nome ?></td>
+                                    <?php if(empty($vencedor[$jogo->id])): ?>
+                                        <td>Não tem</td>
+                                    <?php else: ?>
+                                        <td><?= $vencedor[$jogo->id]->nome ?></a></td>
+                                    <?php endif; ?>
+                                    <td><?= $jogo->status ?></td>
                                 </tr>
                             <?php endforeach; ?> 
                         </tbody>
@@ -41,6 +47,7 @@
         </div>
     </div>
 </div>
+
 
             
 

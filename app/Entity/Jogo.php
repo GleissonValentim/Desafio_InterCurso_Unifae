@@ -16,6 +16,7 @@
         public $time_2;
         public $vencedor;
         public $status;
+        public $horario;
 
         public function cadastrar(){
 
@@ -25,7 +26,11 @@
                                             'local' => $this->local,
                                             'id_modalidade' => $this->modalidade,
                                             'data' => $this->data,
-                                            'status' => $this->status
+                                            'time1' => $this->time_1,
+                                            'time2' => $this->time_2,
+                                            'status' => $this->status,
+                                            'horario' => $this->horario,
+                                            'vencedor' => $this->vencedor
                                         ]);
             return true;
         }
@@ -40,6 +45,16 @@
             return (new DataBase('Jogo'))->select(null, null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
 
+        // Metodo responsavel por retornar todos os jogos que nao sejam nulos
+        public static function getJogosFinal(){
+            return (new DataBase('Jogo'))->select("nome is not null", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        }
+
+        // Metodo responsavel por retornar todos os em que há vencedores
+        public static function getJogosVencedor($id){
+            return (new DataBase('Jogo'))->select("vencedor is not null and id_modalidade = '$id'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        }
+
         // Metodo responsavel por retornar um jogo pelo id
         public static function getJogo($id){
             return (new DataBase('Jogo'))->select("id = '$id'", null, null, '*')->fetchObject(self::class);
@@ -48,6 +63,11 @@
         // Metodo responsavel por excluir um jogo com base na modalidade
         public static function verificaModalidade($id){
             return (new DataBase('Jogo'))->select("id_modalidade = '$id'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);
+        } 
+
+        // Metodo responsavel por retornar um jogo com base na modalidade
+        public static function verificaModalidadeNome($id){
+            return (new DataBase('Jogo'))->select("id_modalidade = '$id'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         } 
 
         // Metodo responsavel por excluir um jogo
@@ -62,7 +82,9 @@
                                                 'local' => $this->local,
                                                 'id_modalidade' => $this->modalidade,
                                                 'data' => $this->data,
-                                                'status' => $this->status
+                                                'status' => $this->status,
+                                                'horario' => $this->horario,
+                                                'vencedor' => $this->vencedor
             ]);
         }
     }

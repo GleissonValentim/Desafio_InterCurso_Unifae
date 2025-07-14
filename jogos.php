@@ -5,6 +5,7 @@
 
     use \App\Entity\jogo;
     use \App\Entity\Modalidade;
+    use \App\Entity\Time;
     use \App\Entity\Mensagem;
     use \App\Entity\Usuario;
     $obMensagem = new Mensagem;
@@ -19,6 +20,15 @@
     }
 
     $jogos = Jogo::getJogos() ?? null;
+
+    $times1 = [];
+    $times2 = [];
+    $vencedor = [];
+    foreach($jogos as $jogo){
+        $times1[$jogo->id] = Time::getIdTime($jogo->time1);
+        $times2[$jogo->id] = Time::getIdTime($jogo->time2);
+        $vencedor[$jogo->id] = Time::getIdTime($jogo->vencedor);
+    }
 
     $modalidades = [];
     foreach($jogos as $jogo ){

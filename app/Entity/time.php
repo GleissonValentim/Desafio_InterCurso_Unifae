@@ -33,9 +33,24 @@
             return (new DataBase('Time'))->select("id_gestor = '$id'", null, null, '*')->fetchObject(self::class);
         }
 
-        // Metodo responsavel por retornar um time pelo id do time
+        // Metodo responsavel por retornar todos os times pelo id do time
         public static function getTime($id){
             return (new DataBase('Time'))->select("id = '$id'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        }
+
+        // Metodo responsavel por retornar um time pelo id
+        public static function getIdTime($id){
+            return (new DataBase('Time'))->select("id = '$id'", null, null, '*')->fetchObject(self::class);
+        }
+
+        // Metodo responsavel por retornar um time pelo id da modalidade
+        public static function getModalidade($id){
+            return (new DataBase('Time'))->select("id_modalidade = '$id'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        }
+
+        // Metodo responsavel por retornar um os times vencedores
+        public static function getVencedores($id){
+            return (new DataBase('Time'))->select("id_modalidade = '$id' and id in (select vencedor from jogo where vencedor is not null)", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
 
         // Metodo responsavel por retornar todos os times pelo nome e modalidade
