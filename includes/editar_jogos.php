@@ -5,11 +5,11 @@
             <form action="editar_jogos.php?" method="POST">
                 <div class="form-group">
                     <label for="nome">Nome: </label>
-                    <input type="text" class="form-control" name="nome" value="<?=$jogo->nome?>">
+                    <input type="text" class="form-control" name="nome" value="<?=$jogo->nome?>" placeholder="Digite o nome do jogo">
                 </div>
                 <div class="form-group">
                     <label for="local">Local: </label>
-                    <input type="text" class="form-control" name="local" value="<?=$jogo->local?>">
+                    <input type="text" class="form-control" name="local" value="<?=$jogo->local?>" placeholder="Digite o local do jogo">
                 </div>
                 <!-- <div class="form-group">
                     <label for="data">Modalidade: </label>

@@ -17,6 +17,7 @@
         public $vencedor;
         public $status;
         public $horario;
+        public $etapa;
 
         public function cadastrar(){
 
@@ -30,7 +31,8 @@
                                             'time2' => $this->time_2,
                                             'status' => $this->status,
                                             'horario' => $this->horario,
-                                            'vencedor' => $this->vencedor
+                                            'vencedor' => $this->vencedor,
+                                            'etapa' => $this->etapa
                                         ]);
             return true;
         }
@@ -65,6 +67,11 @@
             return (new DataBase('Jogo'))->select("id_modalidade = '$id'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);
         } 
 
+        // Metodo responsavel por retornar jogos pela modalidade e a etapa
+        public static function verificaModalidadeEtapa($id, $etapa){
+            return (new DataBase('Jogo'))->select("id_modalidade = '$id' and etapa = '$etapa'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);
+        } 
+
         // Metodo responsavel por retornar um jogo com base na modalidade
         public static function verificaModalidadeNome($id){
             return (new DataBase('Jogo'))->select("id_modalidade = '$id'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
@@ -73,6 +80,14 @@
         // Metodo responsavel por excluir um jogo
         public static function deleteJogo($id){
             return (new DataBase('Jogo'))->delete("id = '$id'");
+        }
+
+        // Metodo responsavel por editar os times de um jogo
+        public function editarJogoTime($etapa){
+            return (new Database('Jogo'))->update("id = ".$this->id." and etapa = '{$etapa}'", [
+                                                'time1' => $this->time_1,
+                                                'time2' => $this->time_2,
+            ]);
         }
 
         // Metodo responsavel por editar um jogo

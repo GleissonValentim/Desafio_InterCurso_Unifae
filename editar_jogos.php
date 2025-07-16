@@ -21,6 +21,7 @@
         $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
     }
 
+    $id = $_GET['id'];
     if(isset($_GET['id'])){
         $id = $_GET['id'];
         $jogo = Jogo::getJogo($id);
@@ -39,7 +40,7 @@
     $editar = $_POST['editar'] ?? null;
 
     $modalidades = Modalidade::getModalidades();
-
+                        
     if($editar){
         $idEditar = $_POST['editar'];
 
@@ -71,11 +72,85 @@
                         break;
                     }
                 }
-
-                if ($verificar == false){
+                
+                if ($verificar == false){ 
                     if (!$nomeDuplicado) {
                         $obJogo->editarJogo();
-                        $obMensagem->getMensagem("jogos.php", "success", "jogo editado com sucesso!");
+
+                        // Sorteio
+                        $timesVencedores = Jogo::getJogosVencedor($modalidade);
+                        $classificacao = Jogo::verificaModalidadeEtapa($modalidade, 'Classificatória');
+                        $semifinal = Jogo::verificaModalidadeEtapa($modalidade, 'Semifinal');
+                        $final = Jogo::verificaModalidadeEtapa($modalidade, 'Final');
+
+                        $etapafinal = false;
+                        $etapaSemifinal = false;
+
+                        if(count($timesVencedores) == count($classificacao)){
+                            $etapaSemifinal = true;
+                        }
+
+                        $soma = count($classificacao) + count($semifinal);
+                        
+                        if(count($timesVencedores) == $soma){
+                            $etapafinal = true;
+                        }
+
+                        if($etapaSemifinal == true || $etapafinal == true){
+                            $contTimes = 0;
+                            $times = null;
+
+                            $repetidos = [];
+                            if($etapaSemifinal){
+                                $times = Time::getVencedores($modalidade);
+                                $contTimes = count($times);
+                            } else if($etapafinal){
+                                $times = Time::getVencedoresEtapa($modalidade, 'Semifinal');
+                                $contTimes = count($times);
+                            }
+
+                            $contTimes = $contTimes / 2;
+                            $indice = 0;
+                            for($i = 0; $i < $contTimes; $i++){
+                            
+                                $timesSorteados = array_rand($times, 2);
+
+                                $id1 = $times[$timesSorteados[0]]->id;
+                                $id2 = $times[$timesSorteados[1]]->id;
+
+                                $repetido = false;
+                                foreach($repetidos as $timeRepetido){
+                                    if($timeRepetido == $id1 || $timeRepetido == $id2){
+                                        $repetido = true;
+                                        $contTimes = $contTimes + 1;
+                                        break;
+                                    } 
+                                }
+
+                                if($repetido == false){
+                                    if($etapaSemifinal){
+                                        $obJogo->id = $semifinal[$indice]->id;
+                                    } else {
+                                        $obJogo->id = $final[$indice]->id;
+                                    }
+                                    $obJogo->modalidade = 1;
+                                    $time1 = $obJogo->time_1 = $id1;
+                                    $time2 = $obJogo->time_2 = $id2;
+
+                                    if($etapaSemifinal){
+                                        $obJogo->editarJogoTime('Semifinal');
+                                    } else {
+                                        $obJogo->editarJogoTime('Final');
+                                    }
+
+                                    $repetidos[] = $id1;
+                                    $repetidos[] = $id2;
+                                    $indice++;
+                                }
+                            }
+                        }
+
+                        $obMensagem->getMensagem("jogos.php", "success", "jogo editado com sucesso!$ei");
                     } else {
                         $obMensagem->getMensagem("editar_jogos.php", "error", "Esse jogo já foi cadastrado. Por favor, tente novamente.", "&id=$id");
                     }

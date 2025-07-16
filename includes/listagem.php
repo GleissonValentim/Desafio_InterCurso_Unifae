@@ -17,6 +17,7 @@
                                 <th>Time-1</th>
                                 <th>Time-2</th>
                                 <th>Vencedor</th>
+                                <th>Etapa</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -28,13 +29,19 @@
                                     <td><?= $modalidades[$jogo->id]->nome ?></td>
                                     <td><?= $jogo->data ?></td>
                                     <td><?= $jogo->horario ?></td>
-                                    <td><?= $times1[$jogo->id]->nome ?></td>
-                                    <td><?= $times2[$jogo->id]->nome ?></td>
+                                    <?php if($jogo->time1 != null && $jogo->time2 != null): ?>
+                                        <td><?= $times1[$jogo->id]->nome ?></td>
+                                        <td><?= $times2[$jogo->id]->nome ?></td>
+                                    <?php else: ?>
+                                        <td></td>
+                                        <td></td>
+                                    <?php endif; ?>
                                     <?php if(empty($vencedor[$jogo->id])): ?>
                                         <td>Não tem</td>
                                     <?php else: ?>
                                         <td><?= $vencedor[$jogo->id]->nome ?></a></td>
                                     <?php endif; ?>
+                                    <td><?= $jogo->etapa ?></td>
                                     <td><?= $jogo->status ?></td>
                                 </tr>
                             <?php endforeach; ?> 

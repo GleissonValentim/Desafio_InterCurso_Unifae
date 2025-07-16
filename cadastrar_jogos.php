@@ -49,11 +49,11 @@
             }
         }
 
-        $contTimes = $contTimes / 2;
+        $contPartidas = $contTimes;
 
-        $cont = 0;
         if($contTimes > 1){
-            while($cont < $contTimes){
+            $contTimes = $contTimes / 2;
+            for($i = 0; $i < $contTimes; $i++){
                 $timesSorteados = array_rand($times, 2);
 
                 $id1 = $times[$timesSorteados[0]]->id;
@@ -62,8 +62,8 @@
                 $repetido = false;
                 foreach($repetidos as $timeRepetido){
                     if($timeRepetido == $id1 || $timeRepetido == $id2){
-                        echo $id2;
                         $repetido = true;
+                        $contTimes = $contTimes + 1;
                         break;
                     } 
                 }
@@ -72,6 +72,8 @@
                     $modalidade = $obJogo->modalidade = $modalidadeNome->id;
                     $time1 = $obJogo->time_1 = $id1;
                     $time2 = $obJogo->time_2 = $id2;
+                    $status = $obJogo->status = "Não começou";
+                    $status = $obJogo->etapa = "Classificatória";
 
                     $cadastrar = $obJogo->cadastrar();
 
@@ -83,13 +85,34 @@
 
                     $repetidos[] = $id1;
                     $repetidos[] = $id2;
-
-                    $cont ++;
                 }
-            }
+            } 
         } else {
             $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não é possivel sortear mais jogos.");
         }   
+
+        $rodadas = log($contPartidas, 2);
+        if($rodadas > 1){
+            for($i = 0; $i < $rodadas; $i++){
+                $status = $obJogo->status = "Não começou";
+                $time1 = $obJogo->time_1 = null;
+                $time2 = $obJogo->time_2 = null;
+
+                if($i == $rodadas - 1){
+                    $etapa = $obJogo->etapa = "Final";
+                } else {
+                    $etapa = $obJogo->etapa = "Semifinal";
+                }
+
+                $cadastrar = $obJogo->cadastrar();
+
+                if($cadastrar){
+                    $obMensagem->getMensagem("jogos.php", "success", "Jogos sorteados com sucesso!");
+                } else {
+                    $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não há mais jogos para sortear.");
+                }
+            } 
+        }
     }
 
     include __DIR__.'/includes/header.php';
