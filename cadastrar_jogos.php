@@ -24,6 +24,10 @@
 
     $modalidades = Modalidade::getModalidades();
 
+    // $timeImpar = Time::getTimeImpar(1, 'Classificatória');
+
+    // echo $timeImpar;
+
     if (isset($_POST['modalidade'])){
         $repetidos = [];
 
@@ -52,7 +56,8 @@
         $contPartidas = $contTimes;
 
         if($contTimes > 1){
-            $contTimes = $contTimes / 2;
+            $contTimes = floor($contTimes / 2);
+
             for($i = 0; $i < $contTimes; $i++){
                 $timesSorteados = array_rand($times, 2);
 
@@ -91,19 +96,23 @@
             $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não é possivel sortear mais jogos.");
         }   
 
-        $rodadas = log($contPartidas, 2);
+        $rodadas = ceil(log($contPartidas, 2));
         if($rodadas > 1){
             for($i = 0; $i < $rodadas; $i++){
                 $status = $obJogo->status = "Não começou";
                 $time1 = $obJogo->time_1 = null;
                 $time2 = $obJogo->time_2 = null;
 
-                if($i == $rodadas - 1){
+                $timeImpar = Time::getTimeImpar($modalidadeNome->id, 'Classificatória');
+
+                if($i == 0 && $timeImpar){
+                    $etapa = $obJogo->etapa = "Classificatória Extra";
+                }else if ($i == $rodadas - 1){
                     $etapa = $obJogo->etapa = "Final";
                 } else {
                     $etapa = $obJogo->etapa = "Semifinal";
                 }
-
+                
                 $cadastrar = $obJogo->cadastrar();
 
                 if($cadastrar){
