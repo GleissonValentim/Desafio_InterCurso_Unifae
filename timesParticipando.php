@@ -13,7 +13,7 @@
 
     if (isset($_SESSION['usuario'])) {
         $usuario = Usuario::getUsuarioId($_SESSION['usuario']);
-        if ($usuario->tipo != "gestor") {
+        if ($usuario->tipo != "comum" && $usuario->tipo != "atleta") {
             $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
         }
     } else {
@@ -21,37 +21,29 @@
     }
 
     $id = $_SESSION['usuario'];
-    $times = Time::getTimesId($id);
 
+    $todosTimes = Usuario_and_time::getTimes($id, 1);
+
+    $times = [];
+    foreach($todosTimes as $time){
+        $times = Time::getTime($time->id_time); 
+    }
+
+    $gestores = [];
     $cont = [];
     foreach($times as $time){
+        $gestores = Usuario::getUsuariosId($time->id_gestor);
+
         $numeroAtletas = Usuario_and_time::getAtletasStatus($time->id, '1');
         $cont = count($numeroAtletas);
     }
 
-    $meuTime = Time::getTimeId($_SESSION['usuario']);
-    $modalidade = Modalidade::getModalidade($meuTime ->id_modalidade) ?? null;
+    $modalidades = [];
+    foreach($times as $time){
+        $modalidades[$time->id] = Modalidade::getModalidade($time->id_modalidade);
+    }
 
-    // if(is_array($times)){
-    //     $time = Time::getTimeId($_SESSION['usuario']);
-    
-    //     if ($time && is_object($time)) {
-    //         $modalidade = Modalidade::getModalidade($time->id_modalidade) ?? null;
-
-         
-
-    //         $cont = 0;
-    //         if(is_object($numeroAtletas) && $numeroAtletas){
-    //             foreach($numeroAtletas as $numeroAtleta){
-    //                 $cont ++;
-    //             }
-    //         }
-    //     } else {
-    //         $modalidade = null;
-    //     }
-    // }
-    
     include __DIR__.'/includes/header.php';
-    include __DIR__.'/includes/listar_times.php';
+    include __DIR__.'/includes/timesParticipando.php';
     include __DIR__.'/includes/footer.php';
 ?>

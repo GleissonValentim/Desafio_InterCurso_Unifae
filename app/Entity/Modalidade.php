@@ -33,6 +33,11 @@
             return (new DataBase('Modalidade'))->select("nome = '$nome'", null, null, 'id')->fetchObject(self::class);
         }
 
+        // Metodo responsavel por retornar uma modalidade pelo seu nome
+        public static function getModalidadesId($nome){
+            return (new DataBase('Modalidade'))->select("nome = '$nome'", null, null, 'id')->fetchObject(self::class);
+        }
+
         // Metodo responsavel por retornar uma modalidade pelo id
         public static function getModalidade($id){
             return (new DataBase('Modalidade'))->select("id = '$id'", null, null, '*')->fetchObject(self::class);

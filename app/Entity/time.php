@@ -65,6 +65,10 @@
             return (new DataBase('Time'))->select("id_modalidade = '$id' and id not in (select time1 from jogo where etapa = '$etapa') and id not in (select time2 from jogo where etapa = '$etapa')", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
 
+        public static function getPerdedor($id, $etapa){
+            return (new DataBase('Time'))->select("id_modalidade = '$id' and id in (select time1 from jogo where etapa = '$etapa') or id in (select time2 from jogo where etapa = '$etapa') and id not in (select vencedor from jogo where etapa = '$etapa')", null, null, '*')->fetchObject(self::class);
+        } 
+
         // Metodo responsavel por retornar todos os times pelo nome e modalidade
         public static function getTimeNome($nome, $modalidade){
             return (new DataBase('Time'))->select("nome = '$nome' and id_modalidade = '$modalidade'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);

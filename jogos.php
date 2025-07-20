@@ -19,7 +19,11 @@
         $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
     }
 
-    $jogos = Jogo::getJogos() ?? null;
+    $modalidade = $_POST['modalidades'] ?? null;
+
+    $jogos = [];
+    $getModalidades = Modalidade::getModalidades();
+    $jogos = Jogo::getJogosModalidade($modalidade);
 
     $times1 = [];
     $times2 = [];

@@ -52,8 +52,8 @@
         }
 
         // Metodo responsavel por retornar os usuarios com base no status nulo e tipo comum
-        public static function getUsuariosStatus(){
-            return (new DataBase('usuario'))->select("tipo = 'comum'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        public static function getUsuariosStatus($tipo1, $tipo2){
+            return (new DataBase('usuario'))->select("tipo = '$tipo1' or tipo = '$tipo2'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
 
          // Metodo responsavel por retornar os usuarios com base no id    
@@ -63,6 +63,11 @@
 
         public static function getGestores(){
             return (new DataBase('usuario'))->select("tipo = 'gestor' and id not in (select id_gestor from time)", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        }
+
+        // Metodo responsavel por retornar todos os getores
+        public static function getUsuarioGestor($id){
+            return (new DataBase('usuario'))->select("id in (select id_gestor from time where id_gestor = '$id')", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
 
         // Metodo responsavel por retornar um id pelo seu email

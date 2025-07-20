@@ -76,7 +76,7 @@
                                 <a href="definir_atletas.php" class="mr-3">Definir atletas</a>
                                 <a href="atletas.php" class="mr-3">Atletas do time</a>
                                 <a href="times.php" class="mr-3">Meu time</a>
-                            <?php elseif($usuario->tipo == "comum"): ?>
+                            <?php elseif($usuario->tipo == "comum" || $usuario->tipo == "atleta"): ?>
                                 <!-- profile info & task notification -->
                                 <!-- <ul class="notification-area pull-left mr-4">
                                     <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
@@ -99,6 +99,7 @@
                                     </li>
                                 </ul> -->
                                 <a href="notificações.php" class="mr-3">Notificações</a>
+                                <a href="timesParticipando.php" class="mr-3">Times</a>
                             <?php endif; ?>
 
                             <a href="editar_perfil.php" class="user mr-3"><?= $usuario->nome ?></a>

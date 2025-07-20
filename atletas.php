@@ -24,7 +24,7 @@
     $time = Time::getTimeId($_SESSION['usuario']);
 
     if (is_object($time)) {
-        $atletasTime = Usuario_and_time::getAtletasTime($time->id);
+        $atletasTime = Usuario_and_time::getAtletasStatus($time->id, 1);
 
         $atletas = [];
         foreach($atletasTime as $atletaTime){
@@ -43,7 +43,12 @@
         $id = $_POST['remover'];
         $excluir = Usuario_and_time::excluirAtleta($id);
 
-        if($excluir){
+        $idUsuario = $obUsuario->id = $id;
+        $tipo = $obUsuario->tipo = 'comum';
+
+        $editarTipo = $obUsuario->deleteGestor();
+
+        if($excluir || $editarTipo){
             $obMensagem->getMensagem("atletas.php", "success", "Atleta removido com sucesso.");
         } else {
             $obMensagem->getMensagem("atletas.php", "error", "Erro ao remover o atleta.");

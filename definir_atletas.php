@@ -22,8 +22,14 @@
         $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
     }
 
-    $usuarios = Usuario::getUsuariosStatus();
+    $usuarios = Usuario::getUsuariosStatus('comum', 'atleta');
     $titulo = "Usuarios comuns";
+
+    $totalAtletas = Modalidade::getModalidade(1); 
+    $atletasAtual = Usuario_and_time::getUsuarios(9);
+
+    // echo $totalAtletas->numero_atletas;
+    // echo count($atletasAtual);
 
     if(isset($_POST['definir'])){
         $id = $Usuario_and_time->atleta = $_POST['definir'];
@@ -37,22 +43,27 @@
             $id_time = $Usuario_and_time->time = $idTime->id;
             $status = $Usuario_and_time->status = 0;
 
-            $totalAtletas = Modalidade::getModalidade($idTime->id); 
-            $atletasAtual = Usuario_and_time::getAtletasTime($idTime->id);
+            $totalAtletas = Modalidade::getModalidade($idTime->id_modalidade); 
+            $atletasAtual = Usuario_and_time::getUsuarios($idTime->id);
             
-            if(count($atletasAtual) <= $totalAtletas){
-                $novoMembro = $Usuario_and_time->cadastrar();
+            if(count($atletasAtual) <= $totalAtletas->numero_atletas){
+                $verificar = Usuario_and_time::verificarTime($id_jogador, $id_time);
+                if(!$verificar){
+                    $novoMembro = $Usuario_and_time->cadastrar();
 
-                if($novoMembro){
-                    $novoStatus = $Usuario_and_time->alterarStatus();
+                    if($novoMembro){
+                        $novoStatus = $Usuario_and_time->alterarStatus();
 
-                    if($novoStatus){
-                        $obMensagem->getMensagem("definir_atletas.php", "success", "Solicitação enviada! O usuário precisa confirmar sua participação no time.");
+                        if($novoStatus){
+                            $obMensagem->getMensagem("definir_atletas.php", "success", "Solicitação enviada! O usuário precisa confirmar sua participação no time.");
+                        } else {
+                            $obMensagem->getMensagem("definir_atletas.php", "error", "Erro ao convidar o usuário!");
+                        }
                     } else {
                         $obMensagem->getMensagem("definir_atletas.php", "error", "Erro ao convidar o usuário!");
                     }
                 } else {
-                    $obMensagem->getMensagem("definir_atletas.php", "error", "Erro ao convidar o usuário!");
+                    $obMensagem->getMensagem("definir_atletas.php", "error", "Esse usuário já é membro da sua equipe ou já foi convidado!");
                 }
             } else {
                 $obMensagem->getMensagem("definir_atletas.php", "error", "A modalidade $totalAtletas->nome possui um limite máximo de $totalAtletas->numero_atletas atletas.");

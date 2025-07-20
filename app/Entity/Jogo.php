@@ -47,6 +47,11 @@
             return (new DataBase('Jogo'))->select(null, null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
 
+        // Metodo responsavel por retornar todos os jogos pela modalidade
+        public static function getJogosModalidade($modalidade){
+            return (new DataBase('Jogo'))->select("id_modalidade = '$modalidade'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        }
+
         // Metodo responsavel por retornar todos os jogos que nao sejam nulos
         public static function getJogosFinal(){
             return (new DataBase('Jogo'))->select("nome is not null", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
@@ -76,7 +81,6 @@
         public static function getEtapa($id, $etapa){
             return (new DataBase('Jogo'))->select("id_modalidade = '$id' and etapa = '$etapa'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         } 
-
 
         // Metodo responsavel por retornar um jogo com base na modalidade
         public static function verificaModalidadeNome($id){
