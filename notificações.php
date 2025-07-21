@@ -31,7 +31,8 @@
     }
 
     if(isset($_POST['recusar'])){
-        $excluir = Usuario_and_time::excluirAtleta($id);
+        $idTime = $_POST['recusar'];
+        $excluir = Usuario_and_time::excluirAtleta($id, $idTime);
 
         if($excluir){
             $obMensagem->getMensagem("notificações.php", "success", "Convite recusado com sucesso.");

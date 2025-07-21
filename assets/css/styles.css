@@ -157,6 +157,10 @@
    color: white; 
 }
 
+.tabela {
+    padding-bottom: 50px;
+}
+
 .tabela th, td {
     width: 550px;
     height: 50px;

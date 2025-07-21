@@ -9,6 +9,7 @@
     use \App\Entity\Mensagem;
     use \App\Entity\Usuario;
     $obMensagem = new Mensagem;
+    $obJogo = new Jogo;
 
     if (isset($_SESSION['usuario'])) {
         $usuario = Usuario::getUsuarioId($_SESSION['usuario']);
@@ -22,8 +23,10 @@
     $modalidade = $_POST['modalidades'] ?? null;
 
     $jogos = [];
-    $getModalidades = Modalidade::getModalidades();
-    $jogos = Jogo::getJogosModalidade($modalidade);
+    // $getModalidades = Modalidade::getModalidades();
+    // $jogos = Jogo::getJogosModalidade($modalidade);
+
+    $jogos = Jogo::getJogos();
 
     $times1 = [];
     $times2 = [];
@@ -57,6 +60,31 @@
     if($editar){
         $obMensagem->getMensagem("editar_jogos.php", "warning", "Atenção: após definir o status do jogo como 'Concluído', não será mais possível editá-lo.", "&id=$editar");
     }
+
+    // $jogosAtual = Jogo::getEtapa(1, 'Semifinal');
+    // $proximosJogos = Jogo::verificaDiferencaEtapa(1, 'Classificatória', 'Semifinal', null);
+
+    // $k = 0; // índice da próxima fase (próximo jogo)
+
+    // for ($i = 0; $i < count($jogosAtual); $i += 2) {
+    //     // Jogo atual 1
+    //     $obJogo->id = $jogosAtual[$i]->id;
+    //     $obJogo->modalidade = 1;
+    //     $obJogo->id_proximo_jogo = $proximosJogos[$k]->id;
+    //     $obJogo->editarJogo();
+
+    //     // Jogo atual 2
+    //     if($k >= 2){
+    //         $obJogo->id = $jogosAtual[$i + 1]->id;
+    //         $obJogo->modalidade = 1;
+    //         $obJogo->id_proximo_jogo = $proximosJogos[$k]->id;
+    //         $eu = $obJogo->editarJogo();
+    //     }
+
+    //     // Próximo jogo da próxima fase
+    //     $k++;
+    // }
+    // // print_r($proximosJogos);
 
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/listar_jogos.php';

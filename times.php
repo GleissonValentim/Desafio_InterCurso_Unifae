@@ -30,7 +30,12 @@
     }
 
     $meuTime = Time::getTimeId($_SESSION['usuario']);
-    $modalidade = Modalidade::getModalidade($meuTime ->id_modalidade) ?? null;
+
+    if(!empty($meuTime)){
+        $modalidade = Modalidade::getModalidade($meuTime ->id_modalidade) ?? null;
+    } else {
+        $meuTime = null;
+    }
 
     // if(is_array($times)){
     //     $time = Time::getTimeId($_SESSION['usuario']);

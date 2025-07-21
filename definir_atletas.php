@@ -46,7 +46,7 @@
             $totalAtletas = Modalidade::getModalidade($idTime->id_modalidade); 
             $atletasAtual = Usuario_and_time::getUsuarios($idTime->id);
             
-            if(count($atletasAtual) <= $totalAtletas->numero_atletas){
+            if(count($atletasAtual) < $totalAtletas->numero_atletas){
                 $verificar = Usuario_and_time::verificarTime($id_jogador, $id_time);
                 if(!$verificar){
                     $novoMembro = $Usuario_and_time->cadastrar();

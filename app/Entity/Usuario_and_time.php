@@ -70,7 +70,7 @@
         }
 
         // Metodo responsavel por excluir um usuario
-        public static function excluirAtleta($id){
-            return (new DataBase('Usuario_and_time'))->delete("id_atleta = '$id'");
+        public static function excluirAtleta($id, $time){
+            return (new DataBase('Usuario_and_time'))->delete("id_atleta = '$id' and id_time = '$time'");
         }
     }

@@ -18,6 +18,7 @@
         public $status;
         public $horario;
         public $etapa;
+        public $id_proximo_jogo;
 
         public function cadastrar(){
 
@@ -32,7 +33,8 @@
                                             'status' => $this->status,
                                             'horario' => $this->horario,
                                             'vencedor' => $this->vencedor,
-                                            'etapa' => $this->etapa
+                                            'etapa' => $this->etapa,
+                                            'id_proximo_jogo' => $this->id_proximo_jogo
                                         ]);
             return true;
         }
@@ -77,6 +79,11 @@
             return (new DataBase('Jogo'))->select("id_modalidade = '$id' and etapa = '$etapa'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);
         } 
 
+        // Metodo responsavel por retornar jogos pela modalidade e a etapa
+        public static function verificaDiferencaEtapa($id, $etapa1, $etapa2, $etapa3){
+            return (new DataBase('Jogo'))->select("id_modalidade = '$id' and etapa != '$etapa1' and etapa != '$etapa2' and etapa != '$etapa3'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);
+        } 
+
         // Metodo responsavel por retornar jogos pela etapa
         public static function getEtapa($id, $etapa){
             return (new DataBase('Jogo'))->select("id_modalidade = '$id' and etapa = '$etapa'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
@@ -109,7 +116,8 @@
                                                 'data' => $this->data,
                                                 'status' => $this->status,
                                                 'horario' => $this->horario,
-                                                'vencedor' => $this->vencedor
+                                                'vencedor' => $this->vencedor,
+                                                'id_proximo_jogo' => $this->id_proximo_jogo
             ]);
         }
     }

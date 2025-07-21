@@ -8,7 +8,7 @@
                     <input type="text" class="form-control" name="antigo" value="<?= $usuario->nome ?>" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="modalidade">Modalidade: </label>
+                    <label for="modalidade">Novo gestor: </label>
                     <select class="form-control" name="gestor">
                         <option value="">Selecione uma gestor</option>
                         <?php foreach($gestores as $gestor): ?>

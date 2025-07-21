@@ -7,6 +7,7 @@
     use \App\Entity\Mensagem;
     use \App\Entity\Usuario;
     use \App\Entity\Time;
+    use \App\Entity\Etapa;
     $obMensagem = new Mensagem;
     $obJogo = new Jogo;
 
@@ -25,8 +26,6 @@
     $modalidades = Modalidade::getModalidades();
 
     // $timeImpar = Time::getTimeImpar(1, 'Classificatória');
-
-    // echo $timeImpar;
 
     if (isset($_POST['modalidade'])){
         $repetidos = [];
@@ -54,6 +53,7 @@
         }
 
         $contPartidas = $contTimes;
+        $etapa = null;
 
         if($contTimes > 1){
             $contTimes = floor($contTimes / 2);
@@ -74,12 +74,13 @@
                 }
 
                 if($repetido == false){
+                    $etapaJogo = 
                     $modalidade = $obJogo->modalidade = $modalidadeNome->id;
                     $time1 = $obJogo->time_1 = $id1;
                     $time2 = $obJogo->time_2 = $id2;
                     $status = $obJogo->status = "Não começou";
-                    $status = $obJogo->etapa = "Classificatória";
-
+                    $etapa = $obJogo->etapa = "Classificatória";
+                    
                     $cadastrar = $obJogo->cadastrar();
 
                     if($cadastrar){
@@ -92,6 +93,7 @@
                     $repetidos[] = $id2;
                 }
             } 
+
         } else {
             $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não é possivel sortear mais jogos.");
         }   
@@ -122,7 +124,32 @@
                 }
             } 
         }
-    }
+
+        $jogosAtual = Jogo::getEtapa(1, 'Semifinal');
+        $proximosJogos = Jogo::verificaDiferencaEtapa(1, 'Classificatória', 'Semifinal', null);
+
+        $k = 0; // índice da próxima fase (próximo jogo)
+
+        for ($i = 0; $i < count($jogosAtual); $i += 2) {
+            // Jogo atual 1
+            $obJogo->id = $jogosAtual[$i]->id;
+            $obJogo->modalidade = 1;
+            $obJogo->id_proximo_jogo = $proximosJogos[$k]->id;
+            $obJogo->editarJogo();
+
+            // Jogo atual 2
+            if($jogosAtual >= 2){
+                $obJogo->id = $jogosAtual[$i + 1]->id;
+                $obJogo->modalidade = 1;
+                $obJogo->id_proximo_jogo = $proximosJogos[$k]->id;
+                $eu = $obJogo->editarJogo();
+            }
+
+            // Próximo jogo da próxima fase
+            $k++;
+        }
+        // print_r($proximosJogos);
+        }
 
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/jogos.php';
