@@ -7,6 +7,7 @@
     use \App\Entity\Modalidade;
     use \App\Entity\Time;
     use \App\Entity\Mensagem;
+    use \App\Entity\Etapa;
     use \App\Entity\Usuario;
     $obMensagem = new Mensagem;
     $obJogo = new Jogo;
@@ -31,10 +32,12 @@
     $times1 = [];
     $times2 = [];
     $vencedor = [];
+    $etapas = [];
     foreach($jogos as $jogo){
         $times1[$jogo->id] = Time::getIdTime($jogo->time1);
         $times2[$jogo->id] = Time::getIdTime($jogo->time2);
         $vencedor[$jogo->id] = Time::getIdTime($jogo->vencedor);
+        $etapas[$jogo->id] = Etapa::getEtapa($jogo->id_etapa);
     }
 
     $modalidades = [];

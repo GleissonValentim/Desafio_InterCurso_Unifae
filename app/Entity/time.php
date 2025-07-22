@@ -58,11 +58,11 @@
         }
 
         public static function getVencedoresEtapa($id, $etapa){
-            return (new DataBase('Time'))->select("id_modalidade = '$id' and id in (select vencedor from jogo where vencedor is not null and etapa = '$etapa')", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+            return (new DataBase('Time'))->select("id_modalidade = '$id' and id in (select vencedor from jogo where vencedor is not null and id_etapa = '$etapa')", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
 
         public static function getTimeImpar($id, $etapa){
-            return (new DataBase('Time'))->select("id_modalidade = '$id' and id not in (select time1 from jogo where etapa = '$etapa') and id not in (select time2 from jogo where etapa = '$etapa')", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+            return (new DataBase('Time'))->select("id_modalidade = '$id' and id not in (select time1 from jogo where id_etapa = $etapa) and id not in (select time2 from jogo where id_etapa = $etapa)", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
 
         public static function getPerdedor($id, $etapa){

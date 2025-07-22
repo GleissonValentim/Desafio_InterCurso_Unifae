@@ -42,11 +42,14 @@
                                     <td><?= $modalidades[$jogo->id]->nome ?></td>
                                     <td><?= $jogo->data ?></td>
                                     <td><?= $jogo->horario ?></td>
-                                    <?php if($jogo->time1 != null && $jogo->time2 != null): ?>
+                                    <?php if($jogo->time1 != null): ?>
                                         <td><?= $times1[$jogo->id]->nome ?></td>
-                                        <td><?= $times2[$jogo->id]->nome ?></td>
                                     <?php else: ?>
                                         <td></td>
+                                    <?php endif; ?>
+                                    <?php if($jogo->time2 != null): ?>
+                                        <td><?= $times2[$jogo->id]->nome ?></td>
+                                    <?php else: ?>
                                         <td></td>
                                     <?php endif; ?>
                                     <?php if(empty($vencedor[$jogo->id])): ?>
@@ -54,7 +57,7 @@
                                     <?php else: ?>
                                         <td><?= $vencedor[$jogo->id]->nome ?></a></td>
                                     <?php endif; ?>
-                                    <td><?= $jogo->etapa ?></td>
+                                    <td><?= $etapas[$jogo->id]->Nome ?></td>
                                     <td><?= $jogo->status ?></td>
                                     <form action="jogos.php" method="POST">
                                         <td>

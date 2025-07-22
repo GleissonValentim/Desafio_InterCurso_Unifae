@@ -17,7 +17,7 @@
         public $vencedor;
         public $status;
         public $horario;
-        public $etapa;
+        public $id_etapa;
         public $id_proximo_jogo;
 
         public function cadastrar(){
@@ -33,7 +33,7 @@
                                             'status' => $this->status,
                                             'horario' => $this->horario,
                                             'vencedor' => $this->vencedor,
-                                            'etapa' => $this->etapa,
+                                            'id_etapa' => $this->id_etapa,
                                             'id_proximo_jogo' => $this->id_proximo_jogo
                                         ]);
             return true;
@@ -76,17 +76,22 @@
 
         // Metodo responsavel por retornar jogos pela modalidade e a etapa
         public static function verificaModalidadeEtapa($id, $etapa){
-            return (new DataBase('Jogo'))->select("id_modalidade = '$id' and etapa = '$etapa'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);
+            return (new DataBase('Jogo'))->select("id_modalidade = '$id' and id_etapa = '$etapa'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);
         } 
 
         // Metodo responsavel por retornar jogos pela modalidade e a etapa
         public static function verificaDiferencaEtapa($id, $etapa1, $etapa2, $etapa3){
-            return (new DataBase('Jogo'))->select("id_modalidade = '$id' and etapa != '$etapa1' and etapa != '$etapa2' and etapa != '$etapa3'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);
+            return (new DataBase('Jogo'))->select("id_modalidade = '$id' and id_etapa != '$etapa1' and id_etapa != '$etapa2' and id_etapa != '$etapa3'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);
         } 
+
+        // Metodo responsavel por retornar etapas especificas
+        public static function getEtapasEspecificas($id, $etapa){
+            return (new DataBase('Jogo'))->select("id_modalidade = '$id' and id_etapa > '$etapa'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        }
 
         // Metodo responsavel por retornar jogos pela etapa
         public static function getEtapa($id, $etapa){
-            return (new DataBase('Jogo'))->select("id_modalidade = '$id' and etapa = '$etapa'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+            return (new DataBase('Jogo'))->select("id_modalidade = '$id' and id_etapa = '$etapa'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         } 
 
         // Metodo responsavel por retornar um jogo com base na modalidade
@@ -99,11 +104,24 @@
             return (new DataBase('Jogo'))->delete("id = '$id'");
         }
 
-        // Metodo responsavel por editar os times de um jogo
-        public function editarJogoTime($etapa){
-            return (new Database('Jogo'))->update("id = ".$this->id." and etapa = '{$etapa}'", [
-                                                'time1' => $this->time_1,
-                                                'time2' => $this->time_2,
+        // Metodo responsavel por editar um jogo
+        public function editarProximoJogo(){
+            return (new Database('Jogo'))->update('id = '.$this->id, [
+                                                'id_proximo_jogo' => $this->id_proximo_jogo
+            ]);
+        }
+
+        // Metodo responsavel por editar o time1
+        public function editarTime1(){
+            return (new Database('Jogo'))->update('id = '.$this->id, [
+                                                'time1' => $this->time_1
+            ]);
+        }
+
+        // Metodo responsavel por editar o time2
+        public function editarTime2(){
+            return (new Database('Jogo'))->update('id = '.$this->id, [
+                                                'time2' => $this->time_2
             ]);
         }
 
@@ -116,8 +134,7 @@
                                                 'data' => $this->data,
                                                 'status' => $this->status,
                                                 'horario' => $this->horario,
-                                                'vencedor' => $this->vencedor,
-                                                'id_proximo_jogo' => $this->id_proximo_jogo
+                                                'vencedor' => $this->vencedor
             ]);
         }
     }

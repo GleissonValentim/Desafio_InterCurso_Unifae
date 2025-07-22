@@ -24,6 +24,7 @@
     }
 
     $modalidades = Modalidade::getModalidades();
+    $eu = null;
 
     // $timeImpar = Time::getTimeImpar(1, 'Classificatória');
 
@@ -53,7 +54,6 @@
         }
 
         $contPartidas = $contTimes;
-        $etapa = null;
 
         if($contTimes > 1){
             $contTimes = floor($contTimes / 2);
@@ -79,7 +79,8 @@
                     $time1 = $obJogo->time_1 = $id1;
                     $time2 = $obJogo->time_2 = $id2;
                     $status = $obJogo->status = "Não começou";
-                    $etapa = $obJogo->etapa = "Classificatória";
+                    
+                    $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Classificatória')->id;
                     
                     $cadastrar = $obJogo->cadastrar();
 
@@ -105,14 +106,15 @@
                 $time1 = $obJogo->time_1 = null;
                 $time2 = $obJogo->time_2 = null;
 
-                $timeImpar = Time::getTimeImpar($modalidadeNome->id, 'Classificatória');
+                $etapa = Etapa::getEtapaNome('Classificatória')->id;
+                $timeImpar = Time::getTimeImpar($modalidadeNome->id, $etapa);
 
                 if($i == 0 && $timeImpar){
-                    $etapa = $obJogo->etapa = "Classificatória Extra";
-                }else if ($i == $rodadas - 1){
-                    $etapa = $obJogo->etapa = "Final";
+                    $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Classificatória Extra')->id;
+                } else if ($i == $rodadas - 1){
+                    $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Final')->id;
                 } else {
-                    $etapa = $obJogo->etapa = "Semifinal";
+                    $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Semifinal')->id;
                 }
                 
                 $cadastrar = $obJogo->cadastrar();
@@ -125,31 +127,159 @@
             } 
         }
 
-        $jogosAtual = Jogo::getEtapa(1, 'Semifinal');
-        $proximosJogos = Jogo::verificaDiferencaEtapa(1, 'Classificatória', 'Semifinal', null);
-
-        $k = 0; // índice da próxima fase (próximo jogo)
-
-        for ($i = 0; $i < count($jogosAtual); $i += 2) {
-            // Jogo atual 1
-            $obJogo->id = $jogosAtual[$i]->id;
-            $obJogo->modalidade = 1;
-            $obJogo->id_proximo_jogo = $proximosJogos[$k]->id;
-            $obJogo->editarJogo();
-
-            // Jogo atual 2
-            if($jogosAtual >= 2){
-                $obJogo->id = $jogosAtual[$i + 1]->id;
-                $obJogo->modalidade = 1;
-                $obJogo->id_proximo_jogo = $proximosJogos[$k]->id;
-                $eu = $obJogo->editarJogo();
+        $etapa = Etapa::getEtapasEspecificas(2);
+        
+        for($i = 0; $i < count($etapa); $i++){
+            $jogosAtual = null;
+            $proximosJogos = null;
+            if($i == 0){
+                $jogosAtual = Jogo::getEtapa($modalidadeNome->id, 2);
+                $proximosJogos = Jogo::getEtapasEspecificas(1, 2);
+            } elseif($i == 1) {
+                $jogosAtual = Jogo::getEtapa($modalidadeNome->id, 3);
+                $proximosJogos = Jogo::getEtapasEspecificas(1, 3);
             }
 
-            // Próximo jogo da próxima fase
-            $k++;
+            $k = 0; 
+
+            for ($j = 0; $j < count($jogosAtual); $j += 2) {
+                // Jogo atual 1
+                $obJogo->id = $jogosAtual[$j]->id;
+                $obJogo->id_proximo_jogo = $proximosJogos[$k]->id;
+                $obJogo->editarProximoJogo();
+
+                // Jogo atual 2
+                if($jogosAtual >= 2){
+                    $obJogo->id = $jogosAtual[$j + 1]->id;
+                    $obJogo->id_proximo_jogo = $proximosJogos[$k]->id;
+                    $obJogo->editarProximoJogo();
+                }
+
+                $k++;
+            }
         }
-        // print_r($proximosJogos);
-        }
+    }
+
+    // $timeImpar = false;
+        // if(count($times) % 2 == 1){
+        //     $timeImpar = true;
+        //     $contTimes = $contTimes + 1;
+        // }
+
+        // // if($timeImpar == true){
+        // //     $timesSorteados = array_rand($times, 2);
+
+        // //     $id1 = $times[$timesSorteados[0]]->id;
+        // //     $id2 = $times[$timesSorteados[1]]->id;
+
+        // //     // $repetido = false;
+        // //     // foreach($repetidos as $timeRepetido){
+        // //     //     if($timeRepetido == $id1 || $timeRepetido == $id2){
+        // //     //         $repetido = true;
+        // //     //         // $contTimes = $contTimes + 1;
+        // //     //         break;
+        // //     //     } 
+        // //     // }
+
+        // //     if($repetido == false){
+        // //         $etapaJogo = 
+        // //         $modalidade = $obJogo->modalidade = $modalidadeNome->id;
+        // //         $time1 = $obJogo->time_1 = $id1;
+        // //         $time2 = $obJogo->time_2 = $id2;
+        // //         $status = $obJogo->status = "Não começou";
+
+        // //         $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Classificatória Extra')->id;
+                
+        // //         $cadastrar = $obJogo->cadastrar();
+
+        // //         if($cadastrar){
+        // //             $obMensagem->getMensagem("jogos.php", "success", "Jogos sorteados com sucesso!");
+        // //         } else {
+        // //             $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não há mais jogos para sortear.");
+        // //         }
+
+        // //         $repetidos[] = $id1;
+        // //         $repetidos[] = $id2;
+
+        // //         $timeImpar = false;
+        // //     }
+        // // }
+
+        $contPartidas = $contTimes;
+        // $contTimes = floor($contTimes / 2);
+
+        // if($contTimes > 1){
+        //     for($i = 0; $i < $contTimes; $i++){
+        //         // $etapa = Etapa::getEtapaNome('Classificatória')->id;
+        //         // $timeImpar = Time::getTimeImpar($modalidadeNome->id, $etapa);
+             
+        //         $timesSorteados = array_rand($times, 2);
+
+        //         $id1 = $times[$timesSorteados[0]]->id;
+        //         $id2 = $times[$timesSorteados[1]]->id;
+
+        //         $repetido = false;
+        //         foreach($repetidos as $timeRepetido){
+        //             if($timeRepetido == $id1 || $timeRepetido == $id2){
+        //                 $repetido = true;
+        //                 $contTimes = $contTimes + 1;
+        //                 break;
+        //             } 
+        //         }
+
+        //         if($repetido == false){
+        //             $etapaJogo = 
+        //             $modalidade = $obJogo->modalidade = $modalidadeNome->id;
+        //             $time1 = $obJogo->time_1 = $id1;
+        //             $time2 = $obJogo->time_2 = $id2;
+        //             $status = $obJogo->status = "Não começou";
+
+        //             if($timeImpar == true){
+        //                 $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Classificatória Extra')->id;
+        //                 $timeImpar == false;
+        //             } else {
+        //                 $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Classificatória')->id;
+        //             }
+                    
+        //             $cadastrar = $obJogo->cadastrar();
+
+        //             if($cadastrar){
+        //                 $obMensagem->getMensagem("jogos.php", "success", "Jogos sorteados com sucesso!");
+        //             } else {
+        //                 $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não há mais jogos para sortear.");
+        //             }
+
+        //             $repetidos[] = $id1;
+        //             $repetidos[] = $id2;
+        //         }
+        //     } 
+
+        // } else {
+        //     $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não é possivel sortear mais jogos.");
+        // }   
+
+        // $rodadas = ceil(log($contPartidas, 2));
+        // if($rodadas > 1){
+        //     for($i = 0; $i < $rodadas; $i++){
+        //         $status = $obJogo->status = "Não começou";
+        //         $time1 = $obJogo->time_1 = null;
+        //         $time2 = $obJogo->time_2 = null;
+
+        //         if ($i == $rodadas - 1){
+        //             $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Final')->id;
+        //         } else {
+        //             $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Semifinal')->id;
+        //         }
+                
+        //         $cadastrar = $obJogo->cadastrar();
+
+        //         if($cadastrar){
+        //             $obMensagem->getMensagem("jogos.php", "success", "Jogos sorteados com sucesso!");
+        //         } else {
+        //             $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não há mais jogos para sortear.");
+        //         }
+        //     } 
+        // }
 
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/jogos.php';
