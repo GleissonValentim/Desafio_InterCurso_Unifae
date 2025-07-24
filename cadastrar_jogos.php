@@ -193,6 +193,46 @@
                                     $id2 = null;
                                 }
                             }
+
+                            // $eu = 0;
+                            // foreach ($todosOsTimes as $removido) {
+                            //     $estaEmDif = false;
+
+                            //     foreach ($difirencasExtra as $difirencaExtra) {
+                            //         if ($removido->id == $difirencaExtra->time1 || $removido->id == $difirencaExtra->time2) {
+                            //             $estaEmDif = true;
+                            //             break;
+                            //         }
+                            //     }
+
+                            //     foreach ($difirencasClassi as $difirencaClassi) {
+                            //         if ($removido->id == $difirencaClassi->time1 || $removido->id == $difirencaClassi->time2) {
+                            //             $estaEmDif = true;
+                            //             break;
+                            //         }
+                            //     }
+
+                            //     if(!$estaEmDif){
+                            //         $eu++;
+                            //     }
+                            // }
+
+                            // foreach ($todosOsTimes as $removido) {
+                            //     if($eu == 1){
+                            //         if ($i == 0){
+                            //             $id1 = $removido->id;
+                            //             $id2 = null;
+                            //             break; 
+                            //         } else {
+                            //             $id1 = null;
+                            //             $id2 = null;
+                            //         }
+                            //     } else {
+                            //         $id1 = $removido->id;
+                            //         $id2 = $removido->id + 1;
+                            //         break; 
+                            //     }
+                            // }
                         }
 
                         // else {
