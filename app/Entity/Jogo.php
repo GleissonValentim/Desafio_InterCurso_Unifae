@@ -99,6 +99,11 @@
             return (new DataBase('Jogo'))->select("id_modalidade = '$id'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         } 
 
+        // Metodo responsavel por retornar um jogo com base no id_proximoJogo
+        public static function verificaProximoJogo($id){
+            return (new DataBase('Jogo'))->select("id_proximo_jogo = '$id'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        } 
+
         // Metodo responsavel por excluir um jogo
         public static function deleteJogo($id){
             return (new DataBase('Jogo'))->delete("id = '$id'");

@@ -21,6 +21,7 @@
                     <table id="dataTable" class="text-center jogos">
                         <thead class="bg-light text-capitalize">
                             <tr>
+                                <th>Jogo</th>
                                 <th>Nome</th>
                                 <th>Local</th>
                                 <th>Modalidade</th>
@@ -37,6 +38,7 @@
                         <tbody>
                             <?php foreach($jogos as $jogo): ?>
                                 <tr class="infos">
+                                    <td><?= $countJogos++ ?></td>
                                     <td><?= $jogo->nome ?></td>
                                     <td><?= $jogo->local ?></td>
                                     <td><?= $modalidades[$jogo->id]->nome ?></td>
@@ -45,6 +47,11 @@
                                     <?php if($jogo->time1 != null): ?>
                                         <td><?= $times1[$jogo->id]->nome ?></td>
                                     <?php else: ?>
+                                        <!-- <?php foreach($verificaJogos as $verificaJogo): ?>
+                                            <?php if($jogo->id == $verificaJogo->id): ?>
+                                                <td><?= $verificaJogo->id ?></td>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?> -->
                                         <td></td>
                                     <?php endif; ?>
                                     <?php if($jogo->time2 != null): ?>

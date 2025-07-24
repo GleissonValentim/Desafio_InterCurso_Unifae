@@ -71,6 +71,8 @@
         $timeExtra = 0;
         $removidos = null;
         $extra = 0;
+        $timesImpar = null;
+        $contRemovidos = null;
 
         $timeImpar = false;
         if(count($times) != 8 && count($times) != 16 && count($times) != 4){
@@ -83,6 +85,7 @@
             
             $timesRemovidos = $times;
             $removidos = array_splice($timesRemovidos, 0, $extra * 2);
+            $contRemovidos = count($removidos);
             $timeImpar = true;
         }
 
@@ -118,44 +121,95 @@
         }
 
         if($contTimes > 1){
-            for($i = 0; $i < $contTimes; $i++){
-                // $etapa = Etapa::getEtapaNome('Classificatória')->id;
-                // $timeImpar = Time::getTimeImpar($modalidadeNome->id, $etapa);
+            $removido2 = null;
+            $remover = $times;
+            if(count($remover) % 2 == 1){
+                $removido2 = array_splice($times, 3, 1);
+            }
 
+            for($i = 0; $i < $contTimes; $i++){
                 $repetido = false;
         
                 $contarTimes = count($times);
-                $contRemovidos = count($removidos);
                 $contarTimes -= $contRemovidos; 
 
                 if($timeImpar){
                     if($j != $contarTimes - 1){
-                        $timesSorteados = array_rand($times, 2);
+                        $difirenca = count($remover) - count($removidos);
+                        
+                        $timesImpar = $difirenca;
 
-                        $id1 = $times[$timesSorteados[0]]->id;
-                        $id2 = $times[$timesSorteados[1]]->id;
+                        if($difirenca % 2 == 0){
+                            $timesSorteados = array_rand($times, 2);
 
-                        foreach($repetidos as $timeRepetido){
-                            if($timeRepetido == $id1 || $timeRepetido == $id2){
-                                $repetido = true;
-                                
-                                break;
+                            $id1 = $times[$timesSorteados[0]]->id;
+                            $id2 = $times[$timesSorteados[1]]->id;
+
+                            foreach($repetidos as $timeRepetido){
+                                if($timeRepetido == $id1 || $timeRepetido == $id2){
+                                    $repetido = true;
+                                    break;
+                                } 
+                            }
+                            
+                            if($difirenca % 2 == 0){
+                                foreach($removidos as $removido){
+                                    if($removido->id == $id1 || $removido->id == $id2){
+                                        $repetido = true;
+                                        break;
+                                    } 
+                                }
                             } 
+                            
+                        } else {
+                            $difirencasExtra = Jogo::getEtapa($modalidadeNome->id, 1);
+                            $difirencasClassi = Jogo::getEtapa($modalidadeNome->id, 2);
+                            $todosOsTimes = Time::getTimes();
+                            foreach ($todosOsTimes as $removido) {
+                                $estaEmDif = false;
+
+                                foreach ($difirencasExtra as $difirencaExtra) {
+                                    if ($removido->id == $difirencaExtra->time1 || $removido->id == $difirencaExtra->time2) {
+                                        $estaEmDif = true;
+                                        break;
+                                    }
+                                }
+
+                                foreach ($difirencasClassi as $difirencaClassi) {
+                                    if ($removido->id == $difirencaClassi->time1 || $removido->id == $difirencaClassi->time2) {
+                                        $estaEmDif = true;
+                                        break;
+                                    }
+                                }
+
+                                if ($i == 0){
+                                    if (!$estaEmDif) {
+                                        $id1 = $removido->id;
+                                        $id2 = null;
+                                        break; 
+                                    }
+                                } else {
+                                    $id1 = null;
+                                    $id2 = null;
+                                }
+                            }
                         }
 
-                        foreach($removidos as $removido){
-                            if($removido->id == $id1 || $removido->id == $id2){
-                                $repetido = true;
-                                
-                                break;
-                            } 
-                        }
+                        // else {
+                        //     // $difirencasExtra = Jogo::getEtapa($modalidadeNome->id, 1);
+                        //     // foreach($difirencasExtra as $difirencaExtra){
+                        //     //     if($difirencaExtra->time1 == $id1 || $difirencaExtra->time2 == $id2){
+                        //     //         $repetido = true;
+                        //     //         break;
+                        //     //     }
+                        //     // }
+                        // }
 
                         if($repetido == true){
                             $contTimes = $contTimes + 1;
                         }
                     } else {
-                        $id1 = null;
+                        $id1 = $removido2[0]->id;
                         $id2 = null;
                     }
                 } else {
@@ -201,7 +255,13 @@
             $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não é possivel sortear mais jogos.");
         }   
 
-        $rodadas = ceil(log($contPartidas, 2));
+        $rodadas = null;
+        if($contPartidas % 2 == 1){
+            $rodadas = floor(log($contPartidas, 2));
+        } else {
+            $rodadas = ceil(log($contPartidas, 2));
+        }
+
         if($rodadas > 1){
             for($i = 0; $i < $rodadas; $i++){
                 $status = $obJogo->status = "Não começou";
@@ -217,7 +277,7 @@
                 $cadastrar = $obJogo->cadastrar();
 
                 if($cadastrar){
-                    $obMensagem->getMensagem("jogos.php", "success", "Jogos sorteados com sucesso!".count($times));
+                    $obMensagem->getMensagem("jogos.php", "success", "Jogos sorteados com sucesso!");
                 } else {
                     $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não há mais jogos para sortear.");
                 }
@@ -283,8 +343,6 @@
 
                 $k++; 
             }
-
-
         }
     }
 

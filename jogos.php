@@ -28,17 +28,23 @@
     // $jogos = Jogo::getJogosModalidade($modalidade);
 
     $jogos = Jogo::getJogos();
+    $countJogos = 1;
 
     $times1 = [];
     $times2 = [];
     $vencedor = [];
     $etapas = [];
+    $verificaJogos = [];
+
     foreach($jogos as $jogo){
         $times1[$jogo->id] = Time::getIdTime($jogo->time1);
         $times2[$jogo->id] = Time::getIdTime($jogo->time2);
         $vencedor[$jogo->id] = Time::getIdTime($jogo->vencedor);
         $etapas[$jogo->id] = Etapa::getEtapa($jogo->id_etapa);
+        $verificaJogos = Jogo::verificaProximoJogo($jogo->id);
     }
+
+    // print_r($verificaJogos);
 
     $modalidades = [];
     foreach($jogos as $jogo ){

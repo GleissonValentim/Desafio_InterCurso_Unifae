@@ -42,6 +42,10 @@
             return (new DataBase('Time'))->select(null, null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
 
+        public static function getJogoUnico($id, $etapa){
+            return (new DataBase('Time'))->select("id not in (select time1 from jogo where id_modalidade = '$id' and id_etapa = '$etapa') or id not in (select time2 from jogo where id_modalidade = '$id' and id_etapa = '$etapa')", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        } 
+
         // Metodo responsavel por retornar um time pelo id
         public static function getIdTime($id){
             return (new DataBase('Time'))->select("id = '$id'", null, null, '*')->fetchObject(self::class);
