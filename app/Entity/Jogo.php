@@ -100,8 +100,8 @@
         } 
 
         // Metodo responsavel por retornar um jogo com base no id_proximoJogo
-        public static function verificaProximoJogo($id){
-            return (new DataBase('Jogo'))->select("id_proximo_jogo = '$id'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        public static function verificaProximoJogo(){
+            return (new DataBase('Jogo'))->select(null, null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         } 
 
         // Metodo responsavel por excluir um jogo

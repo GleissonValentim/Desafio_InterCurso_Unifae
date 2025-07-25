@@ -25,23 +25,6 @@
 
     $modalidades = Modalidade::getModalidades();
 
-    // $jogosAtual = Jogo::getEtapa(1, 1);
-    // $proximosJogos = Jogo::getEtapasEspecificas(1, 1);
-
-    
-    // if($proximosJogos[1]->time1 == null || $proximosJogos[1]->time2 == null){
-    //     $obJogo->id = $jogosAtual[0]->id;
-    //     $obJogo->id_proximo_jogo = $proximosJogos[1]->id;
-    //     $obJogo->editarProximoJogo();
-
-    //     // Jogo atual 2
-    //     if($jogosAtual >= 2){
-    //         $obJogo->id = $jogosAtual[0 + 1]->id;
-    //         $obJogo->id_proximo_jogo = $proximosJogos[1]->id;
-    //         $obJogo->editarProximoJogo();
-    //     }    
-    // }
-
     if (isset($_POST['modalidade'])){
         $repetidos = [];
 
@@ -73,6 +56,7 @@
         $extra = 0;
         $timesImpar = null;
         $contRemovidos = null;
+        $eu = 0;
 
         $timeImpar = false;
         if(count($times) != 8 && count($times) != 16 && count($times) != 4){
@@ -113,11 +97,16 @@
         }
 
         $contPartidas = $contTimes;
+        
         $contTimes = floor($contTimes / 2);
-        $j = 0;
 
-        if($contTimes %2 == 1){
-            $contTimes -= 1;
+        $j = 0;
+        $tentantivas = 0;
+
+        if($conTimes > 1){
+            if($contTimes % 2 == 1){
+                $contTimes -= 1;
+            }
         }
 
         if($contTimes > 1){
@@ -133,117 +122,80 @@
                 $contarTimes = count($times);
                 $contarTimes -= $contRemovidos; 
 
+                if(count($times) != 6){
+                    $contarTimes -= 1;
+                }
+
                 if($timeImpar){
-                    if($j != $contarTimes - 1){
+                    if($j != $contarTimes){
                         $difirenca = count($remover) - count($removidos);
                         
                         $timesImpar = $difirenca;
-
-                        if($difirenca % 2 == 0){
+                        $timesSobrando = Time::getTimeImpar($modalidadeNome->id, 1);
+                        
+                        if(count($timesSobrando) != 1){
                             $timesSorteados = array_rand($times, 2);
 
                             $id1 = $times[$timesSorteados[0]]->id;
                             $id2 = $times[$timesSorteados[1]]->id;
+                        }
 
-                            foreach($repetidos as $timeRepetido){
-                                if($timeRepetido == $id1 || $timeRepetido == $id2){
-                                    $repetido = true;
-                                    break;
-                                } 
-                            }
-                            
-                            if($difirenca % 2 == 0){
-                                foreach($removidos as $removido){
-                                    if($removido->id == $id1 || $removido->id == $id2){
-                                        $repetido = true;
-                                        break;
-                                    } 
-                                }
+                        foreach($repetidos as $timeRepetido){
+                            if($timeRepetido == $id1 || $timeRepetido == $id2){
+                                $repetido = true;
+                                break;
                             } 
-                            
-                        } else {
-                            $difirencasExtra = Jogo::getEtapa($modalidadeNome->id, 1);
-                            $difirencasClassi = Jogo::getEtapa($modalidadeNome->id, 2);
-                            $todosOsTimes = Time::getTimes();
-                            foreach ($todosOsTimes as $removido) {
-                                $estaEmDif = false;
+                        }
+                        
+                        foreach($removidos as $removido){
+                            if($removido->id == $id1 || $removido->id == $id2){
+                                $repetido = true;
+                                break;
+                            }
+                        }
+                        $tentantivas++;
 
-                                foreach ($difirencasExtra as $difirencaExtra) {
-                                    if ($removido->id == $difirencaExtra->time1 || $removido->id == $difirencaExtra->time2) {
-                                        $estaEmDif = true;
-                                        break;
+                        if($difirenca % 2 == 0){
+                            if(count($times) == $tentantivas){
+                                $repetido = false;
+                                $id1 = null;
+                                $id2 = null;
+                            }
+                        }
+
+                        if($difirenca % 2 == 1){
+                            if(count($times) == $tentantivas){
+                                $repetido = false;
+
+                                $difirencasExtra = Jogo::getEtapa($modalidadeNome->id, 1);
+                                $difirencasClassi = Jogo::getEtapa($modalidadeNome->id, 2);
+                                $todosOsTimes = Time::getTimes();
+                                foreach ($todosOsTimes as $removido) {
+                                    $estaEmDif = false;
+
+                                    foreach ($difirencasExtra as $difirencaExtra) {
+                                        if ($removido->id == $difirencaExtra->time1 || $removido->id == $difirencaExtra->time2) {
+                                            $estaEmDif = true;
+                                            break;
+                                        }
                                     }
-                                }
 
-                                foreach ($difirencasClassi as $difirencaClassi) {
-                                    if ($removido->id == $difirencaClassi->time1 || $removido->id == $difirencaClassi->time2) {
-                                        $estaEmDif = true;
-                                        break;
+                                    foreach ($difirencasClassi as $difirencaClassi) {
+                                        if ($removido->id == $difirencaClassi->time1 || $removido->id == $difirencaClassi->time2) {
+                                            $estaEmDif = true;
+                                            break;
+                                        }
                                     }
-                                }
 
-                                if ($i == 0){
                                     if (!$estaEmDif) {
                                         $id1 = $removido->id;
+                                        $repetido = false;
                                         $id2 = null;
                                         break; 
                                     }
-                                } else {
-                                    $id1 = null;
-                                    $id2 = null;
                                 }
                             }
-
-                            // $eu = 0;
-                            // foreach ($todosOsTimes as $removido) {
-                            //     $estaEmDif = false;
-
-                            //     foreach ($difirencasExtra as $difirencaExtra) {
-                            //         if ($removido->id == $difirencaExtra->time1 || $removido->id == $difirencaExtra->time2) {
-                            //             $estaEmDif = true;
-                            //             break;
-                            //         }
-                            //     }
-
-                            //     foreach ($difirencasClassi as $difirencaClassi) {
-                            //         if ($removido->id == $difirencaClassi->time1 || $removido->id == $difirencaClassi->time2) {
-                            //             $estaEmDif = true;
-                            //             break;
-                            //         }
-                            //     }
-
-                            //     if(!$estaEmDif){
-                            //         $eu++;
-                            //     }
-                            // }
-
-                            // foreach ($todosOsTimes as $removido) {
-                            //     if($eu == 1){
-                            //         if ($i == 0){
-                            //             $id1 = $removido->id;
-                            //             $id2 = null;
-                            //             break; 
-                            //         } else {
-                            //             $id1 = null;
-                            //             $id2 = null;
-                            //         }
-                            //     } else {
-                            //         $id1 = $removido->id;
-                            //         $id2 = $removido->id + 1;
-                            //         break; 
-                            //     }
-                            // }
                         }
-
-                        // else {
-                        //     // $difirencasExtra = Jogo::getEtapa($modalidadeNome->id, 1);
-                        //     // foreach($difirencasExtra as $difirencaExtra){
-                        //     //     if($difirencaExtra->time1 == $id1 || $difirencaExtra->time2 == $id2){
-                        //     //         $repetido = true;
-                        //     //         break;
-                        //     //     }
-                        //     // }
-                        // }
 
                         if($repetido == true){
                             $contTimes = $contTimes + 1;
@@ -262,7 +214,6 @@
                         if($timeRepetido == $id1 || $timeRepetido == $id2){
                             $repetido = true;
                             $contTimes = $contTimes + 1;
-                            
                             break;
                         } 
                     }
@@ -290,39 +241,41 @@
                     $j++;
                 }
             } 
-
         } else {
             $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não é possivel sortear mais jogos.");
         }   
 
+        $jogoClassificatoria = jogo::getEtapa($modalidadeNome->id, 2);
         $rodadas = null;
-        if($contPartidas % 2 == 1){
-            $rodadas = floor(log($contPartidas, 2));
-        } else {
+        if(count($jogoClassificatoria) % 2 == 1){
             $rodadas = ceil(log($contPartidas, 2));
+        } else {
+            if(count($jogoClassificatoria) > 2){
+                $rodadas = floor(log($contPartidas, 2));
+            } else {
+                $rodadas = 1;
+            }
         }
 
-        if($rodadas > 1){
-            for($i = 0; $i < $rodadas; $i++){
-                $status = $obJogo->status = "Não começou";
-                $time1 = $obJogo->time_1 = null;
-                $time2 = $obJogo->time_2 = null;
+        for($i = 0; $i < $rodadas; $i++){
+            $status = $obJogo->status = "Não começou";
+            $time1 = $obJogo->time_1 = null;
+            $time2 = $obJogo->time_2 = null;
 
-                if ($i == $rodadas - 1){
-                    $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Final')->id;
-                } else {
-                    $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Semifinal')->id;
-                }
-                
-                $cadastrar = $obJogo->cadastrar();
+            if ($i == $rodadas - 1){
+                $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Final')->id;
+            } else {
+                $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Semifinal')->id;
+            }
+            
+            $cadastrar = $obJogo->cadastrar();
 
-                if($cadastrar){
-                    $obMensagem->getMensagem("jogos.php", "success", "Jogos sorteados com sucesso!");
-                } else {
-                    $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não há mais jogos para sortear.");
-                }
-            } 
-        }
+            if($cadastrar){
+                $obMensagem->getMensagem("jogos.php", "success", "Jogos sorteados com sucesso!");
+            } else {
+                $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não há mais jogos para sortear.");
+            }
+        } 
 
         $etapa = null;
         if($timeImpar){

@@ -34,17 +34,25 @@
     $times2 = [];
     $vencedor = [];
     $etapas = [];
-    $verificaJogos = [];
+    $verificaJogos = Jogo::verificaProximoJogo();
 
     foreach($jogos as $jogo){
         $times1[$jogo->id] = Time::getIdTime($jogo->time1);
         $times2[$jogo->id] = Time::getIdTime($jogo->time2);
         $vencedor[$jogo->id] = Time::getIdTime($jogo->vencedor);
         $etapas[$jogo->id] = Etapa::getEtapa($jogo->id_etapa);
-        $verificaJogos = Jogo::verificaProximoJogo($jogo->id);
     }
 
-    // print_r($verificaJogos);
+    $ei = [];
+    $i = 1;
+    foreach($jogos as $jogo){
+        foreach($verificaJogos as $eu){
+            if($jogo->id == $eu->id_proximo_jogo){
+                $ei[$jogo->id] = $i;
+                $i++;
+            }
+        }
+    }
 
     $modalidades = [];
     foreach($jogos as $jogo ){
@@ -69,31 +77,6 @@
     if($editar){
         $obMensagem->getMensagem("editar_jogos.php", "warning", "Atenção: após definir o status do jogo como 'Concluído', não será mais possível editá-lo.", "&id=$editar");
     }
-
-    // $jogosAtual = Jogo::getEtapa(1, 'Semifinal');
-    // $proximosJogos = Jogo::verificaDiferencaEtapa(1, 'Classificatória', 'Semifinal', null);
-
-    // $k = 0; // índice da próxima fase (próximo jogo)
-
-    // for ($i = 0; $i < count($jogosAtual); $i += 2) {
-    //     // Jogo atual 1
-    //     $obJogo->id = $jogosAtual[$i]->id;
-    //     $obJogo->modalidade = 1;
-    //     $obJogo->id_proximo_jogo = $proximosJogos[$k]->id;
-    //     $obJogo->editarJogo();
-
-    //     // Jogo atual 2
-    //     if($k >= 2){
-    //         $obJogo->id = $jogosAtual[$i + 1]->id;
-    //         $obJogo->modalidade = 1;
-    //         $obJogo->id_proximo_jogo = $proximosJogos[$k]->id;
-    //         $eu = $obJogo->editarJogo();
-    //     }
-
-    //     // Próximo jogo da próxima fase
-    //     $k++;
-    // }
-    // // print_r($proximosJogos);
 
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/listar_jogos.php';
