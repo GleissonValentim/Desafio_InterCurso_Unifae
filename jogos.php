@@ -24,16 +24,27 @@
     $modalidade = $_POST['modalidades'] ?? null;
 
     $jogos = [];
-    // $getModalidades = Modalidade::getModalidades();
-    // $jogos = Jogo::getJogosModalidade($modalidade);
-
     $jogos = Jogo::getJogos();
     $countJogos = 1;
+
+    $modalidadesFiltadas;
+    if(isset($_POST['modalidades'])){
+        $modalidadesFiltadas = Modalidade::getModalidade($_POST['modalidades']);
+    } else {
+        $modalidadesFiltadas = Modalidade::getModalidade(1);
+        
+        if(empty($modalidadesFiltadas)){
+            $modalidadesFiltadas = null;
+        }
+    }
+
+    $getModalidades = Modalidade::getModalidades();
 
     $times1 = [];
     $times2 = [];
     $vencedor = [];
     $etapas = [];
+    $vazio = false;
     $verificaJogos = Jogo::verificaProximoJogo();
 
     foreach($jogos as $jogo){
@@ -41,14 +52,20 @@
         $times2[$jogo->id] = Time::getIdTime($jogo->time2);
         $vencedor[$jogo->id] = Time::getIdTime($jogo->vencedor);
         $etapas[$jogo->id] = Etapa::getEtapa($jogo->id_etapa);
+
+        if($jogo->id_modalidade == $modalidadesFiltadas->id){
+            $vazio = false;
+        } else {
+            $vazio = true;
+        }
     }
 
-    $ei = [];
+    $count = [];
     $i = 1;
     foreach($jogos as $jogo){
-        foreach($verificaJogos as $eu){
-            if($jogo->id == $eu->id_proximo_jogo){
-                $ei[$jogo->id] = $i;
+        foreach($verificaJogos as $verificaJogo){
+            if($jogo->id == $verificaJogo->id_proximo_jogo){
+                $count[$jogo->id] = $i;
                 $i++;
             }
         }

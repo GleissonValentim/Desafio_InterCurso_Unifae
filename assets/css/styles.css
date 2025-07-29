@@ -180,6 +180,14 @@ select {
     height: 45px !important;
 }
 
+.listar-jogos {
+    margin: 50px;
+}
+
+.filtragem {
+    margin: 0 1px;
+}
+
 /* Termina aqui  */
 
 .sidebar-menu {
