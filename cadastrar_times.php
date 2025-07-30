@@ -6,6 +6,7 @@
     use \App\Entity\time;
     use \App\Entity\Mensagem;
     use \App\Entity\Modalidade;
+    use \App\Entity\Jogo;
     use \App\Entity\Usuario;
     $obMensagem = new Mensagem;
     $obTime = new time;
@@ -32,11 +33,16 @@
 
             $verificarTime = Time::getTimeNome($nome, $modalidade);
             $verificarGestor = Time::getTimesId($id);
+            $podeCadastrar = Jogo::getStatus($modalidade, 'Não começou', 'Em andamento');
             
             if (count($verificarGestor) < 1){
                 if(count($verificarTime) < 1){
-                    $obTime->cadastrar();
-                    $obMensagem->getMensagem("times.php", "success", "Time cadastrado com sucesso!");
+                    if(count($podeCadastrar) < 1){
+                        $obTime->cadastrar();
+                        $obMensagem->getMensagem("times.php", "success", "Time cadastrado com sucesso!");
+                    } else {
+                        $obMensagem->getMensagem("cadastrar_times.php", "error", "Não é possível cadastrar um novo time enquanto houver jogos em andamento.");
+                    }
                 } else {
                     $obMensagem->getMensagem("cadastrar_times.php", "error", "Esse Time já foi cadastrado. Por favor cadastre outro.");
                 }

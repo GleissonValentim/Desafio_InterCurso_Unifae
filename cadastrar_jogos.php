@@ -26,90 +26,93 @@
     $modalidades = Modalidade::getModalidades();
 
     if (isset($_POST['modalidade'])){
-        $repetidos = [];
+        $podeJogar = Jogo::getStatus($_POST['modalidade'], 'Não começou', 'Em andamento');
 
-        $modalidadeNome = Modalidade::getModalidade($_POST['modalidade']);
+        if(count($podeJogar) < 1){
+            $repetidos = [];
 
-        $jogos = Jogo::verificaModalidadeNome($modalidadeNome->id);
-        $jogosVencedores = Jogo::getJogosVencedor($modalidadeNome->id);
+            $modalidadeNome = Modalidade::getModalidade($_POST['modalidade']);
 
-        $id1 = null;
-        $id2 = null;
+            $jogos = Jogo::verificaModalidadeNome($modalidadeNome->id);
+            $jogosVencedores = Jogo::getJogosVencedor($modalidadeNome->id);
 
-        $contTimes = 0;
-        $times = null;
-        if($jogosVencedores){
-            $times = Time::getVencedores($modalidadeNome->id);
-            foreach($times as $time){
-                $contTimes++;
-            }
-        } else {
-            $times = Time::getModalidade($modalidadeNome->id);
-            foreach($times as $time){
-                $contTimes++;
-            }
-        }
+            $id1 = null;
+            $id2 = null;
 
-        $contPartidas = $contTimes;
-        $timeExtra = 0;
-        $removidos = null;
-        $extra = 0;
-        $timesImpar = null;
-        $contRemovidos = null;
-        $eu = 0;
-
-        $timeImpar = false;
-        if(count($times) != 8 && count($times) != 16 && count($times) != 4){
-            $elevado = 1;
-            while($elevado * 2 <= count($times)){
-                $elevado *= 2;
+            $contTimes = 0;
+            $times = null;
+            if($jogosVencedores){
+                $times = Time::getVencedores($modalidadeNome->id);
+                foreach($times as $time){
+                    $contTimes++;
+                }
+            } else {
+                $times = Time::getModalidade($modalidadeNome->id);
+                foreach($times as $time){
+                    $contTimes++;
+                }
             }
 
-            $extra = count($times) - $elevado;
-            
-            $timesRemovidos = $times;
-            $removidos = array_splice($timesRemovidos, 0, $extra * 2);
-            $contRemovidos = count($removidos);
-            $timeImpar = true;
-        }
+            $totalTimes = $contTimes;
+            $contPartidas = $contTimes;
+            $timeExtra = 0;
+            $removidos = null;
+            $extra = 0;
+            $timesImpar = null;
+            $contRemovidos = null;
+            $eu = 0;
 
-        if($timeImpar == true){
-            $k = 0;
-            while($k != $extra){
-                
-                $modalidade = $obJogo->modalidade = $modalidadeNome->id;
-                $time1 = $obJogo->time_1 = $removidos[$k * 2]->id;
-                $time2 = $obJogo->time_2 = $removidos[$k * 2 + 1]->id;
-                $status = $obJogo->status = "Não começou";
-
-                $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Classificatória Extra')->id;
-                
-                $cadastrar = $obJogo->cadastrar();
-
-                if($cadastrar){
-                    $obMensagem->getMensagem("jogos.php", "success", "Jogos sorteados com sucesso!");
-                } else {
-                    $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não há mais jogos para sortear.");
+            $timeImpar = false;
+            if(count($times) != 8 && count($times) != 16 && count($times) != 4 && count($times) != 2){
+                $elevado = 1;
+                while($elevado * 2 <= count($times)){
+                    $elevado *= 2;
                 }
 
-                $k++;
+                $extra = count($times) - $elevado;
+                
+                $timesRemovidos = $times;
+                $removidos = array_splice($timesRemovidos, 0, $extra * 2);
+                $contRemovidos = count($removidos);
+                $timeImpar = true;
             }
-        }
 
-        $contPartidas = $contTimes;
-        
-        $contTimes = floor($contTimes / 2);
+            if($timeImpar == true){
+                $k = 0;
+                while($k != $extra){
+                    
+                    $modalidade = $obJogo->modalidade = $modalidadeNome->id;
+                    $time1 = $obJogo->time_1 = $removidos[$k * 2]->id;
+                    $time2 = $obJogo->time_2 = $removidos[$k * 2 + 1]->id;
+                    $status = $obJogo->status = "Não começou";
 
-        $j = 0;
-        $tentantivas = 0;
+                    $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Classificatória Extra')->id;
+                    
+                    $cadastrar = $obJogo->cadastrar();
 
-        if($conTimes > 1){
-            if($contTimes % 2 == 1){
-                $contTimes -= 1;
+                    if($cadastrar){
+                        $obMensagem->getMensagem("jogos.php", "success", "Jogos sorteados com sucesso!");
+                    } else {
+                        $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não há mais jogos para sortear.");
+                    }
+
+                    $k++;
+                }
             }
-        }
 
-        if($contTimes > 1){
+            $contPartidas = $contTimes;
+            
+            $contTimes = floor($contTimes / 2);
+
+            $j = 0;
+            $tentantivas = 0;
+
+            if($contTimes > 1){
+                if($contTimes % 2 == 1){
+                    $contTimes -= 1;
+                }
+            }
+
             $removido2 = null;
             $remover = $times;
             if(count($remover) % 2 == 1){
@@ -220,13 +223,16 @@
                 }
 
                 if($repetido == false){
-                    $etapaJogo = 
                     $modalidade = $obJogo->modalidade = $modalidadeNome->id;
                     $time1 = $obJogo->time_1 = $id1;
                     $time2 = $obJogo->time_2 = $id2;
                     $status = $obJogo->status = "Não começou";
 
-                    $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Classificatória')->id;
+                    if($totalTimes > 2){
+                        $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Classificatória')->id;
+                    } else {
+                        $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Final')->id;
+                    }
                                     
                     $cadastrar = $obJogo->cadastrar();
 
@@ -241,103 +247,107 @@
                     $j++;
                 }
             } 
-        } else {
-            $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não é possivel sortear mais jogos.");
-        }   
-
-        $jogoClassificatoria = jogo::getEtapa($modalidadeNome->id, 2);
-        $rodadas = null;
-        if(count($jogoClassificatoria) % 2 == 1){
-            $rodadas = ceil(log($contPartidas, 2));
-        } else {
-            if(count($jogoClassificatoria) > 2){
-                $rodadas = floor(log($contPartidas, 2));
-            } else {
-                $rodadas = 1;
-            }
-        }
-
-        for($i = 0; $i < $rodadas; $i++){
-            $status = $obJogo->status = "Não começou";
-            $time1 = $obJogo->time_1 = null;
-            $time2 = $obJogo->time_2 = null;
-
-            if ($i == $rodadas - 1){
-                $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Final')->id;
-            } else {
-                $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Semifinal')->id;
-            }
             
-            $cadastrar = $obJogo->cadastrar();
-
-            if($cadastrar){
-                $obMensagem->getMensagem("jogos.php", "success", "Jogos sorteados com sucesso!");
-            } else {
-                $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não há mais jogos para sortear.");
-            }
-        } 
-
-        $etapa = null;
-        if($timeImpar){
-            $etapa = Etapa::getEtapasEspecificas(1);
-        } else {
-            $etapa = Etapa::getEtapasEspecificas(2);
-        }
-        
-        for($i = 0; $i < count($etapa); $i++){
-            $jogosAtual = null;
-            $proximosJogos = null;
-            if($timeImpar){
-                if($i == 0){
-                    $jogosAtual = Jogo::getEtapa($modalidadeNome->id, 1);
-                    $proximosJogos = Jogo::getEtapasEspecificas($modalidadeNome->id, 1);
-                } elseif($i == 1) {
-                    $jogosAtual = Jogo::getEtapa($modalidadeNome->id, 2);
-                    $proximosJogos = Jogo::getEtapasEspecificas($modalidadeNome->id, 2);
-                } elseif($i == 2) {
-                    $jogosAtual = Jogo::getEtapa($modalidadeNome->id, 3);
-                    $proximosJogos = Jogo::getEtapasEspecificas($modalidadeNome->id, 3);
+            // Seminifinais e final
+            if($totalTimes > 2){
+                $jogoClassificatoria = jogo::getEtapa($modalidadeNome->id, 2);
+                $rodadas = null;
+                if(count($jogoClassificatoria) % 2 == 1){
+                    $rodadas = ceil(log($contPartidas, 2));
+                } else {
+                    if(count($jogoClassificatoria) > 2){
+                        $rodadas = floor(log($contPartidas, 2));
+                    } else {
+                        $rodadas = 1;
+                    }
                 }
-            } else {
-                if($i == 0){
-                    $jogosAtual = Jogo::getEtapa($modalidadeNome->id, 2);
-                    $proximosJogos = Jogo::getEtapasEspecificas($modalidadeNome->id, 2);
-                } elseif($i == 1) {
-                    $jogosAtual = Jogo::getEtapa($modalidadeNome->id, 3);
-                    $proximosJogos = Jogo::getEtapasEspecificas($modalidadeNome->id, 3);
+
+                for($i = 0; $i < $rodadas; $i++){
+                    // $modalidade = $obJogo->modalidade = $modalidadeNome->id;
+                    $status = $obJogo->status = "Não começou";
+                    $time1 = $obJogo->time_1 = null;
+                    $time2 = $obJogo->time_2 = null;
+
+                    if ($i == $rodadas - 1){
+                        $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Final')->id;
+                    } else {
+                        $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Semifinal')->id;
+                    }
+                    
+                    $cadastrar = $obJogo->cadastrar();
+
+                    if($cadastrar){
+                        $obMensagem->getMensagem("jogos.php", "success", "Jogos sorteados com sucesso!");
+                    } else {
+                        $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não há mais jogos para sortear.");
+                    }
                 } 
+
+                $etapa = null;
+                if($timeImpar){
+                    $etapa = Etapa::getEtapasEspecificas(1);
+                } else {
+                    $etapa = Etapa::getEtapasEspecificas(2);
+                }
+                
+                for($i = 0; $i < count($etapa); $i++){
+                    $jogosAtual = null;
+                    $proximosJogos = null;
+                    if($timeImpar){
+                        if($i == 0){
+                            $jogosAtual = Jogo::getEtapa($modalidadeNome->id, 1);
+                            $proximosJogos = Jogo::getEtapasEspecificas($modalidadeNome->id, 1);
+                        } elseif($i == 1) {
+                            $jogosAtual = Jogo::getEtapa($modalidadeNome->id, 2);
+                            $proximosJogos = Jogo::getEtapasEspecificas($modalidadeNome->id, 2);
+                        } elseif($i == 2) {
+                            $jogosAtual = Jogo::getEtapa($modalidadeNome->id, 3);
+                            $proximosJogos = Jogo::getEtapasEspecificas($modalidadeNome->id, 3);
+                        }
+                    } else {
+                        if($i == 0){
+                            $jogosAtual = Jogo::getEtapa($modalidadeNome->id, 2);
+                            $proximosJogos = Jogo::getEtapasEspecificas($modalidadeNome->id, 2);
+                        } elseif($i == 1) {
+                            $jogosAtual = Jogo::getEtapa($modalidadeNome->id, 3);
+                            $proximosJogos = Jogo::getEtapasEspecificas($modalidadeNome->id, 3);
+                        } 
+                    }
+
+                    $k = 0;
+
+                    for ($j = 0; $j < count($jogosAtual); $j += 2) {
+        
+                        while (
+                            $k < count($proximosJogos) &&
+                            $proximosJogos[$k]->time1 !== null &&
+                            $proximosJogos[$k]->time2 !== null
+                        ) {
+                            $k++; 
+                        }
+
+                        if ($k >= count($proximosJogos)) {
+                            break;
+                        }
+
+                        $obJogo->id = $jogosAtual[$j]->id;
+                        $obJogo->id_proximo_jogo = $proximosJogos[$k]->id;
+                        $obJogo->editarProximoJogo();
+
+                        if (isset($jogosAtual[$j + 1])) {
+                            $obJogo->id = $jogosAtual[$j + 1]->id;
+                            $obJogo->id_proximo_jogo = $proximosJogos[$k]->id;
+                            $obJogo->editarProximoJogo();
+                        }
+
+                        $k++; 
+                    }
+                }
             }
-
-            $k = 0;
-
-            for ($j = 0; $j < count($jogosAtual); $j += 2) {
-   
-                while (
-                    $k < count($proximosJogos) &&
-                    $proximosJogos[$k]->time1 !== null &&
-                    $proximosJogos[$k]->time2 !== null
-                ) {
-                    $k++; 
-                }
-
-                if ($k >= count($proximosJogos)) {
-                    break;
-                }
-
-                $obJogo->id = $jogosAtual[$j]->id;
-                $obJogo->id_proximo_jogo = $proximosJogos[$k]->id;
-                $obJogo->editarProximoJogo();
-
-                if (isset($jogosAtual[$j + 1])) {
-                    $obJogo->id = $jogosAtual[$j + 1]->id;
-                    $obJogo->id_proximo_jogo = $proximosJogos[$k]->id;
-                    $obJogo->editarProximoJogo();
-                }
-
-                $k++; 
-            }
+        } else {
+            $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Os jogos já foram sorteados.");
         }
-    }
+    } 
 
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/jogos.php';

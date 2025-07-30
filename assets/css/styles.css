@@ -181,7 +181,8 @@ select {
 }
 
 .listar-jogos {
-    margin: 50px;
+    width: 100%;
+    margin: 0 50px;
 }
 
 .filtragem {

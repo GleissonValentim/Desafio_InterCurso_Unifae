@@ -61,12 +61,17 @@
     }
 
     $count = [];
-    $i = 1;
+    $count2 = [];
+    $i = -1;
+    $j = 0;
     foreach($jogos as $jogo){
         foreach($verificaJogos as $verificaJogo){
             if($jogo->id == $verificaJogo->id_proximo_jogo){
-                $count[$jogo->id] = $i;
                 $i++;
+                $j = $i + 1;
+
+                $count[$jogo->id] = $i;
+                $count2[$jogo->id] = $j;
             }
         }
     }

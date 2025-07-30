@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="row d-flex justify-content-between align-items-center mb-4 filtragem">
                 <h4 class="header-title">Jogos</h4>
-                <div class=" d-flex align-items-center">
+                <div class="d-flex align-items-center">
                     <a href="cadastrar_jogos.php"><button class="btn enviar pr-4">Sortear Jogos</button></a>
                     <form action="jogos.php" class="d-flex" method="POST">
                         <select class="form-control ml-4 mr-2" name="modalidades">
@@ -53,7 +53,7 @@
                                         <?php if($jogo->time2 != null): ?>
                                             <td><?= $times2[$jogo->id]->nome ?></td>
                                         <?php else: ?>
-                                            <td>Vencedor do jogo <?= $count[$jogo->id] ?></td>
+                                            <td>Vencedor do jogo <?= $count2[$jogo->id] ?></td>
                                         <?php endif; ?>
                                         <?php if(empty($vencedor[$jogo->id])): ?>
                                             <td>Não tem</td>
