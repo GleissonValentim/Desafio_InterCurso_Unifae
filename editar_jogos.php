@@ -28,7 +28,7 @@
         $time1= Time::getIdTime($jogo->time1);
         $time2 = Time::getIdTime($jogo->time2);
 
-        if($jogo->status == 'concluido'){
+        if($jogo->status == 'Concluido'){
             $obMensagem->getMensagem("jogos.php", "error", "Voçe não tem acesso a essa página");
         }   
 

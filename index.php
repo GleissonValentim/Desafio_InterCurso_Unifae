@@ -28,6 +28,7 @@
     $times2 = [];
     $vencedor = [];
     $etapas = [];
+    $data = [];
     $vazio = false;
     $verificaJogos = Jogo::verificaProximoJogo();
 
@@ -41,6 +42,12 @@
             $vazio = false;
         } else {
             $vazio = true;
+        }
+
+        if(!empty($jogo->data)){
+            $data[$jogo->id] = DateTime::createFromFormat('Y-m-d', $jogo->data)->format('d/m/Y');
+        } else {
+            $data[$jogo->id] = null;
         }
     }
 

@@ -44,6 +44,7 @@
     $times2 = [];
     $vencedor = [];
     $etapas = [];
+    $data = [];
     $vazio = false;
     $verificaJogos = Jogo::verificaProximoJogo();
 
@@ -57,6 +58,12 @@
             $vazio = false;
         } else {
             $vazio = true;
+        }
+
+        if(!empty($jogo->data)){
+            $data[$jogo->id] = DateTime::createFromFormat('Y-m-d', $jogo->data)->format('d/m/Y');
+        } else {
+            $data[$jogo->id] = null;
         }
     }
 
@@ -81,20 +88,7 @@
         $modalidades[$jogo->id] = Modalidade::getModalidade($jogo->id_modalidade);
     }
 
-    $excluir = $_POST['excluir'] ?? null;
     $editar = $_POST['editar'] ?? null;
-
-    if($excluir){
-        $id = $_POST['excluir'];
-
-        $deleteJogo = Jogo::deleteJogo($id);
-
-        if($deleteJogo){
-            $obMensagem->getMensagem("jogos.php", "success", "jogo excluido com sucesso!");
-        } else {
-            $obMensagem->getMensagem("jogos.php", "error", "Falha ao excluir o jogo. Por favor, tente novamente.", "&id=$id");
-        }
-    } 
 
     if($editar){
         $obMensagem->getMensagem("editar_jogos.php", "warning", "Atenção: após definir o status do jogo como 'Concluído', não será mais possível editá-lo.", "&id=$editar");

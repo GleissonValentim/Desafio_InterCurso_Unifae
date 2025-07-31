@@ -43,7 +43,7 @@
                                         <td><?= $jogo->nome ?></td>
                                         <td><?= $jogo->local ?></td>
                                         <td><?= $modalidades[$jogo->id]->nome ?></td>
-                                        <td><?= $jogo->data = date('d/m/Y') ?></td>
+                                        <td><?= $data[$jogo->id] ?></td>
                                         <td><?= $jogo->horario ?></td>
                                         <?php if($jogo->time1 != null): ?>
                                             <td><?= $times1[$jogo->id]->nome ?></td>

@@ -116,7 +116,8 @@
             $removido2 = null;
             $remover = $times;
             if(count($remover) % 2 == 1){
-                $removido2 = array_splice($times, 3, 1);
+                $removido2 = array_splice($times, 1, 1);
+                // $removido2 = array_splice($times, 3, 1);
             }
 
             for($i = 0; $i < $contTimes; $i++){
@@ -136,7 +137,8 @@
                         $timesImpar = $difirenca;
                         $timesSobrando = Time::getTimeImpar($modalidadeNome->id, 1);
                         
-                        if(count($timesSobrando) != 1){
+                        // != 1
+                        if(count($timesSobrando)){
                             $timesSorteados = array_rand($times, 2);
 
                             $id1 = $times[$timesSorteados[0]]->id;
@@ -156,6 +158,7 @@
                                 break;
                             }
                         }
+                        
                         $tentantivas++;
 
                         if($difirenca % 2 == 0){
@@ -254,16 +257,15 @@
                 $rodadas = null;
                 if(count($jogoClassificatoria) % 2 == 1){
                     $rodadas = ceil(log($contPartidas, 2));
-                } else {
-                    if(count($jogoClassificatoria) > 2){
-                        $rodadas = floor(log($contPartidas, 2));
-                    } else {
-                        $rodadas = 1;
-                    }
                 }
 
-                for($i = 0; $i < $rodadas; $i++){
-                    // $modalidade = $obJogo->modalidade = $modalidadeNome->id;
+                if(count($jogoClassificatoria) > 2){
+                    $rodadas = floor(log($contPartidas, 2));
+                } else {
+                    $rodadas = 1;
+                }
+
+                for($i = 0; $i < 1; $i++){
                     $status = $obJogo->status = "Não começou";
                     $time1 = $obJogo->time_1 = null;
                     $time2 = $obJogo->time_2 = null;
