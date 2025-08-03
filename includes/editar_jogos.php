@@ -28,7 +28,9 @@
                     <select class="form-control" name="vencedor">
                         <option value="">Selecione</option>
                         <option value="<?= $jogo->time1 ?>"><?= $time1->nome ?></option>
-                        <option value="<?= $jogo->time2 ?>"><?= $time2->nome ?></option>
+                        <?php if(!empty($jogo->time2)): ?>
+                            <option value="<?= $jogo->time2 ?>"><?= $time2->nome ?></option>
+                        <?php endif; ?>
                     </select>
                 </div>
                 <div class="form-group">

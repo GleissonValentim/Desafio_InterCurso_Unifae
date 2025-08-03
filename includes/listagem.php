@@ -44,12 +44,12 @@
                                         <?php if($jogo->time1 != null): ?>
                                             <td><?= $times1[$jogo->id]->nome ?></td>
                                         <?php else: ?>
-                                            <td>Vencedor do jogo <?= $count[$jogo->id] ?></td>
+                                            <td class="proximo_jogo">Vencedor do jogo <?= $count[$jogo->id] ?></td>
                                         <?php endif; ?>
                                         <?php if($jogo->time2 != null): ?>
                                             <td><?= $times2[$jogo->id]->nome ?></td>
                                         <?php else: ?>
-                                            <td>Vencedor do jogo <?= $count[$jogo->id] ?></td>
+                                            <td class="proximo_jogo">Vencedor do jogo <?= $count[$jogo->id] ?></td>
                                         <?php endif; ?>
                                         <?php if(empty($vencedor[$jogo->id])): ?>
                                             <td>Não tem</td>

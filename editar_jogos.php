@@ -82,24 +82,28 @@
                 
                 if ($verificar == false){ 
                     if (!$nomeDuplicado) {
-                        $obJogo->editarJogo();
+                        if (!empty($jogo->time2)){
+                            $obJogo->editarJogo();
 
-                        $jogo = Jogo::getJogo($id);
+                            $jogo = Jogo::getJogo($id);
 
-                        if($jogo->id_proximo_jogo != null){
-                            $idProximoJogo = $obJogo->id = $jogo->id_proximo_jogo;
-                            $proximoJogo = Jogo::getJogo($idProximoJogo);
+                            if($jogo->id_proximo_jogo != null){
+                                $idProximoJogo = $obJogo->id = $jogo->id_proximo_jogo;
+                                $proximoJogo = Jogo::getJogo($idProximoJogo);
 
-                            if($proximoJogo->time1 == null){
-                                $time1ProximoJogo = $obJogo->time_1 = $jogo->vencedor;
-                                $obJogo->editarTime1();
-                            } else if($proximoJogo->time2 == null){
-                                $time2ProximoJogo = $obJogo->time_2 = $jogo->vencedor;
-                                $obJogo->editarTime2();
+                                if($proximoJogo->time1 == null){
+                                    $time1ProximoJogo = $obJogo->time_1 = $jogo->vencedor;
+                                    $obJogo->editarTime1();
+                                } else if($proximoJogo->time2 == null){
+                                    $time2ProximoJogo = $obJogo->time_2 = $jogo->vencedor;
+                                    $obJogo->editarTime2();
+                                }
+
+                                $obMensagem->getMensagem("jogos.php", "success", "jogo editado com sucesso!");
                             }
+                        } else {
+                            $obMensagem->getMensagem("editar_jogos.php", "error", "Os times ainda não foram definidos", "&id=$id");
                         }
-
-                        $obMensagem->getMensagem("jogos.php", "success", "jogo editado com sucesso!");
                     } else {
                         $obMensagem->getMensagem("editar_jogos.php", "error", "Esse jogo já foi cadastrado. Por favor, tente novamente.", "&id=$id");
                     }
