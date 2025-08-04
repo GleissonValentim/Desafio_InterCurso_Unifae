@@ -19,6 +19,7 @@
                     <table id="dataTable" class="text-center">
                         <thead class="bg-light text-capitalize">
                             <tr>
+                                <th>Usuário</th>
                                 <th>Nome</th>
                                 <th>Email</th>
                                 <th>Tipo</th>
@@ -29,6 +30,7 @@
                             <?php foreach($usuarios as $usuario): ?>
                                 <?php if($titulo == "Gestores"): ?>
                                     <tr class="infos">
+                                        <td><?= $countUsuario++ ?></td>
                                         <td><?= $usuario->nome ?></td>
                                         <td><?= $usuario->email ?></td>
                                         <td><?= $usuario->tipo ?></td>
@@ -38,6 +40,7 @@
                                     </tr>
                                 <?php else: ?>
                                     <tr class="infos">
+                                        <td><?= $countUsuario++ ?></td>
                                         <td><?= $usuario->nome ?></td>
                                         <td><?= $usuario->email ?></td>
                                         <td><?= $usuario->tipo ?></td>

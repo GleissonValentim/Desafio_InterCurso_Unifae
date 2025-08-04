@@ -21,6 +21,7 @@
         $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
     }
 
+    $countAtleta = 1;
     $time = Time::getTimeId($_SESSION['usuario']);
 
     if (is_object($time)) {
@@ -41,7 +42,7 @@
 
     if(isset($_POST['remover'])){
         $id = $_POST['remover'];
-        $excluir = Usuario_and_time::excluirAtleta($id);
+        $excluir = Usuario_and_time::excluirAtleta($id, $time->id);
 
         $idUsuario = $obUsuario->id = $id;
         $tipo = $obUsuario->tipo = 'comum';

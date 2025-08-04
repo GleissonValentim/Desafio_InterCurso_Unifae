@@ -15,19 +15,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach($notificacoes as $notificacao): ?>
-                                <?php foreach($flatTimes as $time): ?>
-                                    <tr class="infos">
-                                        <td><?= $time->nome ?></td>
-                                        <td>Convidou você a fazer parte do time</td>
-                                        <form action="notificações.php" method="POST">
-                                            <td>
-                                                <button type="hidden" class="btn enviar-formulario ml-2" value="<?= $time->id ?>" name="aceitar">Aceitar</button>
-                                                <button type="hidden" class="btn btn-danger deletar-formulario ml-2" value="<?= $time->id ?>" name="recusar">Recusar</button>
-                                            </td>
-                                        </form>
-                                    </tr>
-                                <?php endforeach; ?> 
+                            <?php foreach($flatTimes as $time): ?>
+                                <tr class="infos">
+                                    <td><?= $time->nome ?></td>
+                                    <td>Convidou você a fazer parte do time</td>
+                                    <form action="notificações.php" method="POST">
+                                        <td>
+                                            <button type="hidden" class="btn enviar-formulario ml-2" value="<?= $time->id ?>" name="aceitar">Aceitar</button>
+                                            <button type="hidden" class="btn btn-danger deletar-formulario ml-2" value="<?= $time->id ?>" name="recusar">Recusar</button>
+                                        </td>
+                                    </form>
+                                </tr>
                             <?php endforeach; ?> 
                         </tbody>
                     </table>

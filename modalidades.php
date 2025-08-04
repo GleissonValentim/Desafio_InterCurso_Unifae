@@ -23,6 +23,8 @@
     $excluir = $_POST['excluir'] ?? null;
     $editar = $_POST['editar'] ?? null;
 
+    $countModalidade = 1;
+
     if($excluir){
         $id = $_POST['excluir'];
 

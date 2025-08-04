@@ -10,6 +10,7 @@
                     <table id="dataTable" class="text-center">
                         <thead class="bg-light text-capitalize">
                             <tr>
+                                <th>Modalidade</th>
                                 <th>Nome</th>
                                 <th>Regras</th>
                                 <th>Numeo máximo de atletas</th>
@@ -19,6 +20,7 @@
                         <tbody>
                             <?php foreach($modalidades as $modalidade): ?>
                                 <tr class="infos">
+                                    <td><?= $countModalidade++ ?></td>
                                     <td><?= $modalidade->nome?></td>
                                     <td><?= $modalidade->regras?></td>
                                     <td><?= $modalidade->numero_atletas?></td>

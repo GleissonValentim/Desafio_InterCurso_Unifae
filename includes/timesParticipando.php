@@ -9,6 +9,7 @@
                     <table id="dataTable" class="text-center">
                         <thead class="bg-light text-capitalize">
                             <tr>
+                                <th>Time</th>
                                 <th>Nome</th>
                                 <th>Gestor</th>
                                 <th>Numeo de atletas</th>
@@ -19,6 +20,7 @@
                             <?php foreach($times as $time): ?>
                                 <?php foreach($gestores as $gestor): ?>
                                     <tr class="infos">
+                                        <td><?= $countTime++ ?></td>
                                         <td><?= $time->nome ?></td>
                                         <td><?= $gestor->nome?></td>
                                         <td><?= $cont ?></td>

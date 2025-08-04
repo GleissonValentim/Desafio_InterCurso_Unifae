@@ -23,6 +23,7 @@
     $id = $_SESSION['usuario'];
 
     $todosTimes = Usuario_and_time::getTimes($id, 1);
+    $countTime = 1;
 
     $times = [];
     foreach($todosTimes as $time){

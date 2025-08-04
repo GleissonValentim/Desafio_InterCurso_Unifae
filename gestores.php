@@ -19,6 +19,8 @@
         $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
     }
 
+    $countUsuario = 1;
+
     $usuarios = [];
     if(isset($_POST['usuarios'])){
         if($_POST['usuarios'] == 'gestor'){

@@ -41,6 +41,8 @@
 
     $modalidades = Modalidade::getModalidades();
 
+    $segundoTime = $jogo->time2;
+
     // $perdedor = Time::getPerdedor(1, 'Classificatória Extra');
 
     // echo $perdedor->nome;
@@ -66,10 +68,14 @@
 
                 $verificarJogos = Jogo::getJogoNome($nome);
 
-                // $verificar = false;
-                // if($vencedor != '' && $status != 'Concluido' || empty($vencedor) && $status == 'Concluido'){
-                //     $verificar = true;
-                // }
+                if ($segundoTime == null){
+                    $obMensagem->getMensagem("editar_jogos.php", "error", "Os times ainda não foram definidos", "&id=$id");            
+                } 
+
+                $verificar = false;
+                if(empty($vencedor) && $status != 'Concluido'){
+                    $verificar = true;
+                }
 
                 $nomeDuplicado = false;
 
@@ -82,8 +88,7 @@
                 
                 if ($verificar == false){ 
                     if (!$nomeDuplicado) {
-                        if (!empty($jogo->time2)){
-                            $obJogo->editarJogo();
+                        $obJogo->editarJogo();
 
                             $jogo = Jogo::getJogo($id);
 
@@ -101,9 +106,7 @@
 
                                 $obMensagem->getMensagem("jogos.php", "success", "jogo editado com sucesso!");
                             }
-                        } else {
-                            $obMensagem->getMensagem("editar_jogos.php", "error", "Os times ainda não foram definidos", "&id=$id");
-                        }
+    
                     } else {
                         $obMensagem->getMensagem("editar_jogos.php", "error", "Esse jogo já foi cadastrado. Por favor, tente novamente.", "&id=$id");
                     }

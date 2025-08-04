@@ -7,6 +7,7 @@
 
     class Usuario_and_time {
         
+        public $id;
         public $atleta;
         public $time;
         public $status;
@@ -14,7 +15,7 @@
         public function cadastrar(){
 
             $obDatabase = new DataBase('Usuario_and_time');
-            $this->atleta = $obDatabase->insert([
+            $this->id = $obDatabase->insert([
                                             'id_atleta' => $this->atleta,
                                             'id_time' => $this->time,
                                             'status' => $this->status,
@@ -64,7 +65,7 @@
 
         // Metodo responsavel alterar o status do usuario
         public function alterarStatus(){
-            return (new Database('Usuario_and_time'))->update('id_atleta = '.$this->atleta, [
+            return (new Database('Usuario_and_time'))->update('id_time = '.$this->time.' and id_atleta = '.$this->atleta.'', [
                                                 'status' => $this->status
             ]);
         }

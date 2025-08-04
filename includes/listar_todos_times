@@ -19,7 +19,7 @@
                         <tbody>
                             <?php foreach($times as $time): ?>
                                 <tr class="infos">
-                                    <td><?= $countTime++ ?></td>
+                                    <td><?= $contTimes++ ?></td>
                                     <td><?= $time->nome?></a></td>
                                     <td><?= $cont?></td>
                                     <td><?= $modalidade->nome ?></a></td>

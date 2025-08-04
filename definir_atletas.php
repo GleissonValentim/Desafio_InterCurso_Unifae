@@ -24,6 +24,7 @@
 
     $usuarios = Usuario::getUsuariosStatus('comum', 'atleta');
     $titulo = "Usuarios comuns";
+    $countAtleta = 1;
 
     $totalAtletas = Modalidade::getModalidade(1); 
     $atletasAtual = Usuario_and_time::getUsuarios(9);

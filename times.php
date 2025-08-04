@@ -23,6 +23,8 @@
     $id = $_SESSION['usuario'];
     $times = Time::getTimesId($id);
 
+    $countTime = 1;
+
     $cont = [];
     foreach($times as $time){
         $numeroAtletas = Usuario_and_time::getAtletasStatus($time->id, '1');

@@ -11,6 +11,7 @@
                     <table id="dataTable" class="text-center">
                         <thead class="bg-light text-capitalize">
                             <tr>
+                                <th>Atleta</th>
                                 <th>Nome</th>
                                 <th>Email</th>
                                 <th>Tipo</th>
@@ -20,6 +21,7 @@
                         <tbody>
                             <?php foreach($usuarios as $usuario): ?>
                                 <tr class="infos">
+                                    <td><?= $countAtleta++ ?></td>
                                     <td><?= $usuario->nome ?></td>
                                     <td><?= $usuario->email ?></td>
                                     <td><?= $usuario->tipo ?></td>

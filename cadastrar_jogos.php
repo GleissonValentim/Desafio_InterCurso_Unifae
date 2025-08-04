@@ -238,7 +238,11 @@
                         $status = $obJogo->status = "Não começou";
 
                         if($totalTimes > 3){
-                            $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Classificatória')->id;
+                            if($totalTimes == 4){
+                                $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Semifinal')->id;
+                            } else {
+                                $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Classificatória')->id;
+                            }
                         } else {
                             $etapa = $obJogo->id_etapa = Etapa::getEtapaNome('Final')->id;
                         }

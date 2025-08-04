@@ -8,6 +8,9 @@
     use \App\Entity\Time;
     use \App\Entity\Etapa;
     use \App\Entity\Modalidade;
+    use \App\Entity\Usuario;
+    $obUsuario = new Usuario;
+    $obEtapa = new Etapa;
 
     $jogos = Jogo::getJogosFinal();
     $countJogos = 1;
@@ -65,6 +68,39 @@
     $modalidades = [];
     foreach($jogos as $jogo ){
         $modalidades[$jogo->id] = Modalidade::getModalidade($jogo->id_modalidade);
+    }
+
+    // Criar conta do Organizador
+    $organizador = Usuario::getUsuarios('Organizador');
+    if(count($organizador) < 1){
+        $senhaProtegida = password_hash($_POST["senha"], PASSWORD_DEFAULT);
+        $nome = $obUsuario->nome = $_POST["nome"];
+        $tipo = $obUsuario->tipo = "comum";
+        $email = $obUsuario->email = $_POST["email"];
+        $senha = $obUsuario->senha = $senhaProtegida;
+
+        $obUsuario->cadastrar();
+    }
+
+    // Criar as etapas
+    $verificaEtapas = Etapa::getEtapas();
+
+    if(count($verificaEtapas) < 1){
+        for($i = 0; $i < 4; $i++){
+            
+            if($i == 0){
+                $etapa = 'Classificatória Extra';
+            } elseif($i == 1){
+                $etapa = 'Classificatória';
+            } elseif($i == 2){
+                $etapa = 'Semifinal';
+            } elseif($i == 3){
+                $etapa = 'Final';
+            }
+
+            $nome = $obEtapa->nome = 'Classificatória Extra';
+            $obUsuario->cadastrar();
+        }
     }
 
     include __DIR__.'/includes/header.php';
