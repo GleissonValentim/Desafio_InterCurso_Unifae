@@ -27,7 +27,7 @@
                                     <form action="modalidades.php" method="POST">
                                         <td>
                                             <button type="hidden" class="btn enviar-formulario ml-2" value="<?=$modalidade->id?>" name="editar">Editar</button>
-                                            <button type="hidden" class="btn btn-danger deletar-formulario ml-2" value="<?=$modalidade->id?>" name="excluir">Deletar</button>
+                                            <button id="form1" type="hidden" class="btn btn-danger deletar-formulario ml-2" value="<?=$modalidade->id?>" name="excluir">Deletar</button>
                                         </td>
                                     </form>
                                 </tr>
