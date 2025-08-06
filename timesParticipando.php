@@ -27,22 +27,50 @@
 
     $times = [];
     foreach($todosTimes as $time){
-        $times = Time::getTime($time->id_time); 
+        $times[] = Time::getTime($time->id_time); 
     }
 
     $gestores = [];
+    $novo = [];
     $cont = [];
-    foreach($times as $time){
-        $gestores = Usuario::getUsuariosId($time->id_gestor);
-
-        $numeroAtletas = Usuario_and_time::getAtletasStatus($time->id, '1');
-        $cont = count($numeroAtletas);
-    }
-
     $modalidades = [];
     foreach($times as $time){
-        $modalidades[$time->id] = Modalidade::getModalidade($time->id_modalidade);
+        foreach($time as $novoTime){
+            $gestores[$novoTime->id] = Usuario::getUsuariosId($novoTime->id_gestor);
+            $numeroAtletas = Usuario_and_time::getAtletasStatus($novoTime->id, '1');
+            $modalidades[$novoTime->id] = Modalidade::getModalidade($novoTime->id_modalidade);
+            $cont = count($numeroAtletas);
+
+            foreach($gestores as $gestor){
+                foreach($gestor as $novoGestor){
+                    if($novoGestor->id == $novoTime->id_gestor){
+                        $novo[$novoTime->id] = $novoGestor->nome;
+                    }
+                }
+            }
+        }
     }
+
+    
+
+    // $times = [];
+    // foreach($todosTimes as $time){
+    //     $times[] = Time::getTime($time->id_time); 
+    // }
+
+    // $gestores = [];
+    // $cont = [];
+    // foreach($times as $time){
+    //     $gestores = Usuario::getUsuariosId($time->id_gestor);
+
+    //     $numeroAtletas = Usuario_and_time::getAtletasStatus($time->id, '1');
+    //     $cont = count($numeroAtletas);
+    // }
+
+    // $modalidades = [];
+    // foreach($times as $time){
+    //     $modalidades[$time->id] = Modalidade::getModalidade($time->id_modalidade);
+    // }
 
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/timesParticipando.php';

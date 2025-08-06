@@ -7,7 +7,11 @@
                     <a href="cadastrar_jogos.php"><button class="btn enviar pr-4">Sortear Jogos</button></a>
                     <form action="jogos.php" class="d-flex" method="POST">
                         <select class="form-control ml-4 mr-2" name="modalidades">
-                            <option value="">Selecione</option>
+                            <?php if(empty($getModalidades)): ?>
+                                <option value="">Selecione</option>
+                            <?php else: ?>
+                                <option value=""><?= $filtro ?></option>
+                            <?php endif; ?>
                             <?php foreach($getModalidades as $getModalidade): ?>
                                 <option value="<?= $getModalidade->id ?>"><?= $getModalidade->nome ?></option>
                             <?php endforeach; ?>

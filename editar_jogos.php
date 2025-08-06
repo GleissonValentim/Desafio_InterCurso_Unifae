@@ -42,6 +42,7 @@
     $modalidades = Modalidade::getModalidades();
 
     $segundoTime = $jogo->time2;
+    $primeiroTime = $jogo->time1;
 
     // $perdedor = Time::getPerdedor(1, 'Classificatória Extra');
 
@@ -68,14 +69,14 @@
 
                 $verificarJogos = Jogo::getJogoNome($nome);
 
-                if ($segundoTime == null){
-                    $obMensagem->getMensagem("editar_jogos.php", "error", "Os times ainda não foram definidos", "&id=$id");            
-                } 
+                // if ($segundoTime == null && isset($primeiroTime)){
+                //     $obMensagem->getMensagem("editar_jogos.php", "error", "Os times ainda não foram definidos", "&id=$id");            
+                // } 
 
                 $verificar = false;
-                if(empty($vencedor) && $status != 'Concluido'){
-                    $verificar = true;
-                }
+                // if(isset($vencedor) && $status != 'Concluido'){
+                //     $verificar = true;
+                // }
 
                 $nomeDuplicado = false;
 

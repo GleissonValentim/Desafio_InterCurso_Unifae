@@ -7,7 +7,8 @@
                 </div>
                 <div class="col-auto d-flex align-items-center">
                     <select class="form-control ml-2" name="usuarios">
-                        <option value="">Selecione</option>
+                        <!-- <option value="">Selecione</option> -->
+                        <option value="gestor"><?= $filtro ?></option>
                         <option value="gestor">Gestor</option>
                         <option value="comum">Comum</option>
                     </select>

@@ -26,9 +26,11 @@
         if($_POST['usuarios'] == 'gestor'){
             $usuarios = Usuario::getUsuarios("gestor");
             $titulo = "Gestores";
+            $filtro = "Gestor";
         } else if($_POST['usuarios'] == 'comum'){
             $usuarios = Usuario::getUsuarios("comum");
             $titulo = "Usuarios comuns";
+            $filtro = "Comum";
         } else {
             $usuarios = Usuario::getUsuarios("gestor");
             $titulo = "Gestores";
@@ -36,6 +38,7 @@
     } else {
         $usuarios = Usuario::getUsuarios("gestor");
         $titulo = "Gestores";
+        $filtro = "Gestor";
     }
 
     if(isset($_POST['definir'])){

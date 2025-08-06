@@ -29,11 +29,7 @@
             $flatTimes[] = $timeObj;
         }
     }
-
-    foreach($flatTimes as $eu){
-        echo $eu->id;
-    }
-
+    
     if(isset($_POST['recusar'])){
         $idTime = $_POST['recusar'];
         $excluir = Usuario_and_time::excluirAtleta($id, $idTime);

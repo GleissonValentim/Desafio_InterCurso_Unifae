@@ -19,8 +19,10 @@
     $modalidadesFiltadas;
     if(isset($_POST['modalidades'])){
         $modalidadesFiltadas = Modalidade::getModalidade($_POST['modalidades']);
+        $filtro = $modalidadesFiltadas->nome;
     } else {
         $modalidadesFiltadas = Modalidade::getModalidade(1);
+        $filtro = $modalidadesFiltadas->nome;
         
         if(empty($modalidadesFiltadas)){
             $modalidadesFiltadas = null;

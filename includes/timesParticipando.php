@@ -18,15 +18,15 @@
                         </thead>
                         <tbody>
                             <?php foreach($times as $time): ?>
-                                <?php foreach($gestores as $gestor): ?>
+                                <?php foreach($time as $novoTime): ?> 
                                     <tr class="infos">
                                         <td><?= $countTime++ ?></td>
-                                        <td><?= $time->nome ?></td>
-                                        <td><?= $gestor->nome?></td>
+                                        <td><?= $novoTime->nome ?></td>
+                                        <td><?= $novo[$novoTime->id]?></td>
                                         <td><?= $cont ?></td>
-                                        <td><?= $modalidades[$time->id]->nome?></td>
+                                        <td><?= $modalidades[$novoTime->id]->nome?></td> 
                                     </tr>
-                                <?php endforeach; ?> 
+                                <?php endforeach; ?>  
                             <?php endforeach; ?> 
                         </tbody>
                     </table>

@@ -53,8 +53,14 @@
                 }
 
                 if (!$nomeDuplicado) {
-                    $obModalidade->editarModalidade();
-                    $obMensagem->getMensagem("modalidades.php", "success", "modalidade editada com sucesso!");
+                    $modalidadeAndamento = Jogo::verificaDiferencaEtapa($id, 'concluida', null, null);
+
+                    if (empty($modalidadeAndamento)){
+                        $obModalidade->editarModalidade();
+                        $obMensagem->getMensagem("modalidades.php", "success", "modalidade editada com sucesso!");
+                    } else {
+                        $obMensagem->getMensagem("editar_modalidades.php", "error", "Essa modalidade está vinculdada há jogos que estão em andamento", "&id=$id");
+                    }
                 } else {
                     $obMensagem->getMensagem("editar_modalidades.php", "error", "Essa modalidade já foi cadastrada. Por favor, tente novamente.", "&id=$id");
                 }
