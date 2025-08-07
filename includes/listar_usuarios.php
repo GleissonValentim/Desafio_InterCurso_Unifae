@@ -35,9 +35,9 @@
                                         <td><?= $usuario->nome ?></td>
                                         <td><?= $usuario->email ?></td>
                                         <td><?= $usuario->tipo ?></td>
-                                        <form action="gestores.php" method="POST">
-                                            <td><button type="hidden" class="btn btn-danger deletar-formulario ml-2" value="<?= $usuario->id ?>" name="remover">Remover gestor</button></td>
-                                        </form>
+                                        <!-- <form action="gestores.php" method="POST"> -->
+                                            <td><button type="hidden" id="deletarGestor" class="btn btn-danger deletar-formulario ml-2" value="<?= $usuario->id ?>" name="remover">Remover gestor</button></td>
+                                        <!-- </form> -->
                                     </tr>
                                 <?php else: ?>
                                     <tr class="infos">
@@ -45,9 +45,9 @@
                                         <td><?= $usuario->nome ?></td>
                                         <td><?= $usuario->email ?></td>
                                         <td><?= $usuario->tipo ?></td>
-                                        <form action="gestores.php" method="POST">
-                                            <td><button type="hidden" class="btn enviar-formulario ml-2" value="<?= $usuario->id ?>" name="definir">Definir gestor</button></td>
-                                        </form>
+                                        <!-- <form action="gestores.php" method="POST"> -->
+                                            <td><button type="hidden" id="definir" class="btn enviar-formulario ml-2" value="<?= $usuario->id ?>" name="definir">Definir gestor</button></td>
+                                        <!-- </form> -->
                                     </tr>
                                 <?php endif; ?>
                             <?php endforeach; ?> 

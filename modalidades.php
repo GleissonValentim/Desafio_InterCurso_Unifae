@@ -8,6 +8,8 @@
     use \App\Entity\Jogo;
     use \App\Entity\Mensagem;
     $obMensagem = new Mensagem;
+
+    $saida = "";
     
     if (isset($_SESSION['usuario'])) {
         $usuario = Usuario::getUsuarioId($_SESSION['usuario']);
@@ -41,6 +43,28 @@
     if($editar){
         header("Location: editar_modalidades.php?id=$editar");
     }
+
+    if(!empty($modalidades)){
+        foreach($modalidades as $modalidade){
+            $saida .= '
+                <tr class="infos">
+                    <td> '.$countModalidade++.' </td>
+                    <td> '.$modalidade->nome.' </td>
+                    <td> '.$modalidade->regras.' </td>
+                    <td> '.$modalidade->numero_atletas.' </td>
+                    <form action="modalidades.php" method="POST">
+                        <td>
+                            
+                        </td>
+                    </form>
+                </tr>   
+            ' ;
+        }
+    } else {
+        echo $saida .= '<p class="text-center mt-5"><strong>Não há nenhuma modalidade cadastrada!</strong></p>';
+    }
+
+    echo $saida;
 
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/listar_modalidades.php';

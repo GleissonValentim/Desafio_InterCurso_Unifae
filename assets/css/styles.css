@@ -142,6 +142,16 @@
    color: white; 
 }
 
+.cancelar {
+   background-color: rgb(226, 226, 226);
+   color: #39bd9c;
+}
+
+.cancelar:hover {
+   background-color: rgb(221, 221, 221);
+   color: #39bd9c;
+}
+
 .enviar-2 {
    background-color: white;
    color: #39bd9c;

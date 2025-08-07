@@ -3,19 +3,18 @@
     
     include __DIR__.'/vendor/autoload.php';
 
-    use \App\Entity\Mensagem;
-    $obMensagem = new Mensagem;
     use \App\Entity\Modalidade;
     use \App\Entity\Usuario;
     $obModalidade = new Modalidade;
 
+
     if (isset($_SESSION['usuario'])) {
         $usuario = Usuario::getUsuarioId($_SESSION['usuario']);
         if ($usuario->tipo != "Organizador") {
-            $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
+            $menssagem = "Voçe não tem acesso a essa página";
         }
     } else {
-        $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
+        $menssagem = "Voçe não tem acesso a essa página"; $erro = true;
     }
 
     if(isset($_POST['nome'], $_POST['regras'], $_POST['atletas'])){
@@ -30,16 +29,19 @@
             
             if(count($verificarModalidade) < 1){
                 $obModalidade->cadastrar();
-                $obMensagem->getMensagem("modalidades.php", "success", "Modalidade cadastrado com sucesso!");
+                $menssagem = ["menssagem" => "Modalidade cadastrada com sucesso!", "erro" => false];
             } else {
-                $obMensagem->getMensagem("cadastrar_modalidades.php", "error", "Essa modalidade já foi cadastrada. Por favor cadastre outra.");
+                $menssagem = ["menssagem" => "Essa modalidade já foi cadastrada. Por favor cadastre outra.", "erro" => true];
             }
         } else {
-             $obMensagem->getMensagem("cadastrar_modalidades.php", "error", "Por favor preencha todos os campos!");
+             $menssagem = ["menssagem" => "Por favor preencha todos os campos!", "erro" => true];
         }
     }
 
-    include __DIR__.'/includes/header.php';
-    include __DIR__.'/includes/modalidades.php';
-    include __DIR__.'/includes/footer.php';
+    header('Content-Type: aplication/json');
+    echo json_encode($menssagem);
+
+    // include __DIR__.'/includes/header.php';
+    // // include __DIR__.'/includes/modalidades.php';
+    // include __DIR__.'/includes/footer.php';
 ?>
