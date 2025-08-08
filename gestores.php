@@ -41,39 +41,6 @@
         $filtro = "Gestor";
     }
 
-    if(isset($_POST['id'])){
-        $id = $obUsuario->id = $_POST['id'];
-        $tipo = $obUsuario->tipo = "gestor";
-        $definir = $obUsuario->getUsuarioTipo();
-
-        if($definir){
-            $menssagem = ["menssagem" => "Usuário definido como gestor com sucesso!", "erro" => false];
-        } else {
-            $menssagem = ["menssagem" => "Erro ao definir o usuário como gestor!", "erro" => true];
-        }
-    }
-
-    if(isset($_POST['del'])){
-        $id = $obUsuario->id = $_POST['del'];
-        $obTime = Time::getTimeId($id);
-
-        if(!$obTime){  
-            $tipo = $obUsuario->tipo = "comum";
-            $remover = $obUsuario->deleteGestor();
-            if($remover){
-                $menssagem = ["menssagem" => "Gestor removido com sucesso!", "erro" => false];
-            } else {
-                $menssagem = ["menssagem" => "Erro ao remover o gestor!", "erro" => true];
-            }
-        } else {
-            // $obMensagem->getMensagem("redefinir_gestor.php", "warning", "", "&id=$id");
-            $menssagem = ["menssagem" => "Para remover este gestor, desvincule-o primeiro do time.", "erro" => true];
-        }
-    }
-
-    // header('Content-Type: aplication/json');
-    // echo json_encode($menssagem);
-
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/listar_usuarios.php';
     include __DIR__.'/includes/footer.php';

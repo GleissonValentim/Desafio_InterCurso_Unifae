@@ -73,31 +73,10 @@
                                 <a href="modalidades.php" class="mr-3">Modalidades</a>
                                 <a href="jogos.php" class="mr-3">Jogos</a>
                             <?php elseif($usuario->tipo == "gestor"): ?>
-                                <a href="definir_atletas.php" class="mr-3">Definir atletas</a>
+                                <a href="novos_atletas.php" class="mr-3">Definir atletas</a>
                                 <a href="atletas.php" class="mr-3">Atletas do time</a>
                                 <a href="times.php" class="mr-3">Meu time</a>
                             <?php elseif($usuario->tipo == "comum" || $usuario->tipo == "atleta"): ?>
-                                <!-- profile info & task notification -->
-                                <!-- <ul class="notification-area pull-left mr-4">
-                                    <li id="full-view-exit"><i class="ti-zoom-out"></i></li>
-                                    <li class="dropdown">
-                                        <i class="ti-bell dropdown-toggle" data-toggle="dropdown">
-                                            <span>2</span>
-                                        </i>
-                                        <div class="dropdown-menu bell-notify-box notify-box">
-                                            <span class="notify-title">You have 3 new notifications <a href="#">view all</a></span>
-                                            <div class="nofity-list">
-                                                <a href="#" class="notify-item">
-                                                    <div class="notify-thumb"><i class="ti-key btn-danger"></i></div>
-                                                    <div class="notify-text">
-                                                        <p>You have Changed Your Password</p>
-                                                        <span>Just Now</span>
-                                                    </div>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul> -->
                                 <a href="notificações.php" class="mr-3">Notificações</a>
                                 <a href="timesParticipando.php" class="mr-3">Times</a>
                             <?php endif; ?>

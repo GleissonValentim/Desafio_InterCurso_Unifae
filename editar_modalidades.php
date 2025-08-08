@@ -10,20 +10,11 @@
     $obMensagem = new Mensagem;
     $obModalidade = new Modalidade;
 
-    if (isset($_SESSION['usuario'])) {
-        $usuario = Usuario::getUsuarioId($_SESSION['usuario']);
-        if ($usuario->tipo != "Organizador") {
-            $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
-        }
-    } else {
-        $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
-    }
-
-    if(isset($_GET['id'])){
-        $id = $_GET['id'];
-        $modalidade = Modalidade::getModalidade($id);
-    }
-
+    
+    $modalidades = Modalidade::getModalidades() ?? null;
+    $countModalidade = 1;
+    
+    $excluir = $_POST['excluir'] ?? null;
     $editar = $_POST['editar'] ?? null;
 
     if($editar){
@@ -70,7 +61,23 @@
         }
     } 
 
-    include __DIR__.'/includes/header.php';
-    include __DIR__.'/includes/editar_modalidades.php';
-    include __DIR__.'/includes/footer.php';
+    if($excluir){
+        $id = $_POST['excluir'];
+
+        $verificaModalidade = Jogo::verificaModalidade($id);
+
+        if(count($verificaModalidade) < 1){
+            $deleteModalidade = Modalidade::deleteModalidade($id);
+            $obMensagem->getMensagem("modalidades.php", "success", "modalidade excluida com sucesso!");
+        } else {
+            $obMensagem->getMensagem("modalidades.php", "error", "Não foi possível excluir esta modalidade, pois ela está vinculada a um ou mais jogos.", "&id=$id");
+        }
+    } 
+
+    header('Content-Type: aplication/json');
+    echo json_encode($modalidades);
+
+    // include __DIR__.'/includes/header.php';
+    // include __DIR__.'/includes/editar_modalidades.php';
+    // include __DIR__.'/includes/footer.php';
 ?>

@@ -25,9 +25,7 @@
                                     <td><?= $usuario->nome ?></td>
                                     <td><?= $usuario->email ?></td>
                                     <td><?= $usuario->tipo ?></td>
-                                    <form action="definir_atletas.php" method="POST">
-                                        <td><button type="hidden" class="btn enviar-formulario ml-2" value="<?= $usuario->id ?>" name="definir">Definir Atleta</button></td>
-                                    </form>
+                                    <td><button type="hidden" class="btn enviar-formulario ml-2 definir_atleta" id="<?= $usuario->id ?>" name="definir">Definir Atleta</button></td>
                                 </tr>
                             <?php endforeach; ?> 
                         </tbody>

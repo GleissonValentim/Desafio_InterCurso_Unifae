@@ -25,9 +25,7 @@
                                     <td><?= $atleta->nome ?></td>
                                     <td><?= $atleta->email ?></td>
                                     <td><?= $atleta->tipo ?></td>
-                                    <form action="atletas.php" method="POST">
-                                        <td><button type="hidden" class="btn btn-danger deletar-formulario ml-2" value="<?= $atleta->id ?>" name="remover">Remover Atleta</button></td>
-                                    </form>
+                                    <td><button type="hidden" class="btn btn-danger deletar-formulario ml-2 remover_atleta" id="<?= $atleta->id ?>" name="remover">Remover Atleta</button></td>
                                 </tr>
                             <?php endforeach; ?> 
                         </tbody>

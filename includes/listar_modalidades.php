@@ -3,13 +3,7 @@
         <div class="card-body">
             <div class="row d-flex justify-content-between align-items-center mb-4">
                 <h4 class="header-title">Modalidades</h4>
-                <!-- <button type="button" class="btn enviar pr-4 pl-4" data-toggle="modal" data-target="#modalExemplo">
-                    Cadastrar Modalidade
-                </button> -->
                 <button type="button" class="btn enviar pr-4 pl-4" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Cadastrar Modalidade</button>
-                <!-- <form action="" id="cadastrar">
-                    <button class="btn enviar pr-4 pl-4">Cadastrar Modalidade</button><
-                </form> -->
             </div>
             <div class="data-tables">
                 <!-- <?php if(!empty($modalidades)): ?> -->
@@ -23,7 +17,7 @@
                                 <th>Ações</th>
                             </tr>
                         </thead>
-                        <tbody class="exibir_modalidades">
+                        <tbody id="exibir_modalidades">
                             
                         </tbody>
                     </table>
@@ -35,6 +29,7 @@
     </div>
 </div>
 
+<!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">

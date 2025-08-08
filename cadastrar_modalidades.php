@@ -7,7 +7,6 @@
     use \App\Entity\Usuario;
     $obModalidade = new Modalidade;
 
-
     if (isset($_SESSION['usuario'])) {
         $usuario = Usuario::getUsuarioId($_SESSION['usuario']);
         if ($usuario->tipo != "Organizador") {
@@ -40,8 +39,4 @@
 
     header('Content-Type: aplication/json');
     echo json_encode($menssagem);
-
-    // include __DIR__.'/includes/header.php';
-    // // include __DIR__.'/includes/modalidades.php';
-    // include __DIR__.'/includes/footer.php';
 ?>

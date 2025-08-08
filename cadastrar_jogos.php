@@ -4,11 +4,9 @@
     include __DIR__.'/vendor/autoload.php';
 
     use \App\Entity\jogo;
-    use \App\Entity\Mensagem;
     use \App\Entity\Usuario;
     use \App\Entity\Time;
     use \App\Entity\Etapa;
-    $obMensagem = new Mensagem;
     $obJogo = new Jogo;
 
     use \App\Entity\Modalidade;
@@ -97,9 +95,9 @@
                         $cadastrar = $obJogo->cadastrar();
 
                         if($cadastrar){
-                            $obMensagem->getMensagem("jogos.php", "success", "Jogos sorteados com sucesso!");
+                            $menssagem = ["menssagem" => "Jogos sorteados com sucesso!", "erro" => false];
                         } else {
-                            $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não há mais jogos para sortear.");
+                            $menssagem = ["menssagem" => "Não há mais jogos para sortear.", "erro" => true];
                         }
 
                         $k++;
@@ -250,9 +248,9 @@
                         $cadastrar = $obJogo->cadastrar();
 
                         if($cadastrar){
-                            $obMensagem->getMensagem("jogos.php", "success", "Jogos sorteados com sucesso!");
+                            $menssagem = ["menssagem" => "Jogos sorteados com sucesso!", "erro" => false];
                         } else {
-                            $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não há mais jogos para sortear.");
+                            $menssagem = ["menssagem" => "Não há mais jogos para sortear.", "erro" => true];
                         }
 
                         $repetidos[] = $id1;
@@ -290,9 +288,9 @@
                             $cadastrar = $obJogo->cadastrar();
 
                             if($cadastrar){
-                                $obMensagem->getMensagem("jogos.php", "success", "Jogos sorteados com sucesso!");
+                                $menssagem = ["menssagem" => "Jogos sorteados com sucesso!", "erro" => false];
                             } else {
-                                $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não há mais jogos para sortear.");
+                                $menssagem = ["menssagem" => "Não há mais jogos para sortear.", "erro" => true];
                             }
                         } 
                     }
@@ -359,14 +357,13 @@
                     }
                 }
             } else {
-                $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Os jogos já foram sorteados.");
+                $menssagem = ["menssagem" => "Os jogos já foram sorteados.", "erro" => true];
             }
         } else {
-            $obMensagem->getMensagem("cadastrar_jogos.php", "error", "Não há times suficientes.");
+            $menssagem = ["menssagem" => "Não há times suficientes.", "erro" => true];
         }
     } 
 
-    include __DIR__.'/includes/header.php';
-    include __DIR__.'/includes/jogos.php';
-    include __DIR__.'/includes/footer.php';
+    header('Content-Type: aplication/json');
+    echo json_encode($menssagem);
 ?>

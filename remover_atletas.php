@@ -21,26 +21,24 @@
         $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
     }
 
-    $countAtleta = 1;
     $time = Time::getTimeId($_SESSION['usuario']);
-
-    if (is_object($time)) {
-        $atletasTime = Usuario_and_time::getAtletasStatus($time->id, 1);
-
-        $atletas = [];
-        foreach($atletasTime as $atletaTime){
-            $atletas[] = Usuario::getUsuariosId($atletaTime->id_atleta);
-        }
-
-        $flatAtletas = [];
-        foreach ($atletas  as $subArray) {
-            foreach ($subArray as $atletaObj) {
-                $flatAtletas[] = $atletaObj;
-            }
-        }
-    } 
     
-    include __DIR__.'/includes/header.php';
-    include __DIR__.'/includes/listar_atletas_time.php';
-    include __DIR__.'/includes/footer.php';
+    if(isset($_POST['del'])){
+        $id = $_POST['del'];
+        $excluir = Usuario_and_time::excluirAtleta($id, $time->id);
+
+        $idUsuario = $obUsuario->id = $id;
+        $tipo = $obUsuario->tipo = 'comum';
+
+        $editarTipo = $obUsuario->deleteGestor();
+
+        if($excluir || $editarTipo){
+            $menssagem = ["menssagem" => "Atleta removido com sucesso.", "erro" => false];
+        } else {
+            $menssagem = ["menssagem" => "Erro ao remover o atleta.", "erro" => true];
+        }
+    }
+
+    header('Content-Type: aplication/json');
+    echo json_encode($menssagem);
 ?>

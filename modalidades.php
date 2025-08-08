@@ -22,49 +22,34 @@
 
     $modalidades = Modalidade::getModalidades() ?? null;
 
-    $excluir = $_POST['excluir'] ?? null;
-    $editar = $_POST['editar'] ?? null;
+    // $excluir = $_POST['excluir'] ?? null;
+    // $editar = $_POST['editar'] ?? null;
 
-    $countModalidade = 1;
+    // if($editar){
+    //     header("Location: editar_modalidades.php?id=$editar");
+    // }
 
-    if($excluir){
-        $id = $_POST['excluir'];
-
-        $verificaModalidade = Jogo::verificaModalidade($id);
-
-        if(count($verificaModalidade) < 1){
-            $deleteModalidade = Modalidade::deleteModalidade($id);
-            $obMensagem->getMensagem("modalidades.php", "success", "modalidade excluida com sucesso!");
-        } else {
-            $obMensagem->getMensagem("modalidades.php", "error", "Não foi possível excluir esta modalidade, pois ela está vinculada a um ou mais jogos.", "&id=$id");
-        }
-    } 
-
-    if($editar){
-        header("Location: editar_modalidades.php?id=$editar");
-    }
-
-    if(!empty($modalidades)){
-        foreach($modalidades as $modalidade){
-            $saida .= '
-                <tr class="infos">
-                    <td> '.$countModalidade++.' </td>
-                    <td> '.$modalidade->nome.' </td>
-                    <td> '.$modalidade->regras.' </td>
-                    <td> '.$modalidade->numero_atletas.' </td>
-                    <form action="modalidades.php" method="POST">
-                        <td>
+    // if(!empty($modalidades)){
+        // foreach($modalidades as $modalidade){
+        //     $saida .= '
+        //         <tr class="infos">
+        //             <td> '.$countModalidade++.' </td>
+        //             <td> '.$modalidade->nome.' </td>
+        //             <td> '.$modalidade->regras.' </td>
+        //             <td> '.$modalidade->numero_atletas.' </td>
+        //             <form action="modalidades.php" method="POST">
+        //                 <td>
                             
-                        </td>
-                    </form>
-                </tr>   
-            ' ;
-        }
-    } else {
-        echo $saida .= '<p class="text-center mt-5"><strong>Não há nenhuma modalidade cadastrada!</strong></p>';
-    }
+        //                 </td>
+        //             </form>
+        //         </tr>   
+        //     ' ;
+        // }
+    // } else {
+    //     echo $saida .= '<p class="text-center mt-5"><strong>Não há nenhuma modalidade cadastrada!</strong></p>';
+    // }
 
-    echo $saida;
+    // echo json_encode($modalidades);
 
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/listar_modalidades.php';

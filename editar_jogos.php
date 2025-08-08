@@ -29,12 +29,12 @@
         $time2 = Time::getIdTime($jogo->time2);
 
         if($jogo->status == 'Concluido'){
-            $obMensagem->getMensagem("jogos.php", "error", "Voçe não tem acesso a essa página");
+            $menssagem = ["menssagem" => "Voçe não tem acesso a essa página", "erro" => true];
         }   
 
         $verificarModalidade = Modalidade::getModalidade($jogo->id_modalidade);
     } else {
-        $obMensagem->getMensagem("jogos.php", "error", "Voçe não tem acesso a essa página");
+        $menssagem = ["menssagem" => "Voçe não tem acesso a essa página", "erro" => true];
     }
 
     $editar = $_POST['editar'] ?? null;
@@ -104,23 +104,20 @@
                                     $time2ProximoJogo = $obJogo->time_2 = $jogo->vencedor;
                                     $obJogo->editarTime2();
                                 }
-
-                                $obMensagem->getMensagem("jogos.php", "success", "jogo editado com sucesso!");
+                                $menssagem = ["menssagem" => "jogo editado com sucesso!", "erro" => false];
                             }
-    
                     } else {
-                        $obMensagem->getMensagem("editar_jogos.php", "error", "Esse jogo já foi cadastrado. Por favor, tente novamente.", "&id=$id");
+                        $menssagem = ["menssagem" => "Esse jogo já foi cadastrado. Por favor, tente novamente.", "erro" => true];
                     }
                 } else {
-                    $obMensagem->getMensagem("editar_jogos.php", "error", "Ao definir um vencedor o status deve ser marcado como concluido.", "&id=$id");
+                    $menssagem = ["menssagem" => "Ao definir um vencedor o status deve ser marcado como concluido.", "erro" => true];
                 }
             } else {
-                $obMensagem->getMensagem("editar_jogos.php", "error", "Por favor, preencha todos os campos!", "&id=$id");
+                $menssagem = ["menssagem" => "Por favor, preencha todos os campos!", "erro" => true];
             }
         }
     } 
 
-    include __DIR__.'/includes/header.php';
-    include __DIR__.'/includes/editar_jogos.php';
-    include __DIR__.'/includes/footer.php';
+    header('Content-Type: aplication/json');
+    echo json_encode($menssagem);
 ?>

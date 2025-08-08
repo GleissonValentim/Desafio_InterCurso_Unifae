@@ -3,11 +3,10 @@
 
     session_start();
 
-    use \App\Entity\Mensagem;
     use \App\Entity\Usuario;
     use \App\Entity\Time;
     use \App\Entity\Usuario_and_time;
-    $obMensagem = new Mensagem;
+    use \App\Entity\Modalidade;
     $obUsuario = new Usuario;
     $Usuario_and_time = new Usuario_and_time;
     $obTime = new Time;
@@ -21,26 +20,14 @@
         $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
     }
 
+    $usuarios = Usuario::getUsuariosStatus('comum', 'atleta');
+    $titulo = "Usuarios comuns";
     $countAtleta = 1;
-    $time = Time::getTimeId($_SESSION['usuario']);
 
-    if (is_object($time)) {
-        $atletasTime = Usuario_and_time::getAtletasStatus($time->id, 1);
-
-        $atletas = [];
-        foreach($atletasTime as $atletaTime){
-            $atletas[] = Usuario::getUsuariosId($atletaTime->id_atleta);
-        }
-
-        $flatAtletas = [];
-        foreach ($atletas  as $subArray) {
-            foreach ($subArray as $atletaObj) {
-                $flatAtletas[] = $atletaObj;
-            }
-        }
-    } 
+    $totalAtletas = Modalidade::getModalidade(1); 
+    $atletasAtual = Usuario_and_time::getUsuarios(9);
     
     include __DIR__.'/includes/header.php';
-    include __DIR__.'/includes/listar_atletas_time.php';
+    include __DIR__.'/includes/listar_atletas.php';
     include __DIR__.'/includes/footer.php';
 ?>

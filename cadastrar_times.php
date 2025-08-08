@@ -20,8 +20,6 @@
         $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
     }
 
-    $modalidades = Modalidade::getModalidades();
-
     if(isset($_POST['nome'], $_POST['modalidade'])){
 
         $id = $_SESSION['usuario'];
@@ -39,22 +37,21 @@
                 if(count($verificarTime) < 1){
                     if(count($podeCadastrar) < 1){
                         $obTime->cadastrar();
-                        $obMensagem->getMensagem("times.php", "success", "Time cadastrado com sucesso!");
+                        $menssagem = ["menssagem" => "Time cadastrado com sucesso!", "erro" => false];
                     } else {
-                        $obMensagem->getMensagem("cadastrar_times.php", "error", "Não é possível cadastrar um novo time enquanto houver jogos em andamento.");
+                        $menssagem = ["menssagem" => "Não é possível cadastrar um novo time enquanto houver jogos em andamento.", "erro" => true];
                     }
                 } else {
-                    $obMensagem->getMensagem("cadastrar_times.php", "error", "Esse Time já foi cadastrado. Por favor cadastre outro.");
+                    $menssagem = ["menssagem" => "Esse Time já foi cadastrado. Por favor cadastre outro.", "erro" => true];
                 }
             } else {
-                $obMensagem->getMensagem("cadastrar_times.php", "error", "Voçe só pode cadastrar no máximo 1 time.");
+                $menssagem = ["menssagem" => "Voçe só pode cadastrar no máximo 1 time.", "erro" => true];
             }
         } else {
-            $obMensagem->getMensagem("cadastrar_times.php", "error", "Por favor preencha todos os campos!");
+            $menssagem = ["menssagem" => "Por favor preencha todos os campos!", "erro" => true];
         }
     }
 
-    include __DIR__.'/includes/header.php';
-    include __DIR__.'/includes/times.php';
-    include __DIR__.'/includes/footer.php';
+    header('Content-Type: aplication/json');
+    echo json_encode($menssagem);
 ?>

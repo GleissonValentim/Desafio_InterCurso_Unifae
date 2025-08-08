@@ -24,6 +24,7 @@
     $times = Time::getTimesId($id);
 
     $countTime = 1;
+    $modalidades = Modalidade::getModalidades();
 
     $cont = [];
     foreach($times as $time){
@@ -38,25 +39,6 @@
     } else {
         $meuTime = null;
     }
-
-    // if(is_array($times)){
-    //     $time = Time::getTimeId($_SESSION['usuario']);
-    
-    //     if ($time && is_object($time)) {
-    //         $modalidade = Modalidade::getModalidade($time->id_modalidade) ?? null;
-
-         
-
-    //         $cont = 0;
-    //         if(is_object($numeroAtletas) && $numeroAtletas){
-    //             foreach($numeroAtletas as $numeroAtleta){
-    //                 $cont ++;
-    //             }
-    //         }
-    //     } else {
-    //         $modalidade = null;
-    //     }
-    // }
     
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/listar_times.php';

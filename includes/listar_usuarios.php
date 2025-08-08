@@ -36,7 +36,7 @@
                                         <td><?= $usuario->email ?></td>
                                         <td><?= $usuario->tipo ?></td>
                                         <!-- <form action="gestores.php" method="POST"> -->
-                                            <td><button type="hidden" id="deletarGestor" class="btn btn-danger deletar-formulario ml-2" value="<?= $usuario->id ?>" name="remover">Remover gestor</button></td>
+                                            <td><button type="hidden" id=<?= $usuario->id ?> class="btn btn-danger deletar-formulario ml-2 deletarGestor" value="<?= $usuario->id ?>" name="remover">Remover gestor</button></td>
                                         <!-- </form> -->
                                     </tr>
                                 <?php else: ?>
@@ -46,7 +46,7 @@
                                         <td><?= $usuario->email ?></td>
                                         <td><?= $usuario->tipo ?></td>
                                         <!-- <form action="gestores.php" method="POST"> -->
-                                            <td><button type="hidden" id="definir" class="btn enviar-formulario ml-2" value="<?= $usuario->id ?>" name="definir">Definir gestor</button></td>
+                                            <td><button type="hidden" id=<?= $usuario->id ?> class="btn enviar-formulario ml-2 definir" value="<?= $usuario->id ?>" name="definir">Definir gestor</button></td>
                                         <!-- </form> -->
                                     </tr>
                                 <?php endif; ?>
