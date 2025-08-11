@@ -6,78 +6,63 @@
     use \App\Entity\jogo;
     use \App\Entity\Modalidade;
     use \App\Entity\Mensagem;
-    use \App\Entity\Usuario;
     $obMensagem = new Mensagem;
     $obModalidade = new Modalidade;
-
+    $saida = '';
     
-    $modalidades = Modalidade::getModalidades() ?? null;
-    $countModalidade = 1;
-    
-    $excluir = $_POST['excluir'] ?? null;
-    $editar = $_POST['editar'] ?? null;
+    $excluir = $_POST['del'] ?? null;
+    $editar = $_POST['edit'] ?? null;
 
     if($editar){
-        $idEditar = $_POST['editar'];
-
-        if(isset($_POST['nome'], $_POST['regras'], $_POST['atletas'])){
-            $id = $obModalidade->id = $idEditar;
-            $nome = $obModalidade->nome = $_POST["nome"];
-            $regras = $obModalidade->regras = $_POST["regras"];
-            $atletas = $obModalidade->numero_atletas = $_POST["atletas"];
-
-            if ($nome != '' && $regras != '' && $atletas != ''){
-
-                $verificarModalidades = Modalidade::getModalidadeNome($nome);
-
-                if(empty($verificarModalidades)){
-                    $obMensagem->getMensagem("modalidades.php", "error", "Erro ao editar a modalidade. Por favor, tente novamente.");
-                }
-
-                $nomeDuplicado = false;
-
-                foreach ($verificarModalidades as $verificarModalidade) {
-                    if ($verificarModalidade->id != $idEditar) {
-                        $nomeDuplicado = true;
-                        break;
-                    }
-                }
-
-                if (!$nomeDuplicado) {
-                    $modalidadeAndamento = Jogo::verificaDiferencaEtapa($id, 'concluida', null, null);
-
-                    if (empty($modalidadeAndamento)){
-                        $obModalidade->editarModalidade();
-                        $obMensagem->getMensagem("modalidades.php", "success", "modalidade editada com sucesso!");
-                    } else {
-                        $obMensagem->getMensagem("editar_modalidades.php", "error", "Essa modalidade está vinculdada há jogos que estão em andamento", "&id=$id");
-                    }
-                } else {
-                    $obMensagem->getMensagem("editar_modalidades.php", "error", "Essa modalidade já foi cadastrada. Por favor, tente novamente.", "&id=$id");
-                }
-            } else {
-                $obMensagem->getMensagem("editar_modalidades.php", "error", "Por favor, preencha todos os campos!", "&id=$id");
-            }
-        }
+        $modalidade = Modalidade::getModalidade($editar);
+        $saida .= '
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <form action="" id="atualizar_modalidade">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editarModalidade">Editar modalidade</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="nome">Nome: </label>
+                            <input type="hidden" name="id" id="id" class="form-control" value="'.$modalidade->id.'">
+                            <input type="text" class="form-control" name="nome" value="'.$modalidade->nome.'">
+                        </div>
+                        <div class="form-group">
+                            <label for="regras">Atletas: </label>
+                            <input type="number" class="form-control" name="atletas" value="'.$modalidade->numero_atletas.'">
+                        </div>
+                        <div class="form-group">
+                            <label for="regras">Regras: </label>
+                            <textarea class="form-control" name="regras" rows="6">'.$modalidade->regras.'</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" value="enviar" id="btn-show-sweetalert" class="btn enviar mt-2 pr-4 pl-4 mr-2">Enviar</button>
+                        <button type="button" class="btn cancelar mt-2 pr-4 pl-4" data-dismiss="modal">Fechar</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        ';
     } 
 
     if($excluir){
-        $id = $_POST['excluir'];
+        $id = $_POST['del'];
 
         $verificaModalidade = Jogo::verificaModalidade($id);
 
         if(count($verificaModalidade) < 1){
             $deleteModalidade = Modalidade::deleteModalidade($id);
-            $obMensagem->getMensagem("modalidades.php", "success", "modalidade excluida com sucesso!");
+            $saida = ["menssagem" => "modalidade excluida com sucesso!", "erro" => false];
         } else {
-            $obMensagem->getMensagem("modalidades.php", "error", "Não foi possível excluir esta modalidade, pois ela está vinculada a um ou mais jogos.", "&id=$id");
+            $saida = ["menssagem" => "Não foi possível excluir esta modalidade, pois ela está vinculada a um ou mais jogos.", "erro" => true];
         }
     } 
 
     header('Content-Type: aplication/json');
-    echo json_encode($modalidades);
-
-    // include __DIR__.'/includes/header.php';
-    // include __DIR__.'/includes/editar_modalidades.php';
-    // include __DIR__.'/includes/footer.php';
+    echo json_encode($saida);
 ?>

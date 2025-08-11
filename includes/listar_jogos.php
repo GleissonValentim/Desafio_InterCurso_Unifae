@@ -22,7 +22,28 @@
                 </div>
             </div>
             <div class="data-tables">
-                <?php if(!empty($jogos)): ?>
+                <table id="dataTable" class="text-center jogos">
+                    <thead class="bg-light text-capitalize">
+                        <tr>
+                            <th>Jogo</th>
+                            <th>Nome</th>
+                            <th>Local</th>
+                            <th>Modalidade</th>
+                            <th>Data</th>
+                            <th>Horário</th>
+                            <th>Time-1</th>
+                            <th>Time-2</th>
+                            <th>Vencedor</th>
+                            <th>Etapa</th>
+                            <th>Status</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody class="listar_jogos">
+                        
+                    </tbody>
+                </table>
+                <!-- <?php if(!empty($jogos)): ?>
                     <table id="dataTable" class="text-center jogos">
                         <thead class="bg-light text-capitalize">
                             <tr>
@@ -40,7 +61,7 @@
                                 <th>Ações</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="listar_jogos">
                             <?php foreach($jogos as $jogo): ?>
                                 <?php if($jogo->id_modalidade == $modalidadesFiltadas->id):?>
                                     <tr class="infos">
@@ -84,7 +105,7 @@
                 <?php endif; ?>
                 <?php if($vazio): ?>
                     <p class="text-center mt-5"><strong>Não há nenhum jogo cadastrado!</strong></p>
-                <?php endif; ?>
+                <?php endif; ?>  -->
             </div>
         </div>
     </div>
@@ -140,10 +161,6 @@
                 <label for="local">Local: </label>
                 <input type="text" class="form-control" name="local" value="<?=$jogo->local?>" placeholder="Digite o local do jogo">
             </div>
-            <!-- <div class="form-group">
-                <label for="data">Modalidade: </label>
-                <input type="modalidade" class="form-control" name="modalidade" value="<?=$verificarModalidade->nome?>">
-            </div> -->
             <div class="form-group">
                 <label for="data">Data: </label>
                 <input type="date" class="form-control" name="data" min="2025-07-01" value="<?=$jogo->data?>">
