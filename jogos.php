@@ -27,9 +27,16 @@
     $jogos = Jogo::getJogos();
     $countJogos = 1;
 
+    $getModalidades = Modalidade::getModalidades();
+
+    $modalidades = [];
+    foreach($jogos as $jogo){
+        $modalidades[$jogo->id] = Modalidade::getModalidade($jogo->id_modalidade);
+    }
+
     $modalidadesFiltadas;
-    if(isset($_POST['modalidades'])){
-        $modalidadesFiltadas = Modalidade::getModalidade($_POST['modalidades']);
+    if(isset($modalidade)){
+        $modalidadesFiltadas = Modalidade::getModalidade($modalidade);
         $filtro = $modalidadesFiltadas->nome;
     } else {
         $modalidadesFiltadas = Modalidade::getModalidade(1);
@@ -39,15 +46,6 @@
             $modalidadesFiltadas = null;
         }
     }
-
-    $getModalidades = Modalidade::getModalidades();
-
-    $modalidades = [];
-    foreach($jogos as $jogo){
-        $modalidades[$jogo->id] = Modalidade::getModalidade($jogo->id_modalidade);
-    }
-
-    print_r($modalidades);
 
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/listar_jogos.php';

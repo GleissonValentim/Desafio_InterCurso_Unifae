@@ -3,6 +3,35 @@ $(document).ready(function(){
         $('#myInput').trigger('focus')
     })
 
+    // Listar os filtros
+    function getFiltros() {
+        $.ajax({
+            url: 'http://localhost/repositorio/Desafio_InterCurso_Unifae/filtros.php',
+            method: 'GET',
+            dataType: 'json'
+        }).done(function(result){
+            $('.teste').html(result);
+        });
+    }
+    setInterval(getFiltros, 1000);
+
+    // Filtrar
+    $(document).on('click', '.filtrar', function(e){
+        e.preventDefault();
+        var id = $(this).attr("id");
+        console.log("eu")
+        $.ajax({
+            url: 'http://localhost/repositorio/Desafio_InterCurso_Unifae/imprimir_jogos.php',
+            method: 'POST',
+            data:{
+                id: id
+            }
+
+        }).done(function(data){
+           $('.listar_jogos').html(data);
+        })
+    });
+
     // Cadastrar modalidade
     $(document).on('submit', '#cadastrar_modalidade', function(e){
         e.preventDefault();
@@ -197,7 +226,7 @@ $(document).ready(function(){
         });
     });
 
-    // Cadastrar sortear os jogos
+    // Sortear os jogos
     $(document).on('submit', '#sortear_jogos', function(e){
         e.preventDefault();
         $.ajax({
@@ -227,14 +256,45 @@ $(document).ready(function(){
     // script de editar os jogos
     $(document).on('click', '.editar_jogos', function(e){
         e.preventDefault();
-        var id = $(this).attr("id");
+        var edit = $(this).attr("id");
+        $.ajax({
+            url: 'http://localhost/repositorio/Desafio_InterCurso_Unifae/atualizar_jogos.php',
+            method: 'POST',
+            data:{
+                edit: edit
+            }
+
+        }).done(function(data){
+           $('#editar_jogos').html(data);
+        })
+    });
+
+    // $(document).on('click', '.teste', function(e){
+    //     e.preventDefault();
+    //     var edit = $(this).attr("id");
+    //     console.log(edit)
+    //     $.ajax({
+    //         url: 'http://localhost/repositorio/Desafio_InterCurso_Unifae/atualizar_jogos.php',
+    //         method: 'POST',
+    //         data:{
+    //             edit: edit
+    //         }
+
+    //     }).done(function(data){
+    //        $('#editar_jogos').html(data);
+    //     })
+    // });
+
+    // script de atualizar os dados dos jogos
+    $(document).on('submit', '#atualizar_jogos', function(e){
+        e.preventDefault();
         $.ajax({
             url: 'http://localhost/repositorio/Desafio_InterCurso_Unifae/editar_jogos.php',
             method: 'POST',
-            data:{
-                id: id
-            }
-
+            data: new FormData(this),
+            contentType: false,
+            cache: false,
+            processData: false,
         }).done(function(data){
             if(data.erro == true){
                 Swal.fire({
@@ -259,7 +319,6 @@ $(document).ready(function(){
             method: 'GET',
             dataType: 'json'
         }).done(function(result){
-            console.log("eu")
             $('.listar_jogos').html(result);
         });
     }
@@ -360,6 +419,49 @@ $(document).ready(function(){
                 });
             }
         })
+    });
+
+    // Ecluir Times
+    $(document).on('click', '.remover_time', function(e){
+        e.preventDefault();
+        var del = $(this).attr("id");
+        console.log(del)
+        Swal.fire({
+            title: "Tem certeza?",
+            text: "Você não poderá reverter isso!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#39bd9c",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sim, apague!",
+            cancelButtonText: "Cancelar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                    url: 'http://localhost/repositorio/Desafio_InterCurso_Unifae/editar_time.php',
+                    method: 'POST',
+                    data:{
+                        del: del
+                    }
+                }).done(function(data){
+                    if(data.erro == true){
+                        Swal.fire({
+                            title: "Erro",
+                            text: data.menssagem,
+                            icon: "error"
+                        });
+                    } else {
+                    if (result.isConfirmed) {
+                            Swal.fire({
+                            title: "Deletado!",
+                            text: data.menssagem,
+                            icon: "success"
+                            });
+                        }
+                    }
+                })
+            }
+        });
     });
 
     // Editar notificações

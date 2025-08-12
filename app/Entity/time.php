@@ -56,6 +56,11 @@
             return (new DataBase('Time'))->select("id_modalidade = '$id'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
 
+        // Metodo responsavel por retornar um time pelo id da modalidade
+        public static function getTimeModalidade($id, $nome){
+            return (new DataBase('Time'))->select("id_gestor = '$id' and nome = '$nome'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        }
+
         // Metodo responsavel por retornar um os times vencedores
         public static function getVencedores($id){
             return (new DataBase('Time'))->select("id_modalidade = '$id' and id in (select vencedor from jogo where vencedor is not null)", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
@@ -73,9 +78,19 @@
             return (new DataBase('Time'))->select("id_modalidade = '$id' and id in (select time1 from jogo where etapa = '$etapa') or id in (select time2 from jogo where etapa = '$etapa') and id not in (select vencedor from jogo where etapa = '$etapa')", null, null, '*')->fetchObject(self::class);
         } 
 
+        // Metodo responsavel por retornar os times que fazem parte dos jogos
+        public static function getTimesJogos($id, $modalidade, $status1, $status2){
+            return (new DataBase('Time'))->select("'$id' in (select time1 from jogo where status = '$status1' or status = '$status2' and id_modalidade = '$modalidade') or id in (select time2 from jogo where status = '$status1' or status = '$status2' and id_modalidade = '$modalidade')", null, null, '*')->fetchObject(self::class);
+        } 
+
         // Metodo responsavel por retornar todos os times pelo nome e modalidade
         public static function getTimeNome($nome, $modalidade){
             return (new DataBase('Time'))->select("nome = '$nome' and id_modalidade = '$modalidade'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);
+        }
+
+        // Metodo responsavel por excluir um time
+        public static function deleteTime($id){
+            return (new DataBase('Time'))->delete("id = '$id'");
         }
 
         // Metodo responsavel por trocar o gestor

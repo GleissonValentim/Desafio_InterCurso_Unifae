@@ -29,6 +29,9 @@
         }
     }
 
+    $timeJogando = Time::getTimesJogos(3, 47, 'Não começou', 'Em andamento');
+    print_r($timeJogando);
+
     $times1 = [];
     $times2 = [];
     $vencedor = [];

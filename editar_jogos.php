@@ -21,12 +21,16 @@
         $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
     }
 
-    $id = $_GET['id'];
-    if(isset($_GET['id'])){
-        $id = $_GET['id'];
+    $menssagem = ["menssagem" => "Voçe não tem acesso a essa página", "erro" => true];
+    $id = $_POST['id'];
+    if(isset($_POST['id'])){
+        $id = $_POST['id'];
         $jogo = Jogo::getJogo($id);
         $time1= Time::getIdTime($jogo->time1);
         $time2 = Time::getIdTime($jogo->time2);
+
+        $segundoTime = $jogo->time2;
+        $primeiroTime = $jogo->time1;
 
         if($jogo->status == 'Concluido'){
             $menssagem = ["menssagem" => "Voçe não tem acesso a essa página", "erro" => true];
@@ -37,22 +41,12 @@
         $menssagem = ["menssagem" => "Voçe não tem acesso a essa página", "erro" => true];
     }
 
-    $editar = $_POST['editar'] ?? null;
+    $editar = $_POST['id'] ?? null;
 
     $modalidades = Modalidade::getModalidades();
-
-    $segundoTime = $jogo->time2;
-    $primeiroTime = $jogo->time1;
-
-    // $perdedor = Time::getPerdedor(1, 'Classificatória Extra');
-
-    // echo $perdedor->nome;
-    // $proximoJogo = Jogo::getJogo(190);
-
-    // echo $proximoJogo->time1;
                         
     if($editar){
-        $idEditar = $_POST['editar'];
+        $idEditar = $_POST['id'];
 
         if(isset($_POST['nome'], $_POST['local'], $_POST['modalidade'], $_POST['data'], $_POST['status'], $_POST['horario'], $_POST['vencedor'])){
 
@@ -104,8 +98,8 @@
                                     $time2ProximoJogo = $obJogo->time_2 = $jogo->vencedor;
                                     $obJogo->editarTime2();
                                 }
-                                $menssagem = ["menssagem" => "jogo editado com sucesso!", "erro" => false];
                             }
+                        $menssagem = ["menssagem" => "jogo editado com sucesso!", "erro" => false];
                     } else {
                         $menssagem = ["menssagem" => "Esse jogo já foi cadastrado. Por favor, tente novamente.", "erro" => true];
                     }

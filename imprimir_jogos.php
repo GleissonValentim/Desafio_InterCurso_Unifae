@@ -42,6 +42,10 @@
         }
     }
 
+    // if(isset($_POST['id'])){
+    //     $jogos = Jogo::getJogosModalidade($_POST['id']);
+    // }
+
     $getModalidades = Modalidade::getModalidades();
 
     $times1 = [];
@@ -92,60 +96,52 @@
         $modalidades[$jogo->id] = Modalidade::getModalidade($jogo->id_modalidade);
     }
 
-    $time1 = null;
-    foreach($jogos as $jogo){
-        if($jogo->time1 != null){
-            $time1 = $times1[$jogo->id]->nome;
-        } else {
-            $time1 = '<p class="proximo_jogo">Vencedor do jogo '.$count[$jogo->id].'</p>';
-        }
+    if(!empty($jogos)){
+        foreach($jogos as $jogo){
+            if($jogo->time1 != null){
+                $time1 = $times1[$jogo->id]->nome;
+            } else {
+                $time1 = '<p class="proximo_jogo">Vencedor do jogo '.$count[$jogo->id].'</p>';
+            }
 
-        if($jogo->time2 != null){
-            $time2 = $times2[$jogo->id]->nome;
-        } else {
-            $time2 = '<p class="proximo_jogo">Vencedor do jogo '.$count2[$jogo->id].'</p>';
-        }
+            if($jogo->time2 != null){
+                $time2 = $times2[$jogo->id]->nome;
+            } else {
+                $time2 = '<p class="proximo_jogo">Vencedor do jogo '.$count2[$jogo->id].'</p>';
+            }
 
-        if(empty($vencedor[$jogo->id])){
-            $vencedor = 'Não tem';
-        } else {
-            $vencedor = $vencedor[$jogo->id]->nome;
-        }   
+            if(!empty($vencedor[$jogo->id])){
+                $vencer = $vencedor[$jogo->id]->nome;
+            } else {
+                $vencer = 'Não tem';
+            }   
 
-        if($jogo->status != 'concluido'){
-            $button = '<button type="button" class="btn enviar-formulario ml-2 editar_jogos" data-toggle="modal" data-target="#exampleEdit" data-whatever="@mdo" id="<?=$jogo->id?> " name="editar">Editar Jogo</button>';
+            if($jogo->status != 'concluido'){
+                $button = '<button type="button" class="btn enviar-formulario ml-2 editar_jogos" data-toggle="modal" data-target="#exampleEdit" data-whatever="@mdo" id="'.$jogo->id.'" name="editar">Editar Jogo</button>';
+            }
+            
+            $saida .= '
+                <tr class="infos">
+                    <td>'.$countJogos++.'</td>
+                    <td>'.$jogo->nome.'</td>
+                    <td>'.$jogo->local.'</td>
+                    <td>'.$modalidades[$jogo->id]->nome.'</td>
+                    <td>'.$data[$jogo->id].'</td>
+                    <td>'.$jogo->horario.'</td>
+                    <td>'.$time1.'</td>
+                    <td>'.$time2.'</td>
+                    <td>'.$vencer.'</td>
+                    <td>'.$etapas[$jogo->id]->Nome.'</td>
+                    <td>'.$jogo->status.'</td>
+                    <td>
+                        '.$button.'
+                    </td>
+                </tr>
+            ';
         }
-        
-        $saida .= '
-            <tr class="infos">
-                <td>'.$countJogos++.'</td>
-                <td>'.$jogo->nome.'</td>
-                <td>'.$jogo->local.'</td>
-                <td>'.$modalidades[$jogo->id]->nome.'</td>
-                <td>'.$data[$jogo->id].'</td>
-                <td>'.$jogo->horario.'</td>
-                <td>'.$time1.'</td>
-                <td>'.$time2.'</td>
-                <td>'.$vencedor.'</td>
-                <td>'.$etapas[$jogo->id]->Nome.'</td>
-                <td>'.$jogo->status.'</td>
-                <td>
-                     '.$button.'
-                 </td>
-            </tr>
-        ';
+    } else {
+        // $saida .= '<p class="text-center mt-5"><strong>Não há nenhum jogo cadastrado!</strong></p>';
     }
-
-    // <td>'.$vencedor1.'</td>
-    //             <td>'.$$time2.'</td>
-    //             <td>'.$vencedor2.'</td>
-    //             <td>'.$naoTem.'</td>
-    //             <td>'.$vencedor3.'</td>
-    //             <td>'.$etapas[$jogo->id]->nome.'</td>
-    //             <td>'.$jogo->status.'</td>
-    //             <td>
-    //                 '.$button.'
-    //             </td>
 
     header('Content-Type: aplication/json');
     echo json_encode($saida);

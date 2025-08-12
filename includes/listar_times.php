@@ -14,15 +14,17 @@
                                 <th>Nome</th>
                                 <th>Numero de Atletas</th>
                                 <th>Modalidade</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php foreach($times as $time): ?>
                                 <tr class="infos">
                                     <td><?= $countTime++ ?></td>
-                                    <td><?= $time->nome?></a></td>
+                                    <td><?= $time->nome?></td>
                                     <td><?= $cont?></td>
-                                    <td><?= $modalidade->nome ?></a></td>
+                                    <td><?= $modalidade->nome ?></td>
+                                    <td><button class="btn btn-danger deletar-formulario ml-2 remover_time" id="<?= $time->id ?>">Excluir time</button></td>
                                 </tr>
                             <?php endforeach; ?> 
                         </tbody>
