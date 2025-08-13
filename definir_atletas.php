@@ -7,8 +7,10 @@
     use \App\Entity\Time;
     use \App\Entity\Usuario_and_time;
     use \App\Entity\Modalidade;
+    use \App\Entity\Mensagem;
     $obUsuario = new Usuario;
     $Usuario_and_time = new Usuario_and_time;
+    $obMensagem = new Mensagem;
     $obTime = new Time;
 
     if (isset($_SESSION['usuario'])) {
@@ -20,16 +22,16 @@
         $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
     }
 
-    if(isset($_POST['edit'])){
-        $id = $Usuario_and_time->atleta = $_POST['edit'];
-        $idGestor = $_SESSION['usuario'];
-        $idTime = Time::getTimeId($idGestor);
+    if(isset($_POST['id'])){
+        $id = $Usuario_and_time->atleta = $_POST['id'];
+        // $idGestor = $_SESSION['usuario'];
+        $idTime = Time::getIdTime($_POST['edit']);
 
         if($idTime){
             $numeroAtletas = Usuario_and_time::getAtletas($idTime->id);
 
-            $id_jogador = $Usuario_and_time->atleta = $_POST['edit'];
-            $id_time = $Usuario_and_time->time = $idTime->id;
+            $id_jogador = $Usuario_and_time->atleta = $_POST['id'];
+            $id_time = $Usuario_and_time->time = $_POST['edit'];
             $status = $Usuario_and_time->status = 0;
 
             $totalAtletas = Modalidade::getModalidade($idTime->id_modalidade); 

@@ -30,10 +30,22 @@
         if ($nome != '' && $modalidade != ''){
 
             $verificarTime = Time::getTimeNome($nome, $modalidade);
-            $verificarGestor = Time::getTimeModalidade($id, $nome);
+            $verificarCurso = Time::getTimeId($id);
             $podeCadastrar = Jogo::getStatus($modalidade, 'Não começou', 'Em andamento');
+
+            $avancar = true;
+
+            if($verificarCurso){
+                if ($verificarCurso->nome == $nome){
+                    $avancar = true;
+                } else {
+                    $avancar = false;
+                    $menssagem = ["menssagem" => "Voçe só pode cadastrar os times de seu respectivo curso.", "erro" => true];
+                }
+            }
             
-            if (!$verificarGestor){
+           
+            if($avancar == true){
                 if(count($verificarTime) < 1){
                     if(count($podeCadastrar) < 1){
                         $obTime->cadastrar();
@@ -44,11 +56,7 @@
                 } else {
                     $menssagem = ["menssagem" => "Esse Time já foi cadastrado. Por favor cadastre outro.", "erro" => true];
                 }
-            } else {
-                $menssagem = ["menssagem" => "Voçe só pode cadastrar os times de seu respectivo curso.", "erro" => true];
             }
-        } else {
-            $menssagem = ["menssagem" => "Por favor preencha todos os campos!", "erro" => true];
         }
     }
 

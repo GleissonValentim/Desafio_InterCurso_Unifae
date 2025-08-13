@@ -51,27 +51,6 @@
         }
     }
 
-    
-
-    // $times = [];
-    // foreach($todosTimes as $time){
-    //     $times[] = Time::getTime($time->id_time); 
-    // }
-
-    // $gestores = [];
-    // $cont = [];
-    // foreach($times as $time){
-    //     $gestores = Usuario::getUsuariosId($time->id_gestor);
-
-    //     $numeroAtletas = Usuario_and_time::getAtletasStatus($time->id, '1');
-    //     $cont = count($numeroAtletas);
-    // }
-
-    // $modalidades = [];
-    // foreach($times as $time){
-    //     $modalidades[$time->id] = Modalidade::getModalidade($time->id_modalidade);
-    // }
-
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/timesParticipando.php';
     include __DIR__.'/includes/footer.php';

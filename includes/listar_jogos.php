@@ -4,25 +4,25 @@
             <div class="row d-flex justify-content-between align-items-center mb-4 filtragem">
                 <h4 class="header-title">Jogos</h4>
                 <div class="d-flex align-items-center">
-                    <button type="button" class="btn enviar pr-4" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Sortear jogos</button>
-                    <select class="form-control ml-4 mr-2 teste" name="modalidades">
+                    <button type="button" class="btn enviar pr-4" data-toggle="modal" data-target="#exampleModalidade" data-whatever="@mdo">Sortear jogos</button>
+                    <!-- <select class="form-control ml-4 mr-2 teste" name="modalidades">
             
-                    </select>
-                    <button type="submit" class="btn enviar">Filtrar</button>
-                    <!-- <form action="jogos.php" class="d-flex teste" method="POST">
-                        <select class="form-control ml-4 mr-2" name="modalidades">
+                    </select> -->
+                    <!-- <button type="submit" class="btn enviar">Filtrar</button> -->
+                    <form action="jogos.php" class="d-flex teste" method="POST">
+                        <select class="form-control ml-4 mr-2" id="filtro_modalidades" name="modalidades">
                             <?php if(empty($getModalidades)): ?>
                                 <option value="">Selecione</option>
                             <?php else: ?>
                                 <option value=""><?= $filtro ?></option>
                             <?php endif; ?>
                             <?php foreach($getModalidades as $getModalidade): ?>
-                                <input type="hidden" name="id" id="id" class="form-control" value="<?= $getModalidade->id ?>">
-                                <option value="<?= $getModalidade->id ?>"><?= $getModalidade->nome ?></option>
+                                <!-- <input type="hidden" name="id" id="id" class="form-control" value="<?= $getModalidade->id ?>"> -->
+                                <option id="<?= $getModalidade->id ?>" value="<?= $getModalidade->id ?>"><?= $getModalidade->nome ?></option>
                             <?php endforeach; ?>
                         </select>
                         <button type="submit" class="btn enviar">Filtrar</button>
-                    </form> -->
+                    </form>
                 </div>
             </div>
             <div class="data-tables">
@@ -116,7 +116,7 @@
 </div>
 
 <!-- Modal sortear -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModalidade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <form action="" id="sortear_jogos">

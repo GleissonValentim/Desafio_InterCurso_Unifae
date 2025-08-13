@@ -20,25 +20,22 @@
         $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
     }
 
+    $getModalidades = Modalidade::getModalidades();
+
     $id = $_SESSION['usuario'];
     $times = Time::getTimesId($id);
 
     $countTime = 1;
-    $modalidades = Modalidade::getModalidades();
 
+    $modalidades = [];
     $cont = [];
     foreach($times as $time){
         $numeroAtletas = Usuario_and_time::getAtletasStatus($time->id, '1');
         $cont = count($numeroAtletas);
+        $modalidades[$time->id] = Modalidade::getModalidade($time->id_modalidade);
     }
 
     $meuTime = Time::getTimeId($_SESSION['usuario']);
-
-    if(!empty($meuTime)){
-        $modalidade = Modalidade::getModalidade($meuTime ->id_modalidade) ?? null;
-    } else {
-        $meuTime = null;
-    }
     
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/listar_times.php';

@@ -34,7 +34,6 @@
         $modalidades[$jogo->id] = Modalidade::getModalidade($jogo->id_modalidade);
     }
 
-    $modalidadesFiltadas;
     if(isset($modalidade)){
         $modalidadesFiltadas = Modalidade::getModalidade($modalidade);
         $filtro = $modalidadesFiltadas->nome;
@@ -46,6 +45,8 @@
             $modalidadesFiltadas = null;
         }
     }
+
+
 
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/listar_jogos.php';

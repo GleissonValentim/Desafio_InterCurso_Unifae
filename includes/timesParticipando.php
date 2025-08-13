@@ -14,6 +14,7 @@
                                 <th>Gestor</th>
                                 <th>Numeo de atletas</th>
                                 <th>Modalidade</th>
+                                <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -25,6 +26,7 @@
                                         <td><?= $novo[$novoTime->id]?></td>
                                         <td><?= $cont ?></td>
                                         <td><?= $modalidades[$novoTime->id]->nome?></td> 
+                                        <td><button type="hidden" class="btn btn-danger deletar-formulario ml-2 sair_time" id="<?= $novoTime->id ?>" name="sair">Sair do time</button></td> 
                                     </tr>
                                 <?php endforeach; ?>  
                             <?php endforeach; ?> 

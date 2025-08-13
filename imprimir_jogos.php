@@ -26,7 +26,11 @@
     $modalidade = $_POST['modalidades'] ?? null;
 
     $jogos = [];
-    $jogos = Jogo::getJogos();
+    if(!empty($_GET['id'])){
+        $jogos = Jogo::getJogosModalidade($_GET['id']);
+    } else {
+        $jogos = Jogo::getJogosModalidade(1);
+    }
     $countJogos = 1;
 
     $modalidadesFiltadas;

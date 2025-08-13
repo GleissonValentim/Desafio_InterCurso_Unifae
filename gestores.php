@@ -3,10 +3,10 @@
 
     session_start();
 
-    // use \App\Entity\Mensagem;
+    use \App\Entity\Mensagem;
     use \App\Entity\Usuario;
     use \App\Entity\Time;
-    // $obMensagem = new Mensagem;
+    $obMensagem = new Mensagem;
     $obUsuario = new Usuario;
     $obTime = new Time;
 

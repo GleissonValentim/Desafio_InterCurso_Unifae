@@ -79,9 +79,25 @@
         } 
 
         // Metodo responsavel por retornar os times que fazem parte dos jogos
-        public static function getTimesJogos($id, $modalidade, $status1, $status2){
-            return (new DataBase('Time'))->select("'$id' in (select time1 from jogo where status = '$status1' or status = '$status2' and id_modalidade = '$modalidade') or id in (select time2 from jogo where status = '$status1' or status = '$status2' and id_modalidade = '$modalidade')", null, null, '*')->fetchObject(self::class);
-        } 
+        public static function getTimesJogos($id, $modalidade, $status1, $status2) {
+            return (new DataBase('Time'))->select(
+                "'$id' IN (
+                    SELECT time1 
+                    FROM jogo 
+                    WHERE (status = '$status1' OR status = '$status2') 
+                    AND id_modalidade = '$modalidade'
+                )
+                OR '$id' IN (
+                    SELECT time2 
+                    FROM jogo 
+                    WHERE (status = '$status1' OR status = '$status2') 
+                    AND id_modalidade = '$modalidade'
+                )",
+                null,
+                null,
+                '*'
+            )->fetchObject(self::class);
+        }
 
         // Metodo responsavel por retornar todos os times pelo nome e modalidade
         public static function getTimeNome($nome, $modalidade){

@@ -23,7 +23,7 @@
                                     <td><?= $countTime++ ?></td>
                                     <td><?= $time->nome?></td>
                                     <td><?= $cont?></td>
-                                    <td><?= $modalidade->nome ?></td>
+                                    <td><?= $modalidades[$time->id]->nome ?></td>
                                     <td><button class="btn btn-danger deletar-formulario ml-2 remover_time" id="<?= $time->id ?>">Excluir time</button></td>
                                 </tr>
                             <?php endforeach; ?> 
@@ -57,7 +57,7 @@
                 <label for="modalidade">Modalidade: </label>
                 <select class="form-control" name="modalidade">
                     <option value="">Selecione uma modalidade</option>
-                    <?php foreach($modalidades as $modalidade): ?>
+                    <?php foreach($getModalidades as $modalidade): ?>
                         <option value="<?= $modalidade->id ?>"><?= $modalidade->nome?></option>
                     <?php endforeach; ?>
                 </select>

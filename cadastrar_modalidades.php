@@ -5,16 +5,18 @@
 
     use \App\Entity\Modalidade;
     use \App\Entity\Usuario;
+    use \App\Entity\Mensagem;
     use \App\Entity\jogo;
     $obModalidade = new Modalidade;
+    $obMensagem = new Mensagem;
 
     if (isset($_SESSION['usuario'])) {
         $usuario = Usuario::getUsuarioId($_SESSION['usuario']);
         if ($usuario->tipo != "Organizador") {
-            $menssagem = "Voçe não tem acesso a essa página";
+            $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
         }
     } else {
-        $menssagem = "Voçe não tem acesso a essa página"; $erro = true;
+        $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
     }
 
     if(empty($_POST["id"])){

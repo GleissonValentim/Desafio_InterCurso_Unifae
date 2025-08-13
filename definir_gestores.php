@@ -3,10 +3,10 @@
 
     session_start();
 
-    // use \App\Entity\Mensagem;
+    use \App\Entity\Mensagem;
     use \App\Entity\Usuario;
     use \App\Entity\Time;
-    // $obMensagem = new Mensagem;
+    $obMensagem = new Mensagem;
     $obUsuario = new Usuario;
     $obTime = new Time;
 
@@ -19,8 +19,8 @@
         $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
     }
 
-    if(isset($_POST['id'])){
-        $id = $obUsuario->id = $_POST['id'];
+    if(isset($_POST['edit'])){
+        $id = $obUsuario->id = $_POST['edit'];
         $tipo = $obUsuario->tipo = "gestor";
         $definir = $obUsuario->getUsuarioTipo();
 

@@ -25,7 +25,8 @@
                                     <td><?= $usuario->nome ?></td>
                                     <td><?= $usuario->email ?></td>
                                     <td><?= $usuario->tipo ?></td>
-                                    <td><button type="hidden" class="btn enviar-formulario ml-2 definir_atleta" id="<?= $usuario->id ?>" name="definir">Definir Atleta</button></td>
+                                    <!-- <td><button type="hidden" class="btn enviar-formulario ml-2 definir_atleta" id="<?= $usuario->id ?>" name="definir">Definir Atleta</button></td> -->
+                                    <td><button type="button" class="btn enviar-formulario ml-2 definir_atleta_1" value="<?= $usuario->id ?>" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Definir Atleta</button></td>
                                 </tr>
                             <?php endforeach; ?> 
                         </tbody>
@@ -36,4 +37,33 @@
             </div>
         </div>
     </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <form action="" id="definir_atleta_2">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Escolha um time</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <label for="times">Meus times: </label>
+            <select class="form-control id_atleta" name="modalidade">
+                <option value="">Selecione</option>
+                <?php foreach($times as $time): ?>
+                    <option value="<?= $time->id ?>"><?= $time->nome ?></option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" value="enviar" class="btn enviar mt-2 pr-4 pl-4 mr-2">Definir atleta</button>
+            <button type="button" class="btn cancelar mt-2 pr-4 pl-4" data-dismiss="modal">Fechar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

@@ -21,7 +21,7 @@
         $nome = $obUsuario->nome = $_POST["nome"];
 
         if ($nome != ''){
-            $obUsuario->editarUsuario();
+            $obUsuario->editarUsuarioNome();
 
             if($obUsuario){
                 $obMensagem->getMensagem("index.php", "success", "Usuário editado com sucesso!"); 
@@ -32,20 +32,22 @@
             $obMensagem->getMensagem("editar_perfil.php", "error", "Por favor, preencha todos os campos!");
         }
 
-        if ($_POST['senha'] == $_POST['confirmar_senha']){
-            $novaSenha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
-            $senha = $obUsuario->senha = $novaSenha;
+        if($_POST['senha'] != null && $_POST['confirmar_senha']){
+            if ($_POST['senha'] == $_POST['confirmar_senha']){
+                $novaSenha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+                $senha = $obUsuario->senha = $novaSenha;
 
-            $obUsuario->editarUsuario();
+                $obUsuario->editarUsuarioSenha();
 
-            if($obUsuario){
-                $obMensagem->getMensagem("index.php", "success", "Usuário editado com sucesso!"); 
+                if($obUsuario){
+                    $obMensagem->getMensagem("index.php", "success", "Usuário editado com sucesso!"); 
+                } else {
+                    $obMensagem->getMensagem("editar_perfil.php", "error", "Erro ao editar o usuário. Por favor, tente novamente."); 
+                }
             } else {
-                $obMensagem->getMensagem("editar_perfil.php", "error", "Erro ao editar o usuário. Por favor, tente novamente."); 
+                $obMensagem->getMensagem("editar_perfil.php", "error", "As senhas não batem. Por favor, tente novamente.");  
             }
-        } else {
-            $obMensagem->getMensagem("editar_perfil.php", "error", "As senhas não batem. Por favor, tente novamente.");  
-        }
+        } 
     }
 
     include __DIR__.'/includes/header.php';

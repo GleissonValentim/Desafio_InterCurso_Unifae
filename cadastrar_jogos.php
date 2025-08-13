@@ -7,10 +7,12 @@
     use \App\Entity\Usuario;
     use \App\Entity\Time;
     use \App\Entity\Etapa;
+    use \App\Entity\Mensagem;
     $obJogo = new Jogo;
 
     use \App\Entity\Modalidade;
     $obModalidade = new Modalidade;
+    $obMensagem = new Mensagem;
 
     if (isset($_SESSION['usuario'])) {
         $usuario = Usuario::getUsuarioId($_SESSION['usuario']);

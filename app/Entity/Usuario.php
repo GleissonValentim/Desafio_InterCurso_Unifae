@@ -75,10 +75,16 @@
             return (new DataBase('usuario'))->select("email = '$email'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
 
-        // Metodo responsavel por editar um usuario
-        public function editarUsuario(){
+        // Metodo responsavel por editar o nome dp usuario
+        public function editarUsuarioNome(){
             return (new Database('usuario'))->update('id = '.$this->id, [
                                                 'nome' => $this->nome,
+            ]);
+        }
+
+        // Metodo responsavel por editar um usuario
+        public function editarUsuarioSenha(){
+            return (new Database('usuario'))->update('id = '.$this->id, [
                                                 'senha' => $this->senha
             ]);
         }

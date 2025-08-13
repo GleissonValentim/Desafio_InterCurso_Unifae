@@ -4,16 +4,16 @@ $(document).ready(function(){
     })
 
     // Listar os filtros
-    function getFiltros() {
-        $.ajax({
-            url: 'http://localhost/repositorio/Desafio_InterCurso_Unifae/filtros.php',
-            method: 'GET',
-            dataType: 'json'
-        }).done(function(result){
-            $('.teste').html(result);
-        });
-    }
-    setInterval(getFiltros, 1000);
+    // function getFiltros() {
+    //     $.ajax({
+    //         url: 'http://localhost/repositorio/Desafio_InterCurso_Unifae/filtros.php',
+    //         method: 'GET',
+    //         dataType: 'json'
+    //     }).done(function(result){
+    //         $('.teste').html(result);
+    //     });
+    // }
+    // setInterval(getFiltros, 1000);
 
     // Filtrar
     $(document).on('click', '.filtrar', function(e){
@@ -312,12 +312,24 @@ $(document).ready(function(){
         })
     })
 
+    // Guarda o id da modalidade dos jogos
+    $(document).on('submit', '.teste', function(e){
+        e.preventDefault();
+
+        var id = $('#filtro_modalidades').val();
+        $('.listar_jogos').data('modalidade-id', id);
+    });
+
     // Listar os jogos
     function getjogos() {
+        var id = $('.listar_jogos').data('modalidade-id');
         $.ajax({
             url: 'http://localhost/repositorio/Desafio_InterCurso_Unifae/imprimir_jogos.php',
             method: 'GET',
-            dataType: 'json'
+            dataType: 'json',
+            data:{
+                id: id
+            }
         }).done(function(result){
             $('.listar_jogos').html(result);
         });
@@ -325,15 +337,25 @@ $(document).ready(function(){
 
     setInterval(getjogos, 1000);
 
-    // script para definir um atleta
-    $(document).on('click', '.definir_atleta', function(e){
+    // Guarda o id do atleta
+    $(document).on('click', '.definir_atleta_1', function(e){
         e.preventDefault();
-        var edit = $(this).attr("id");
+
+        var id = $(this).val(); 
+        $('#exampleModal').data('usuario-id', id);
+    });
+
+    // script para definir um atleta
+    $(document).on('submit', '#definir_atleta_2', function(e){
+        e.preventDefault();
+        var edit = $('select[name="modalidade"]').val();
+        var id = $('#exampleModal').data('usuario-id');
         $.ajax({
             url: 'http://localhost/repositorio/Desafio_InterCurso_Unifae/definir_atletas.php',
             method: 'POST',
             data:{
-                edit: edit
+                edit: edit,
+                id: id
             }
         }).done(function(data){
             if(data.erro == true){
@@ -442,6 +464,49 @@ $(document).ready(function(){
                     method: 'POST',
                     data:{
                         del: del
+                    }
+                }).done(function(data){
+                    if(data.erro == true){
+                        Swal.fire({
+                            title: "Erro",
+                            text: data.menssagem,
+                            icon: "error"
+                        });
+                    } else {
+                    if (result.isConfirmed) {
+                            Swal.fire({
+                            title: "Deletado!",
+                            text: data.menssagem,
+                            icon: "success"
+                            });
+                        }
+                    }
+                })
+            }
+        });
+    });
+
+    // Sair de um time
+    $(document).on('click', '.sair_time', function(e){
+        e.preventDefault();
+        var sair = $(this).attr("id");
+        console.log(sair)
+        Swal.fire({
+            title: "Tem certeza?",
+            text: "Você não poderá reverter isso!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#39bd9c",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sim, sair do time!",
+            cancelButtonText: "Cancelar",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                    url: 'http://localhost/repositorio/Desafio_InterCurso_Unifae/editar_time.php',
+                    method: 'POST',
+                    data:{
+                        sair: sair
                     }
                 }).done(function(data){
                     if(data.erro == true){

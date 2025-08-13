@@ -8,6 +8,7 @@
     use \App\Entity\Time;
     use \App\Entity\Etapa;
     use \App\Entity\Modalidade;
+    use \App\Entity\Usuario_and_time;
     use \App\Entity\Usuario;
     $obUsuario = new Usuario;
     $obEtapa = new Etapa;
@@ -28,9 +29,6 @@
             $modalidadesFiltadas = null;
         }
     }
-
-    $timeJogando = Time::getTimesJogos(3, 47, 'Não começou', 'Em andamento');
-    print_r($timeJogando);
 
     $times1 = [];
     $times2 = [];

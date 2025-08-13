@@ -7,8 +7,10 @@
     use \App\Entity\Time;
     use \App\Entity\Usuario_and_time;
     use \App\Entity\Modalidade;
+    use app\Entity\Mensagem;
     $obUsuario = new Usuario;
     $Usuario_and_time = new Usuario_and_time;
+    $obMensagem = new Mensagem;
     $obTime = new Time;
 
     if (isset($_SESSION['usuario'])) {
@@ -23,6 +25,9 @@
     $usuarios = Usuario::getUsuariosStatus('comum', 'atleta');
     $titulo = "Usuarios comuns";
     $countAtleta = 1;
+
+    $id = $_SESSION['usuario'];
+    $times = Time::getTimesId($id);
 
     $totalAtletas = Modalidade::getModalidade(1); 
     $atletasAtual = Usuario_and_time::getUsuarios(9);
