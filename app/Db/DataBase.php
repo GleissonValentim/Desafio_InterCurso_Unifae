@@ -10,7 +10,7 @@
         const HOST = 'localhost';
         const NAME = 'intercurso';
         const USER = 'root';
-        const PASS = '1234';
+        const PASS = '';
 
         //Nome da tabela a ser manipulada
         private $table;

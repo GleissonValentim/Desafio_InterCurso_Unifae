@@ -6,6 +6,7 @@
     use \App\Entity\jogo;
     use \App\Entity\Modalidade;
     use \App\Entity\Usuario;
+    use \App\Entity\Time;
     use \App\Entity\Mensagem;
     $obMensagem = new Mensagem;
     $obModalidade = new Modalidade;
@@ -66,8 +67,14 @@
         $verificaModalidade = Jogo::verificaModalidade($id);
 
         if(count($verificaModalidade) < 1){
-            $deleteModalidade = Modalidade::deleteModalidade($id);
-            $saida = ["menssagem" => "modalidade excluida com sucesso!", "erro" => false];
+            $verificaTime = Time::getModalidade($id);
+            
+            if(count($verificaTime) < 1){
+                $deleteModalidade = Modalidade::deleteModalidade($id);
+                $saida = ["menssagem" => "modalidade excluida com sucesso!", "erro" => false];
+            } else {
+                $saida = ["menssagem" => "Não foi possível excluir esta modalidade, pois ela está vinculada a um ou mais times.", "erro" => true];
+            }
         } else {
             $saida = ["menssagem" => "Não foi possível excluir esta modalidade, pois ela está vinculada a um ou mais jogos.", "erro" => true];
         }

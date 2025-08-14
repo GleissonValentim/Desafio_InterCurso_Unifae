@@ -7,6 +7,7 @@
     use \App\Entity\Usuario;
     use \App\Entity\Time;
     use \App\Entity\Usuario_and_time;
+    use \App\Entity\Modalidade;
     $obMensagem = new Mensagem;
     $obUsuario = new Usuario;
     $Usuario_and_time = new Usuario_and_time;
@@ -22,12 +23,32 @@
     }
 
     $countAtleta = 1;
-    $time = Time::getTimeId($_SESSION['usuario']);
+    $getModalidades = Modalidade::getModalidades();
 
-    if (is_object($time)) {
-        $atletasTime = Usuario_and_time::getAtletasStatus($time->id, 1);
+    $modalidadesFiltadas;
+    if(isset($_POST['modalidades'])){
+        $modalidadesFiltadas = Modalidade::getModalidade($_POST['modalidades']);
+        $time = Time::getIdModalidade($_SESSION['usuario'], $_POST['modalidades']);
+        if($time){
+            $atletasTime = Usuario_and_time::getAtletasStatusModalidade($time->id, 1, $_POST['modalidades']);
+        } else {
+            $atletasTime = null;
+        }
+        $filtro = $modalidadesFiltadas->nome;
+    } else {
+        $modalidadesFiltadas = Modalidade::getModalidade(1);
+        $time = Time::getIdModalidade($_SESSION['usuario'], $modalidadesFiltadas->id);
+        $atletasTime = Usuario_and_time::getAtletasStatusModalidade($time->id, 1, $modalidadesFiltadas->id);
+        $filtro = $modalidadesFiltadas->nome;
+        
+        if(empty($modalidadesFiltadas)){
+            $modalidadesFiltadas = null;
+            $atletasTime = null;
+        }
+    }
 
-        $atletas = [];
+    $atletas = [];
+    if($atletasTime){
         foreach($atletasTime as $atletaTime){
             $atletas[] = Usuario::getUsuariosId($atletaTime->id_atleta);
         }
@@ -38,7 +59,7 @@
                 $flatAtletas[] = $atletaObj;
             }
         }
-    } 
+    }
     
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/listar_atletas_time.php';

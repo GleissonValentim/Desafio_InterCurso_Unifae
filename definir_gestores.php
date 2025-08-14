@@ -35,7 +35,9 @@
         $id = $obUsuario->id = $_POST['del'];
         $obTime = Time::getTimeId($id);
 
-        if(empty($obTime)){  
+        if($obTime){  
+            $menssagem = ["menssagem" => "Erro ao remover o gestor, pois ele está vinculado a um ou mais times!", "erro" => true];
+        } else {
             $tipo = $obUsuario->tipo = "comum";
             $remover = $obUsuario->deleteGestor();
             if($remover){
@@ -43,9 +45,6 @@
             } else {
                 $menssagem = ["menssagem" => "Erro ao remover o gestor!", "erro" => true];
             }
-        } else {
-            // $obMensagem->getMensagem("redefinir_gestor.php", "warning", "", "&id=$id");
-            $menssagem = ["menssagem" => "Para remover este gestor, desvincule-o primeiro do time.", "erro" => true];
         }
     }
 

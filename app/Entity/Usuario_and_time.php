@@ -48,6 +48,11 @@
             return (new DataBase('Usuario_and_time'))->select("id_time = '$id' and status = '$status'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
 
+        // Metodo responsavel por retornar todos os atletas de cada time de acordo com o status e a modalidade
+        public static function getAtletasStatusModalidade($id, $status, $modalidade){
+            return (new DataBase('Usuario_and_time'))->select("id_time = '$id' and status = '$status' and '$modalidade' in (select id_modalidade from time where id = '$id')", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        }
+
         // Metodo responsavel por retornar todos os atletas de cada time
         public static function verificarTime($atleta, $time){
             return (new DataBase('Usuario_and_time'))->select("id_time = '$time' and id_atleta = $atleta", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);

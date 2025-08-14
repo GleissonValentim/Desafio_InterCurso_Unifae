@@ -5,6 +5,7 @@
 
     use \App\Entity\Mensagem;
     use \App\Entity\Usuario;
+    use \App\Entity\Modalidade;
     use \App\Entity\Usuario_and_time;
     use \App\Entity\Time;
     $obMensagem = new Mensagem;
@@ -21,6 +22,13 @@
     $times = [];
     foreach($notificacoes as $notificacao){
         $times[] = Time::getTime($notificacao->id_time);
+    }
+
+    $modalidades = [];
+    foreach($times as $time){
+        foreach($time as $subTime){
+            $modalidades[$subTime->id] = Modalidade::getModalidade($subTime->id_modalidade);
+        }
     }
 
     $flatTimes = [];

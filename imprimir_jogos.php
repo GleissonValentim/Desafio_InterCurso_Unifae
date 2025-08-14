@@ -31,6 +31,7 @@
     } else {
         $jogos = Jogo::getJogosModalidade(1);
     }
+
     $countJogos = 1;
 
     $modalidadesFiltadas;
@@ -144,7 +145,7 @@
             ';
         }
     } else {
-        // $saida .= '<p class="text-center mt-5"><strong>Não há nenhum jogo cadastrado!</strong></p>';
+        $saida = ['menssagem' => '<p class="text-center mt-5"><strong>Não há nenhum jogo cadastrado!</strong></p>', 'erro' => true];
     }
 
     header('Content-Type: aplication/json');

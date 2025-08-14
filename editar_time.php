@@ -6,7 +6,7 @@
     use \App\Entity\time;
     use \App\Entity\Mensagem;
     use \App\Entity\Usuario;
-    use app\Entity\Usuario_and_time;
+    use \App\Entity\Usuario_and_time;
 
     $obMensagem = new Mensagem;
     $obTime = new time;
@@ -46,8 +46,6 @@
 
             if($sair){
                 $menssagem = ["menssagem" => "Voçe saiu do time com sucesso!", "erro" => false];
-
-                
             } else {
                 $menssagem = ["menssagem" => "Erro ao sair do time!", "erro" => true];
             }

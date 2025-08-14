@@ -56,6 +56,11 @@
             return (new DataBase('Time'))->select("id_modalidade = '$id'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
 
+        // Metodo responsavel por retornar um time pelo id da modalidade e do gestor
+        public static function getIdModalidade($id, $modalidade){
+            return (new DataBase('Time'))->select("id_modalidade = '$modalidade' and id_gestor = '$id'", null, null, '*')->fetchObject(self::class);
+        }
+
         // Metodo responsavel por retornar um time pelo id da modalidade
         public static function getTimeModalidade($id, $nome){
             return (new DataBase('Time'))->select("id_gestor = '$id' and nome = '$nome'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);

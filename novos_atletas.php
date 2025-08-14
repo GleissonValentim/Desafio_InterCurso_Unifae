@@ -7,7 +7,7 @@
     use \App\Entity\Time;
     use \App\Entity\Usuario_and_time;
     use \App\Entity\Modalidade;
-    use app\Entity\Mensagem;
+    use \App\Entity\Mensagem;
     $obUsuario = new Usuario;
     $Usuario_and_time = new Usuario_and_time;
     $obMensagem = new Mensagem;
@@ -23,11 +23,16 @@
     }
 
     $usuarios = Usuario::getUsuariosStatus('comum', 'atleta');
-    $titulo = "Usuarios comuns";
+    $titulo = "Usuários comuns";
     $countAtleta = 1;
 
     $id = $_SESSION['usuario'];
     $times = Time::getTimesId($id);
+
+    $getModalidades = [];
+    foreach($times as $time){
+        $getModalidades[$time->id] = Modalidade::getModalidade($time->id_modalidade);
+    }
 
     $totalAtletas = Modalidade::getModalidade(1); 
     $atletasAtual = Usuario_and_time::getUsuarios(9);

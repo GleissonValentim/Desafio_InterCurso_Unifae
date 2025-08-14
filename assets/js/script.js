@@ -3,35 +3,6 @@ $(document).ready(function(){
         $('#myInput').trigger('focus')
     })
 
-    // Listar os filtros
-    // function getFiltros() {
-    //     $.ajax({
-    //         url: 'http://localhost/repositorio/Desafio_InterCurso_Unifae/filtros.php',
-    //         method: 'GET',
-    //         dataType: 'json'
-    //     }).done(function(result){
-    //         $('.teste').html(result);
-    //     });
-    // }
-    // setInterval(getFiltros, 1000);
-
-    // Filtrar
-    $(document).on('click', '.filtrar', function(e){
-        e.preventDefault();
-        var id = $(this).attr("id");
-        console.log("eu")
-        $.ajax({
-            url: 'http://localhost/repositorio/Desafio_InterCurso_Unifae/imprimir_jogos.php',
-            method: 'POST',
-            data:{
-                id: id
-            }
-
-        }).done(function(data){
-           $('.listar_jogos').html(data);
-        })
-    });
-
     // Cadastrar modalidade
     $(document).on('submit', '#cadastrar_modalidade', function(e){
         e.preventDefault();
@@ -132,9 +103,9 @@ $(document).ready(function(){
                     } else {
                     if (result.isConfirmed) {
                             Swal.fire({
-                            title: "Deletado!",
-                            text: data.menssagem,
-                            icon: "success"
+                                title: "Deletado!",
+                                text: data.menssagem,
+                                icon: "success"
                             });
                         }
                     }
@@ -179,6 +150,8 @@ $(document).ready(function(){
                     title: data.menssagem,
                     icon: "success",
                     draggable: true
+                }).then(() => {
+                    location.reload();
                 });
             }
         })
@@ -218,6 +191,8 @@ $(document).ready(function(){
                             title: "Deletado!",
                             text: data.menssagem,
                             icon: "success"
+                            }).then(() => {
+                                location.reload();
                             });
                         }
                     }
@@ -269,22 +244,6 @@ $(document).ready(function(){
         })
     });
 
-    // $(document).on('click', '.teste', function(e){
-    //     e.preventDefault();
-    //     var edit = $(this).attr("id");
-    //     console.log(edit)
-    //     $.ajax({
-    //         url: 'http://localhost/repositorio/Desafio_InterCurso_Unifae/atualizar_jogos.php',
-    //         method: 'POST',
-    //         data:{
-    //             edit: edit
-    //         }
-
-    //     }).done(function(data){
-    //        $('#editar_jogos').html(data);
-    //     })
-    // });
-
     // script de atualizar os dados dos jogos
     $(document).on('submit', '#atualizar_jogos', function(e){
         e.preventDefault();
@@ -331,7 +290,15 @@ $(document).ready(function(){
                 id: id
             }
         }).done(function(result){
-            $('.listar_jogos').html(result);
+            if(result.erro == true){
+                $('.jogos_vazio').show();
+                $('.listar_jogos').hide();
+                $('.jogos_vazio').html(result.menssagem);
+            } else {
+                $('.jogos_vazio').hide();
+                $('.listar_jogos').show();
+                $('.listar_jogos').html(result);
+            }
         });
     }
 
@@ -369,6 +336,8 @@ $(document).ready(function(){
                     title: data.menssagem,
                     icon: "success",
                     draggable: true
+                }).then(() => {
+                    location.reload();
                 });
             }
         })
@@ -408,6 +377,8 @@ $(document).ready(function(){
                             title: "Deletado!",
                             text: data.menssagem,
                             icon: "success"
+                            }).then(() => {
+                                location.reload();
                             });
                         }
                     }
@@ -438,6 +409,8 @@ $(document).ready(function(){
                     title: data.menssagem,
                     icon: "success",
                     draggable: true
+                }).then(() => {
+                    location.reload();
                 });
             }
         })
@@ -478,6 +451,8 @@ $(document).ready(function(){
                             title: "Deletado!",
                             text: data.menssagem,
                             icon: "success"
+                            }).then(() => {
+                                location.reload();
                             });
                         }
                     }
@@ -490,7 +465,6 @@ $(document).ready(function(){
     $(document).on('click', '.sair_time', function(e){
         e.preventDefault();
         var sair = $(this).attr("id");
-        console.log(sair)
         Swal.fire({
             title: "Tem certeza?",
             text: "Você não poderá reverter isso!",
@@ -521,6 +495,8 @@ $(document).ready(function(){
                             title: "Deletado!",
                             text: data.menssagem,
                             icon: "success"
+                            }).then(() => {
+                                location.reload();
                             });
                         }
                     }
@@ -551,6 +527,8 @@ $(document).ready(function(){
                     title: data.menssagem,
                     icon: "success",
                     draggable: true
+                }).then(() => {
+                    location.reload();
                 });
             }
         })
@@ -590,6 +568,8 @@ $(document).ready(function(){
                             title: "Deletado!",
                             text: data.menssagem,
                             icon: "success"
+                            }).then(() => {
+                                location.reload();
                             });
                         }
                     }

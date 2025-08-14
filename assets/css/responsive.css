@@ -1,5 +1,41 @@
 /* (1366x768) WXGA Display */
 
+@media (max-width: 479px) {
+    .header, .logado {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        margin: 20px 10px 0;
+    }
+
+    .header-area a {
+        margin: 0px !important;
+    }
+
+    .page-title-area {
+        margin: 0 !important;
+    }
+
+    .dash {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .page-title-area {
+        padding-bottom: 15px !important;
+    }
+
+    .nao_logado {
+        display: flex;
+        flex-direction: column;
+        margin: 10px 0;
+    }
+
+    .nao_logado button {
+        width: 100% !important;
+    }
+}   
+
 @media screen and (min-width: 1441px) and (max-width: 1920px) {
     .error-content {
         margin-top: 100px;

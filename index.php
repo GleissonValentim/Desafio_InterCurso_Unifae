@@ -8,7 +8,6 @@
     use \App\Entity\Time;
     use \App\Entity\Etapa;
     use \App\Entity\Modalidade;
-    use \App\Entity\Usuario_and_time;
     use \App\Entity\Usuario;
     $obUsuario = new Usuario;
     $obEtapa = new Etapa;
@@ -29,7 +28,7 @@
             $modalidadesFiltadas = null;
         }
     }
-
+            
     $times1 = [];
     $times2 = [];
     $vencedor = [];

@@ -59,10 +59,10 @@
     <!-- <div class="page-container"> -->
         <div class="main-content">
             <div class="header-area">
-                <div class="row align-items-center d-flex justify-content-between">
+                <div class="row align-items-center d-flex justify-content-between header">
                     <img class="logo_unifae" src="assets/images/1625239632883-logo-unifae-2021.png" alt="">
                     <?php if(!$usuario): ?>
-                        <div>
+                        <div class="nao_logado">
                             <a href="login.php"><button class="btn-entrar btn mr-2">Entrar</button></a>
                             <a href="register.php"><button class="btn-cadastrar btn">Cadastrar-se</button></a>
                         </div>
@@ -75,7 +75,7 @@
                             <?php elseif($usuario->tipo == "gestor"): ?>
                                 <a href="novos_atletas.php" class="mr-3">Definir atletas</a>
                                 <a href="atletas.php" class="mr-3">Atletas do time</a>
-                                <a href="times.php" class="mr-3">Meu time</a>
+                                <a href="times.php" class="mr-3">Meus times</a>
                             <?php elseif($usuario->tipo == "comum" || $usuario->tipo == "atleta"): ?>
                                 <a href="notificações.php" class="mr-3">Notificações</a>
                                 <a href="timesParticipando.php" class="mr-3">Times</a>
@@ -98,7 +98,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="col-sm-6 clearfix p-5"></div>
+                    <div class="col-sm-6 clearfix p-5 dash"></div>
                 </div>
             </div>
             <div class="container">

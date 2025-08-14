@@ -11,7 +11,7 @@
                     <table id="dataTable" class="text-center">
                         <thead class="bg-light text-capitalize">
                             <tr>
-                                <th>Atleta</th>
+                                <th>Usuário</th>
                                 <th>Nome</th>
                                 <th>Email</th>
                                 <th>Tipo</th>
@@ -55,7 +55,7 @@
             <select class="form-control id_atleta" name="modalidade">
                 <option value="">Selecione</option>
                 <?php foreach($times as $time): ?>
-                    <option value="<?= $time->id ?>"><?= $time->nome ?></option>
+                    <option value="<?= $time->id ?>"><?= $getModalidades[$time->id]->nome ?></option>
                 <?php endforeach; ?>
             </select>
         </div>

@@ -11,6 +11,7 @@
                             <tr>
                                 <th>Time</th>
                                 <th>Notificação</th>
+                                <th>Modalidade</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
@@ -19,6 +20,7 @@
                                 <tr class="infos">
                                     <td><?= $time->nome ?></td>
                                     <td>Convidou você a fazer parte do time</td>
+                                    <td><?= $modalidades[$time->id]->nome ?></td>
                                     <td>
                                         <button type="hidden" class="btn enviar-formulario ml-2 editar_notificacao" id="<?= $time->id ?>" name="aceitar">Aceitar</button>
                                         <button type="hidden" class="btn btn-danger deletar-formulario ml-2 remover_notificacao" id="<?= $time->id ?>" name="recusar">Recusar</button>
