@@ -2,7 +2,7 @@
     <div class="card col-10">
         <div class="card-body">
             <div class="row d-flex justify-content-between align-items-center mb-4">
-                <h4 class="header-title">Meu time</h4>
+                <h4 class="header-title">Meus times</h4>
                 <button type="button" class="btn enviar pr-4 pl-4" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Cadastrar Time</button>
             </div>
             <div class="data-tables">

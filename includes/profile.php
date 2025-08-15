@@ -1,5 +1,5 @@
 <div class="row justify-content-center mt-5">
-    <div class="card col-5">
+    <div class="card formularios">
         <div class="card-body">
             <h4 class="header-title mb-3">Seus dados pessoais</h4>
             <form action="editar_perfil.php" method="POST">

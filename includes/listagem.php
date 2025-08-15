@@ -2,17 +2,15 @@
     <div class="card listar-jogos">
         <div class="card-body">
             <div class="row d-flex justify-content-between align-items-center mb-4 filtragem">
-                <h4 class="header-title">Jogos</h4>
-                <form action="index.php" class="d-flex" method="POST">
+                <h4 class="header-title"><?= $titulo ?></h4>
+                <form action="index.php" class="d-flex" id="teste" method="POST">
                     <select class="form-control mr-2" name="modalidades">
-                        <?php if(empty($getModalidades)): ?>
-                                <option value="">Selecione</option>
-                            <?php else: ?>
-                                <option value=""><?= $filtro ?></option>
-                            <?php endif; ?>
+                        <option value="">Selecione</option>
+                        <?php if(isset($getModalidades)): ?>
                             <?php foreach($getModalidades as $getModalidade): ?>
                                 <option value="<?= $getModalidade->id ?>"><?= $getModalidade->nome ?></option>
-                        <?php endforeach; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </select>
                     <button type="submit" class="btn enviar">Filtrar</button>
                 </form>
@@ -37,7 +35,7 @@
                         </thead>
                         <tbody>
                             <?php foreach($jogos as $jogo ): ?>
-                                <?php if($jogo->id_modalidade == $modalidadesFiltadas->id):?>
+                                <?php if($vazio == false):?>
                                     <tr class="infos">
                                         <td><?= $countJogos++ ?></td>
                                         <td><?= $jogo->nome ?></td>

@@ -31,19 +31,21 @@
         $time = Time::getIdModalidade($_SESSION['usuario'], $_POST['modalidades']);
         if($time){
             $atletasTime = Usuario_and_time::getAtletasStatusModalidade($time->id, 1, $_POST['modalidades']);
+            $titulo = 'Atletas do time de '.$modalidadesFiltadas->nome;
         } else {
             $atletasTime = null;
+            $titulo = 'Atletas do time';
         }
-        $filtro = $modalidadesFiltadas->nome;
     } else {
-        $modalidadesFiltadas = Modalidade::getModalidade(1);
-        $time = Time::getIdModalidade($_SESSION['usuario'], $modalidadesFiltadas->id);
-        $atletasTime = Usuario_and_time::getAtletasStatusModalidade($time->id, 1, $modalidadesFiltadas->id);
-        $filtro = $modalidadesFiltadas->nome;
-        
+        $modalidadesFiltadas = Modalidade::getPrimeiraModalidade();       
         if(empty($modalidadesFiltadas)){
             $modalidadesFiltadas = null;
             $atletasTime = null;
+            $titulo = 'Atletas do time';
+        } else {
+            $time = Time::getIdModalidade($_SESSION['usuario'], $modalidadesFiltadas->id);
+            $atletasTime = Usuario_and_time::getAtletasStatusModalidade($time->id, 1, $modalidadesFiltadas->id);
+            $titulo = 'Atletas do time de '.$modalidadesFiltadas->nome;
         }
     }
 

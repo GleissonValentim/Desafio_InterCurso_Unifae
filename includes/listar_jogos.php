@@ -3,20 +3,18 @@
         <div class="card-body">
             <div class="row d-flex justify-content-between align-items-center mb-4 filtragem">
                 <h4 class="header-title">Jogos</h4>
-                <div class="d-flex align-items-center">
-                    <button type="button" class="btn enviar pr-4" data-toggle="modal" data-target="#exampleModalidade" data-whatever="@mdo">Sortear jogos</button>
-                    <form action="jogos.php" class="d-flex teste" method="POST">
+                <div class="d-flex align-items-center botoes">
+                    <button type="button" id="principal" class="btn enviar pr-4" data-toggle="modal" data-target="#exampleModalidade" data-whatever="@mdo">Sortear jogos</button>
+                    <form action="jogos.php" class="d-flex" id="teste" method="POST">
                         <select class="form-control ml-4 mr-2" id="filtro_modalidades" name="modalidades">
                             <?php if(empty($getModalidades)): ?>
                                 <option value="">Selecione</option>
-                            <?php else: ?>
-                                <option value=""><?= $filtro ?></option>
                             <?php endif; ?>
                             <?php foreach($getModalidades as $getModalidade): ?>
                                 <option id="<?= $getModalidade->id ?>" value="<?= $getModalidade->id ?>"><?= $getModalidade->nome ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <button type="submit" class="btn enviar">Filtrar</button>
+                        <button type="submit" id="filtrar" class="btn enviar">Filtrar</button>
                     </form>
                 </div>
             </div>

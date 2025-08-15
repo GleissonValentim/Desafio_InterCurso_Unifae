@@ -31,7 +31,7 @@
             ' ;
         }
     } else {
-        $saida .= '<p class="text-center mt-5"><strong>Não há nenhuma modalidade cadastrada!</strong></p>';
+        $saida = ['menssagem' => '<p class="text-center mt-5"><strong>Não há nenhuma modalidade cadastrada!</strong></p>', 'erro' => true];
     }
 
     header('Content-Type: aplication/json');

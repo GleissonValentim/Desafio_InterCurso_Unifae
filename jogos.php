@@ -39,14 +39,17 @@
         $filtro = $modalidadesFiltadas->nome;
     } else {
         $modalidadesFiltadas = Modalidade::getModalidade(1);
-        $filtro = $modalidadesFiltadas->nome;
+        
+        if($modalidadesFiltadas){
+            $filtro = $modalidadesFiltadas->nome;
+        } else {
+            $filtro = null;
+        }
         
         if(empty($modalidadesFiltadas)){
             $modalidadesFiltadas = null;
         }
     }
-
-
 
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/listar_jogos.php';

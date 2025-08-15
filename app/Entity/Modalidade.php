@@ -23,6 +23,11 @@
             return true;
         }
 
+        // Metodo responsavel por retornar a primeira modalidade
+        public static function getPrimeiraModalidade(){
+            return (new DataBase('Modalidade'))->select(null, null, null, 'id')->fetchObject(self::class);
+        }
+
         // Metodo responsavel por retornar todas as modalidades pelo nome
         public static function getModalidadeNome($nome){
             return (new DataBase('Modalidade'))->select("nome = '$nome'", null, null, 'id')->fetchAll(PDO::FETCH_CLASS, self::class);

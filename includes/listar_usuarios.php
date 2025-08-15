@@ -7,8 +7,7 @@
                 </div>
                 <div class="col-auto d-flex align-items-center">
                     <select class="form-control ml-2" name="usuarios">
-                        <!-- <option value="">Selecione</option> -->
-                        <option value="gestor"><?= $filtro ?></option>
+                        <option value="">Selecione</option>
                         <option value="gestor">Gestor</option>
                         <option value="comum">Comum</option>
                     </select>
@@ -35,9 +34,7 @@
                                         <td><?= $usuario->nome ?></td>
                                         <td><?= $usuario->email ?></td>
                                         <td><?= $usuario->tipo ?></td>
-                                        <!-- <form action="gestores.php" method="POST"> -->
                                             <td><button type="hidden" id=<?= $usuario->id ?> class="btn btn-danger deletar-formulario ml-2 deletarGestor" value="<?= $usuario->id ?>" name="remover">Remover gestor</button></td>
-                                        <!-- </form> -->
                                     </tr>
                                 <?php else: ?>
                                     <tr class="infos">
@@ -45,9 +42,7 @@
                                         <td><?= $usuario->nome ?></td>
                                         <td><?= $usuario->email ?></td>
                                         <td><?= $usuario->tipo ?></td>
-                                        <!-- <form action="gestores.php" method="POST"> -->
                                             <td><button type="hidden" id=<?= $usuario->id ?> class="btn enviar-formulario ml-2 definir" value="<?= $usuario->id ?>" name="definir">Definir gestor</button></td>
-                                        <!-- </form> -->
                                     </tr>
                                 <?php endif; ?>
                             <?php endforeach; ?> 

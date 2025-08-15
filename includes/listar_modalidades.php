@@ -20,6 +20,9 @@
                         
                     </tbody>
                 </table>
+                <div class="modalidades_vazia">
+
+                </div>
             </div>
         </div>
     </div>

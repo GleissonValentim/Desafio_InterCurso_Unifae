@@ -19,13 +19,23 @@
     $modalidadesFiltadas;
     if(isset($_POST['modalidades'])){
         $modalidadesFiltadas = Modalidade::getModalidade($_POST['modalidades']);
-        $filtro = $modalidadesFiltadas->nome;
+
+        if($modalidadesFiltadas){
+            $titulo = 'Jogos de '.$modalidadesFiltadas->nome;
+        } else {
+            $titulo = 'Jogos';
+        }
     } else {
         $modalidadesFiltadas = Modalidade::getModalidade(1);
-        $filtro = $modalidadesFiltadas->nome;
+        if($modalidadesFiltadas){
+            $titulo = 'Jogos de '.$modalidadesFiltadas->nome;
+        } else {
+            $titulo = 'Jogos';
+        }
         
         if(empty($modalidadesFiltadas)){
             $modalidadesFiltadas = null;
+            $titulo = 'Jogos';
         }
     }
             
@@ -43,8 +53,12 @@
         $vencedor[$jogo->id] = Time::getIdTime($jogo->vencedor);
         $etapas[$jogo->id] = Etapa::getEtapa($jogo->id_etapa);
 
-        if($jogo->id_modalidade == $modalidadesFiltadas->id){
-            $vazio = false;
+        if($modalidadesFiltadas){
+            if($jogo->id_modalidade == $modalidadesFiltadas->id){
+                $vazio = false;
+            } else {
+                $vazio = true;
+            }
         } else {
             $vazio = true;
         }

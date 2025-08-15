@@ -1,18 +1,18 @@
+
+
 <div class="mt-5 row justify-content-center tabela">
     <div class="card col-10">
         <div class="card-body"> 
             <div class="row d-flex justify-content-between align-items-center mb-4 filtragem">
-                <h4 class="header-title">Atletas do time</h4>
+                <h4 class="header-title"><?= $titulo ?></h4>
                 <form action="atletas.php" class="d-flex" method="POST">
                     <select class="form-control mr-2" name="modalidades">
-                        <?php if(empty($getModalidades)): ?>
-                                <option value="">Selecione</option>
-                            <?php else: ?>
-                                <option value=""><?= $filtro ?></option>
-                            <?php endif; ?>
+                        <option value="">Selecione</option>
+                        <?php if(isset($getModalidades)): ?>           
                             <?php foreach($getModalidades as $getModalidade): ?>
                                 <option value="<?= $getModalidade->id ?>"><?= $getModalidade->nome ?></option>
-                        <?php endforeach; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                     </select>
                     <button type="submit" class="btn enviar">Filtrar</button>
                 </form>

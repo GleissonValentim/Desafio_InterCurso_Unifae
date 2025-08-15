@@ -29,7 +29,7 @@
     if(!empty($_GET['id'])){
         $jogos = Jogo::getJogosModalidade($_GET['id']);
     } else {
-        $jogos = Jogo::getJogosModalidade(1);
+        $jogos = Jogo::getPrimeiroJogo();
     }
 
     $countJogos = 1;
@@ -39,7 +39,7 @@
         $modalidadesFiltadas = Modalidade::getModalidade($_POST['modalidades']);
         $filtro = $modalidadesFiltadas->nome;
     } else {
-        $modalidadesFiltadas = Modalidade::getModalidade(1);
+        $modalidadesFiltadas = Modalidade::getPrimeiraModalidade();
         $filtro = $modalidadesFiltadas->nome;
         
         if(empty($modalidadesFiltadas)){
@@ -123,6 +123,8 @@
 
             if($jogo->status != 'concluido'){
                 $button = '<button type="button" class="btn enviar-formulario ml-2 editar_jogos" data-toggle="modal" data-target="#exampleEdit" data-whatever="@mdo" id="'.$jogo->id.'" name="editar">Editar Jogo</button>';
+            } else {
+                $button = null;
             }
             
             $saida .= '

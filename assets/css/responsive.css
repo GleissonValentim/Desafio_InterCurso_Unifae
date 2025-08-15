@@ -1,5 +1,15 @@
 /* (1366x768) WXGA Display */
 
+@media (max-width: 890px) {
+    .tabela th, td {
+        padding: 20px 15px !important;
+    }
+
+    .tabela th, td, p, button, option, select {
+        font-size: 14px !important;
+    }
+}   
+
 @media (max-width: 479px) {
     .header, .logado {
         display: flex;
@@ -29,10 +39,36 @@
         display: flex;
         flex-direction: column;
         margin: 10px 0;
+        width: 100% !important;
     }
 
     .nao_logado button {
         width: 100% !important;
+        margin-top: 10px;
+    }
+
+    .tabela th, td {
+        padding: 20px 15px !important;
+    }
+
+    .tabela th, td, p, button, option, select {
+        font-size: 12px !important;
+    }
+
+    .filtragem, .botoes {
+        flex-direction: column;
+    }
+
+    #teste {
+        margin-top: 20px;
+    }
+
+    #principal {
+        margin-top: 20px;
+    }
+
+    .formularios {
+        width: 80% !important;
     }
 }   
 

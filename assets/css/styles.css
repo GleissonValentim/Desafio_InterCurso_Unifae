@@ -215,6 +215,19 @@ select {
     color: #2ad1a7;
 }
 
+.data-tables {
+    overflow-x: auto;
+}
+
+.data-tables table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+}
+
+.formularios {
+    width: 50%
+}
+
 /* Termina aqui  */
 
 .sidebar-menu {

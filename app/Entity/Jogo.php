@@ -49,6 +49,11 @@
             return (new DataBase('Jogo'))->select(null, null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         }
 
+        // Metodo responsavel por retornar a primeira modalidade
+        public static function getPrimeiroJogo(){
+            return (new DataBase('Jogo'))->select(null, null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        }
+
         // Metodo responsavel por retornar todos os jogos pela modalidade
         public static function getJogosModalidade($modalidade){
             return (new DataBase('Jogo'))->select("id_modalidade = '$modalidade'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
