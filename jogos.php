@@ -36,7 +36,9 @@
 
     if(isset($modalidade)){
         $modalidadesFiltadas = Modalidade::getModalidade($modalidade);
-        $filtro = $modalidadesFiltadas->nome;
+        if($modalidadesFiltadas){
+            $filtro = $modalidadesFiltadas->nome;
+        }
     } else {
         $modalidadesFiltadas = Modalidade::getModalidade(1);
         

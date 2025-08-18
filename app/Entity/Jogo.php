@@ -99,6 +99,11 @@
             return (new DataBase('Jogo'))->select("id_modalidade = '$id' and id_etapa = '$etapa'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         } 
 
+        // Metodo responsavel por retornar jogos pela etapa
+        // public static function getEtapa($id, $etapa1, $etapa2){
+        //     return (new DataBase('Jogo'))->select("id_modalidade = '$id' and id_etapa = '$etapa1 or id_etapa = '$etapa2'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+        // } 
+
         // Metodo responsavel por retornar jogos pelo status
         public static function getStatus($id, $status, $status2){
             return (new DataBase('Jogo'))->select("id_modalidade = '$id' and status = '$status' or status = '$status2'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);

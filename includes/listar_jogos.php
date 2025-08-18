@@ -5,7 +5,7 @@
                 <h4 class="header-title">Jogos</h4>
                 <div class="d-flex align-items-center botoes">
                     <button type="button" id="principal" class="btn enviar pr-4" data-toggle="modal" data-target="#exampleModalidade" data-whatever="@mdo">Sortear jogos</button>
-                    <form action="jogos.php" class="d-flex" id="teste" method="POST">
+                    <form action="jogos.php" class="d-flex filtrar_jogos" id="teste" method="POST">
                         <select class="form-control ml-4 mr-2" id="filtro_modalidades" name="modalidades">
                             <?php if(empty($getModalidades)): ?>
                                 <option value="">Selecione</option>
@@ -43,6 +43,9 @@
                 <div class="jogos_vazio">
 
                 </div>
+                <?php if(empty($getModalidades)): ?>
+                    <p class="text-center mt-5"><strong>Não há nenhum jogo cadastrado!</strong></p>
+                <?php endif; ?>
             </div>
         </div>
     </div>

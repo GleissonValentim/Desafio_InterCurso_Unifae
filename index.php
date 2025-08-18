@@ -38,7 +38,7 @@
             $titulo = 'Jogos';
         }
     }
-            
+    
     $times1 = [];
     $times2 = [];
     $vencedor = [];
@@ -46,6 +46,8 @@
     $data = [];
     $vazio = false;
     $verificaJogos = Jogo::verificaProximoJogo();
+
+    $etapa = Etapa::getEtapaNome('Quartas de final');
 
     foreach($jogos as $jogo){
         $times1[$jogo->id] = Time::getIdTime($jogo->time1);
@@ -88,35 +90,14 @@
 
     // Criar conta do Organizador
     $organizador = Usuario::getUsuarios('Organizador');
-    if(count($organizador) < 1){
-        $senhaProtegida = password_hash($_POST["senha"], PASSWORD_DEFAULT);
-        $nome = $obUsuario->nome = $_POST["nome"];
-        $tipo = $obUsuario->tipo = "comum";
-        $email = $obUsuario->email = $_POST["email"];
+    if(empty($organizador)){
+        $senhaProtegida = password_hash(123, PASSWORD_DEFAULT);
+        $nome = $obUsuario->nome = "Gleisson";
+        $tipo = $obUsuario->tipo = "Organizador";
+        $email = $obUsuario->email = "organizador@gmail.com";
         $senha = $obUsuario->senha = $senhaProtegida;
 
         $obUsuario->cadastrar();
-    }
-
-    // Criar as etapas
-    $verificaEtapas = Etapa::getEtapas();
-
-    if(count($verificaEtapas) < 1){
-        for($i = 0; $i < 4; $i++){
-            
-            if($i == 0){
-                $etapa = 'Classificatória Extra';
-            } elseif($i == 1){
-                $etapa = 'Classificatória';
-            } elseif($i == 2){
-                $etapa = 'Semifinal';
-            } elseif($i == 3){
-                $etapa = 'Final';
-            }
-
-            $nome = $obEtapa->nome = 'Classificatória Extra';
-            $obUsuario->cadastrar();
-        }
     }
 
     include __DIR__.'/includes/header.php';

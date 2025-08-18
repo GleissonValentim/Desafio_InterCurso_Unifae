@@ -26,6 +26,7 @@
     $getModalidades = Modalidade::getModalidades();
 
     $modalidadesFiltadas;
+    $atletasTime = null;
     if(isset($_POST['modalidades'])){
         $modalidadesFiltadas = Modalidade::getModalidade($_POST['modalidades']);
         $time = Time::getIdModalidade($_SESSION['usuario'], $_POST['modalidades']);
@@ -43,9 +44,13 @@
             $atletasTime = null;
             $titulo = 'Atletas do time';
         } else {
-            $time = Time::getIdModalidade($_SESSION['usuario'], $modalidadesFiltadas->id);
-            $atletasTime = Usuario_and_time::getAtletasStatusModalidade($time->id, 1, $modalidadesFiltadas->id);
-            $titulo = 'Atletas do time de '.$modalidadesFiltadas->nome;
+            if($modalidadesFiltadas){
+                $time = Time::getIdModalidade($_SESSION['usuario'], $modalidadesFiltadas->id);
+                if($time){
+                    $atletasTime = Usuario_and_time::getAtletasStatusModalidade($time->id, 1, $modalidadesFiltadas->id);
+                }
+                $titulo = 'Atletas do time de '.$modalidadesFiltadas->nome;
+            }
         }
     }
 
@@ -61,8 +66,7 @@
                 $flatAtletas[] = $atletaObj;
             }
         }
-    }
-    
+    } 
     include __DIR__.'/includes/header.php';
     include __DIR__.'/includes/listar_atletas_time.php';
     include __DIR__.'/includes/footer.php';
