@@ -52,6 +52,6 @@
         }
     }
 
-    header('Content-Type: aplication/json');
+    header('Content-Type: application/json');
     echo json_encode($menssagem);
 ?>

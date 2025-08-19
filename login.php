@@ -8,9 +8,9 @@
     $obMensagem = new Mensagem;
     $obUsuario = new Usuario;
 
-    if (isset($_SESSION['usuario'])) {
-        $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
-    }
+    // if (!isset($_SESSION['usuario'])) {
+    //     $obMensagem->getMensagem("index.php", "error", "Voçe não tem acesso a essa página");
+    // }
 
     if(isset($_POST['email'], $_POST['senha'])){
 

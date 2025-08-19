@@ -106,7 +106,7 @@
 
         // Metodo responsavel por retornar jogos pelo status
         public static function getStatus($id, $status, $status2){
-            return (new DataBase('Jogo'))->select("id_modalidade = '$id' and status = '$status' or status = '$status2'", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
+            return (new DataBase('Jogo'))->select("id_modalidade = '$id' and (status = '$status' or status = '$status2')", null, null, '*')->fetchAll(PDO::FETCH_CLASS, self::class);
         } 
 
         // Metodo responsavel por retornar um jogo com base na modalidade

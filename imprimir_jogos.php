@@ -24,13 +24,20 @@
     }
 
     $modalidade = $_POST['modalidades'] ?? null;
+    
 
     $jogos = [];
-    if(!empty($_GET['id'])){
-        $jogos = Jogo::getJogosModalidade($_GET['id']);
+    if(isset($_POST['id'])){
+        $jogos = Jogo::getJogosModalidade($_POST['id']);
     } else {
         $jogos = Jogo::getPrimeiroJogo();
     }
+
+    // $jogos = Jogo::getJogosModalidade($_POST['id']);
+
+    // if(!isset($_POST['id'])){
+    //      $jogos = Jogo::getJogosFinal();
+    // } 
 
     $countJogos = 1;
 

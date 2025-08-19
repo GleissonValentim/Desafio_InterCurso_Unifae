@@ -5,7 +5,7 @@
                 <h4 class="header-title">Jogos</h4>
                 <div class="d-flex align-items-center botoes">
                     <button type="button" id="principal" class="btn enviar pr-4" data-toggle="modal" data-target="#exampleModalidade" data-whatever="@mdo">Sortear jogos</button>
-                    <form action="jogos.php" class="d-flex filtrar_jogos" id="teste" method="POST">
+                    <form action="jogos.php" class="d-flex" method="POST">
                         <select class="form-control ml-4 mr-2" id="filtro_modalidades" name="modalidades">
                             <?php if(empty($getModalidades)): ?>
                                 <option value="">Selecione</option>
@@ -14,7 +14,7 @@
                                 <option id="<?= $getModalidade->id ?>" value="<?= $getModalidade->id ?>"><?= $getModalidade->nome ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <button type="submit" id="filtrar" class="btn enviar">Filtrar</button>
+                        <button type="submit" id="filtrar" class="btn enviar filtrar_jogos">Filtrar</button>
                     </form>
                 </div>
             </div>

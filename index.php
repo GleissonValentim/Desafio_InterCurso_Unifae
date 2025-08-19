@@ -37,7 +37,7 @@
             $modalidadesFiltadas = null;
             $titulo = 'Jogos';
         }
-    }
+    } 
     
     $times1 = [];
     $times2 = [];

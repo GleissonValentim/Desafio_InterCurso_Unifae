@@ -18,15 +18,14 @@ $(document).ready(function(){
     // Filtrar
     $(document).on('click', '.filtrar_jogos', function(e){
         e.preventDefault();
-        var id = $(this).attr("id");
-        console.log(id)
+        // var id = $(this).attr("id");
+        var id = $('#filtro_modalidades').val();
         $.ajax({
             url: 'http://localhost/repositorio/Desafio_InterCurso_Unifae/imprimir_jogos.php',
-            method: 'GET',
+            method: 'POST',
             data:{
                 id: id
             }
-
         }).done(function(data){
            $('.listar_jogos').html(data);
         })

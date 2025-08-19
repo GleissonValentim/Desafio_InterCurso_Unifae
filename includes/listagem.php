@@ -3,7 +3,7 @@
         <div class="card-body">
             <div class="row d-flex justify-content-between align-items-center mb-4 filtragem">
                 <h4 class="header-title"><?= $titulo ?></h4>
-                <form action="index.php" class="d-flex" id="teste" method="POST">
+                <form action="index.php" class="d-flex" method="POST">
                     <select class="form-control mr-2" name="modalidades">
                         <option value="">Selecione</option>
                         <?php if(isset($getModalidades)): ?>
